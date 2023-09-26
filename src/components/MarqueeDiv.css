@@ -1,0 +1,20 @@
+.measurement-name_re {
+    margin-left: 10px;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.measurement-name_re.marquee {
+    animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

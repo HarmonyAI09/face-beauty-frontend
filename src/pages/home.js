@@ -9,6 +9,7 @@ import "./home.css";
 
 import { FrontProfileMappingModal, SideProfileMappingModal } from "../components/MappingModal";
 import { ScoreAlert } from "../components/MarkShowDialog";
+import { ViewReportDialog } from "../components/ViewReportModalDialog";
 
 export const UserContext = createContext();
 
@@ -285,7 +286,7 @@ function Home({ }) {
                         </div>
                         <Divider style={{ padding: "8px", color: "purple" }}>Report</Divider>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <Button shape="square" style={{ width: "200px", margin: "5px" }} >View Report</Button>
+                            <ViewReportDialog></ViewReportDialog>
                         </div>
                     </div>
                 </div>

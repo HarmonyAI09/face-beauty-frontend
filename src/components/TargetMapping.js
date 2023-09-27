@@ -301,7 +301,6 @@ export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) =>
         { id: 58, color: 'green', issymmetry: false, position: { x: 300, y: 310 } }
     ]);
 
-
     const handleDrag = (data, id) => {
         const updatedCircles = circles.map((circle) => {
             if (circle.id === id) {

@@ -414,7 +414,6 @@ export function SideProfileMappingModal() {
                     <DialogBody >
                         <DialogTitle style={{ color: "purple" }}>Mapping Dialog</DialogTitle>
                         <SideDialogContent />
-                        {/* <UploadImageCrop/> */}
                         <DialogActions>
                             <DialogTrigger disableButtonEnhancement>
                                 <Button appearance="primary" onClick={handleApplyButtonClick}>Apply</Button>

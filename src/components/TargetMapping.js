@@ -1,4 +1,4 @@
-import { Button, Image } from "@fluentui/react-components";
+import { CompoundButton, Image } from "@fluentui/react-components";
 import React from 'react';
 import Draggable from 'react-draggable';
 import { useEffect, useRef, useState, useContext } from 'react';
@@ -85,6 +85,9 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
 
 export const FrontTargetMapping = ({ selectedPoint, handleSelectPointChange }) => {
 
+    const imageRef = useRef(null);
+    const [imageOffsetX, setImageOffsetX] = useState(0.0);
+
     const { markPoints, setMarkPoints } = useContext(UserContext);
 
     const { selectedFrontImage } = useContext(UserContext);
@@ -120,6 +123,8 @@ export const FrontTargetMapping = ({ selectedPoint, handleSelectPointChange }) =
         { id: 28, color: 'blue', issymmetry: true, position: { x: 150, y: 150 } },
         { id: 29, color: 'green', issymmetry: false, position: { x: 300, y: 300 } },
     ]);
+
+
 
     const handleDrag = (data, id) => {
         const updatedCircles = circles.map((circle) => {
@@ -159,76 +164,61 @@ export const FrontTargetMapping = ({ selectedPoint, handleSelectPointChange }) =
 
     const canvasRef = useRef(null);
 
-    // useEffect(() => {
-    //     const canvas = canvasRef.current;
-    //     const context = canvas.getContext('2d');
-    //     const markPointLines = [
-    //         [1, 2], [1, 5],
-    //         [2, 3], [2, 17],
-    //         [3, 4], [3, 7], [3, 17],
-    //         [4, 8], [4, 17],
-    //         [5, 6], [5, 7],
-    //         [6, 8], [6, 16],
-    //         [7, 8],
-    //         [8, 16],
-    //         [9, 10], [9, 11], [9, 12], [9, 17],
-    //         [10, 12], [10, 13],
-    //         [11, 12], [11, 14],
-    //         [12, 13], [12, 14], [12, 15], [12, 16],
-    //         [13, 16],
-    //         [14, 15],
-    //         [15, 16],
-    //         [16, 18],
-    //         [17, 18], [17, 22],
-    //         [18,19], [18,22],
-    //         [19,20],
-    //         [20,21],
-    //         [22, 23], [22, 26],
-    //         [23, 24], [23, 25], [23, 26],[23, 28],
-    //         [24,25],
-    //         [25, 26], [25, 28], [25, 29],
-    //         [26, 27], [26, 28],
-    //         [27, 28],
-    //         [28, 29],
-    //     ];
+    const handleMagicButtonClick = () => {
+        const formData = new FormData();
+        formData.append('image', selectedFrontImage);
 
-    //     // const animate = () => {
-    //     context.clearRect(0, 0, canvas.width, canvas.height);
-    //     context.lineWidth = 2;
-    //     context.strokeStyle = 'purple';
-    //     markPointLines.forEach(markPointLine => {
-    //         context.beginPath();
-    //         context.moveTo(markPoints[markPointLine[0]][0].x, markPoints[markPointLine[0]][0].y );
-    //         context.lineTo(markPoints[markPointLine[1]][0].x, markPoints[markPointLine[1]][0].y );
+        fetch('http://127.0.0.1:8000/frontmagic', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the backend
+                // console.log(data);
+                //setMarkPoints(data.points);
+                const updatedMarkPoints = { ...markPoints };
+                console.log(data.points.length);
 
-    //         context.moveTo(markPoints[markPointLine[0]][1].x, markPoints[markPointLine[0]][1].y );
-    //         context.lineTo(markPoints[markPointLine[1]][1].x, markPoints[markPointLine[1]][1].y );
+                // if (imageRef.current) {
+                    const width = imageRef.current.naturalWidth;
+                    const height = imageRef.current.naturalHeight;
 
-    //         // context.moveTo(markPoints[1][0].x + 5, markPoints[1][0].y + 10);
-    //         // context.lineTo(markPoints[markPointLine[1]][0].x,markPoints[markPointLine[1]][0].y);
-    //         // context.lineTo(markPoints[2][0].x + 5, markPoints[2][0].y + 10);
-    //         context.stroke();
-    //         // context.beginPath();
-    //         // context.arc(markPoints[currentIndex][0].x, markPoints[currentIndex][0].y, circle.radius, 0, 2 * Math.PI);
-    //         // context.fillStyle = `rgba(0, 255, 0, ${circle.alpha})`;
-    //         // context.fill();
+                    setImageOffsetX((800 - 800*width/height) / 2);
 
-    //         // circle.radius += 0.1;
-    //         // circle.alpha -= 0.005; // Adjust the increment value for smoother or faster changes
+                    console.log((800 - 800*width/height) / 2);
+                    console.log(width/height);
+                    console.log("Image width:", width);
+                    console.log("Image height:", height);
+                // }
 
-    //     });
-    //     // requestAnimationFrame(animate);
-    //     // };
-
-    //     // animate();
-    // }, [markPoints]);
+                for (let i = 0; i < data.points.length; i++) {
+                    updatedMarkPoints[i][0] = { x: data.points[i][0][0] + (800 - 800*width/height) / 2, y: data.points[i][0][1] };
+                    updatedMarkPoints[i][1] = { x: data.points[i][1][0] + (800 - 800*width/height) / 2, y: data.points[i][1][1] };
+                    console.log("updated", updatedMarkPoints[i][0]);
+                    console.log("backend", data.points[i][0][0], data.points[i][0][1]);
+                    console.log(imageOffsetX);
+                }
+                setMarkPoints(updatedMarkPoints);
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
+    };
 
     return (
         <div style={{ position: "relative" }}>
             {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
             <div style={{ width: "800px", height: "800px", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1, backgroundColor: "#6d546a" }}>
-                {selectedFrontImage && (<Image height={800} style={{ zIndex: 2 }} src={URL.createObjectURL(selectedFrontImage)}></Image>)}
+                {selectedFrontImage && (<img ref={imageRef} style={{ zIndex: 2, height: "800px" }} src={URL.createObjectURL(selectedFrontImage)}></img>)}
                 {!selectedFrontImage && (<Image width={800} height={800} style={{ zIndex: 2 }} src={"./images/front_blank.jpg"}></Image>)}
+            </div>
+            <div style={{ position: "absolute", top: "0px", right: "0px", zIndex: 9 }}>
+                <CompoundButton appearance="square" style={{ width: "30px", height: "30px" }}
+                    onClick={handleMagicButtonClick}>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </CompoundButton>
             </div>
             <div style={{ position: "absolute", top: "0px", right: "0px", height: '800px', width: "800px", zIndex: "5" }}>
                 {circles.map((circle) => (
@@ -265,7 +255,7 @@ export const FrontTargetMapping = ({ selectedPoint, handleSelectPointChange }) =
 
 export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) => {
 
-    const { markPoints, setMarkPoints } = useContext(UserContext);   
+    const { markPoints, setMarkPoints } = useContext(UserContext);
 
     const { selectedSideImage } = useContext(UserContext);
 
@@ -390,6 +380,11 @@ export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) =>
             <div style={{ width: "800px", height: "800px", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1, backgroundColor: "#6d546a" }}>
                 {selectedSideImage && (<Image height={800} style={{ zIndex: 2 }} src={URL.createObjectURL(selectedSideImage)}></Image>)}
                 {!selectedSideImage && (<Image width={800} height={800} style={{ zIndex: 2 }} src={"./images/side_blank.jpg"}></Image>)}
+            </div>
+            <div style={{ position: "absolute", top: "0px", right: "0px", zIndex: 9 }}>
+                <CompoundButton appearance="square" style={{ width: "30px", height: "30px" }}>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </CompoundButton>
             </div>
             <div style={{ position: "absolute", top: "0px", right: "0px", height: '800px', width: "800px", zIndex: "5" }}>
                 {circles.map((circle) => (

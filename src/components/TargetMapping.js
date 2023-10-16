@@ -255,6 +255,9 @@ export const FrontTargetMapping = ({ selectedPoint, handleSelectPointChange }) =
 
 export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) => {
 
+    const imageRef = useRef(null);
+    const [imageOffsetX, setImageOffsetX] = useState(0.0);
+
     const { markPoints, setMarkPoints } = useContext(UserContext);
 
     const { selectedSideImage } = useContext(UserContext);
@@ -309,6 +312,49 @@ export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) =>
     };
 
     const canvasRef = useRef(null);
+    
+    const handleMagicButtonClick = () => {
+        const formData = new FormData();
+        formData.append('image', selectedSideImage);
+
+        fetch('http://127.0.0.1:8000/sidemagic', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the backend
+                // console.log(data);
+                //setMarkPoints(data.points);
+                const updatedMarkPoints = { ...markPoints };
+                console.log(data);
+                console.log(data.points.length);
+
+                // if (imageRef.current) {
+                    const width = imageRef.current.naturalWidth;
+                    const height = imageRef.current.naturalHeight;
+
+                    setImageOffsetX((800 - 800*width/height) / 2);
+
+                    console.log((800 - 800*width/height) / 2);
+                    console.log(width/height);
+                    console.log("Image width:", width);
+                    console.log("Image height:", height);
+                // }
+
+                for (let i = 0; i < data.points.length; i++) {
+                    updatedMarkPoints[i+30][0] = { x: data.points[i][0] + (800 - 800*width/height) / 2, y: data.points[i][1] };
+                    console.log("updated", updatedMarkPoints[i]);
+                    console.log("backend", data.points[i][0], data.points[i][1]);
+                    console.log(i);
+                }
+                setMarkPoints(updatedMarkPoints);
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error(error);
+            });
+    };
 
     // useEffect(() => {
     //     const canvas = canvasRef.current;
@@ -378,11 +424,12 @@ export const SideTargetMapping = ({ selectedPoint, handleSelectPointChange }) =>
         <div style={{ position: "relative" }}>
             {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
             <div style={{ width: "800px", height: "800px", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1, backgroundColor: "#6d546a" }}>
-                {selectedSideImage && (<Image height={800} style={{ zIndex: 2 }} src={URL.createObjectURL(selectedSideImage)}></Image>)}
+                {selectedSideImage && (<img ref={imageRef} style={{ zIndex: 2, height: "800px" }} src={URL.createObjectURL(selectedSideImage)}></img>)}
                 {!selectedSideImage && (<Image width={800} height={800} style={{ zIndex: 2 }} src={"./images/side_blank.jpg"}></Image>)}
             </div>
             <div style={{ position: "absolute", top: "0px", right: "0px", zIndex: 9 }}>
-                <CompoundButton appearance="square" style={{ width: "30px", height: "30px" }}>
+                <CompoundButton appearance="square" style={{ width: "30px", height: "30px" }}
+                onClick={handleMagicButtonClick}>
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
                 </CompoundButton>
             </div>

@@ -143,6 +143,7 @@ function Home({ }) {
         [{ x: 168, y: 327 }], //56
         [{ x: 235, y: 352 }], //57
         [{ x: 210, y: 494 }], //58
+        [{ x: 210, y: 494 }], //58
     ]);
 
     const handleGenderChange = React.useCallback(

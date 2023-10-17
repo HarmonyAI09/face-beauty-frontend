@@ -146,6 +146,13 @@ function Home({ }) {
         [{ x: 210, y: 494 }], //58
     ]);
 
+    const [reportNotes, setReportNotes] = useState(Array(45).fill([]));
+    const [reportScores, setReportScores] = useState(Array(45).fill([]));
+    const [reportMaxScores, setReportMaxScores] = useState(Array(45).fill([]));
+    const [reportRanges, setReportRanges] = useState(Array(45).fill([]));
+    const [reportCurrentValues, setReportCurrentValues] = useState(Array(45).fill([]));
+    const [reportMeasurementNames, setReportMeasurementNames] = useState(Array(45).fill([]));
+
     const handleGenderChange = React.useCallback(
         (ev) => {
             if(ev.currentTarget.checked === true){
@@ -240,7 +247,9 @@ function Home({ }) {
             setFacialConvexityNasion, setNasalProjection, setNasalW2HRatio, setRickettsELine, setHoldawayHLine, setSteiinerSLine,
             setBurstoneLine, setNasomentalAngle, setGonion2MouthRelationship, setRecessionRelative2FrankfortPlane, setBrowridgeInclinationAngle,
             setNasalTipAngle,
-            markPoints, setMarkPoints, selectedFrontImage, selectedSideImage, frontProfileMark, setFrontProfileMark, sideProfileMark, setSideProfileMark, gender
+            markPoints, setMarkPoints, selectedFrontImage, selectedSideImage, frontProfileMark, setFrontProfileMark, sideProfileMark, setSideProfileMark, gender,
+            reportNotes, setReportNotes, reportScores, setReportScores, reportMaxScores, setReportMaxScores, reportRanges, setReportRanges, 
+            reportCurrentValues, setReportCurrentValues, reportMeasurementNames, setReportMeasurementNames
         }}>
             <div style={wrapperStyle}>
                 <Image src="images/left.jpg" height={100}></Image>

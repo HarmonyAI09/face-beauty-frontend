@@ -7,7 +7,6 @@ export function FrontSupportImage({ selectedPoint }) {
     // const [currentIndex, setCurrentIndex] = useState(selectedPoint);
 
     useEffect(() => {
-        console.log(selectedPoint);
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         const normal_circles = [
@@ -108,7 +107,6 @@ export function SideSupportImage({ selectedPoint }) {
     // const [currentIndex, setCurrentIndex] = useState(selectedPoint);
 
     useEffect(() => {
-        console.log(selectedPoint);
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         const normal_circles = [

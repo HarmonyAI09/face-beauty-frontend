@@ -11,7 +11,7 @@ const MarqueeDiv = ({ text, width }) => {
     if(divElement.clientWidth>170){
         divElement.classList.add('marquee');
     }
-    console.log(divElement.scrollWidth, divElement.clientWidth);
+    // console.log(divElement.scrollWidth, divElement.clientWidth);
   }, []);
 
   return (

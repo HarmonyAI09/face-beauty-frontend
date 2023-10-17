@@ -41,7 +41,7 @@ import {
 
 const items = [
     {
-        photo : {src : "./images/side.jpg"},
+        photo: { src: "./images/side.jpg" },
         measurement: { label: "Gonial angle", icon: <DocumentRegular /> },
         value: { value: 122 },
         score: { getScore: 40, maxScore: 40 },
@@ -50,7 +50,7 @@ const items = [
         advice: { label: "" },
     },
     {
-        photo : {src : "./images/side.jpg"},
+        photo: { src: "./images/side.jpg" },
         measurement: { label: "Gonial angle", icon: <DocumentRegular /> },
         value: { value: 122 },
         score: { getScore: 40, maxScore: 40 },
@@ -59,7 +59,7 @@ const items = [
         advice: { label: "" },
     },
     {
-        photo : {src : "./images/side.jpg"},
+        photo: { src: "./images/side.jpg" },
         measurement: { label: "Gonial angle", icon: <DocumentRegular /> },
         value: { value: 122 },
         score: { getScore: 40, maxScore: 40 },
@@ -68,7 +68,7 @@ const items = [
         advice: { label: "" },
     },
     {
-        photo : {src : "./images/side.jpg"},
+        photo: { src: "./images/side.jpg" },
         measurement: { label: "Gonial angle", icon: <DocumentRegular /> },
         value: { value: 122 },
         score: { getScore: 40, maxScore: 40 },
@@ -78,7 +78,7 @@ const items = [
     },
 ];
 
-const columns = [    
+const columns = [
     { columnKey: "photo", label: "Photo" },
     { columnKey: "measurement", label: "Measurement Name" },
     { columnKey: "value", label: "Value" },
@@ -88,7 +88,52 @@ const columns = [
     { columnKey: "advice", label: "Improvement advice (if applicable)" },
 ];
 
+const ReportTableHeader = () => {
+    return (
+        <div style={{ display: "flex", width: "100%", textAlign: "center" }}>
+            <div style={{ width: "10%" }}>Image</div>
+            <div style={{ width: "10%" }}>Measurement Name</div>
+            <div style={{ width: "5%" }}>Value</div>
+            <div style={{ width: "5%" }}>Score</div>
+            <div style={{ width: "35%" }}>Your Measurement's Meaning</div>
+            <div style={{ width: "35%" }}>Improvement Advice (if applicable)</div>
+        </div>
+    );
+};
+
+const ReportTableRow = (props) => {
+    return (
+        <div>
+            <div style={{ display: "flex", width: "100%", alignItems: "center", marginTop: "5px", textAlign: "center" }}>
+                <div style={{ width: "10%" }}><Image shape="circular" src="./images/side.jpg" width={70} style={{ border: "2px solid purple" }}></Image></div>
+                <div style={{ width: "10%" }}>{props.measurement}</div>
+                <div style={{ width: "5%" }}>{props.value}</div>
+                <div style={{ width: "5%" }}>{props.score}</div>
+                <div style={{ width: "35%", textAlign: "left", paddingLeft: "5px" }}>{props.note}</div>
+                <div style={{ width: "35%", textAlign: "left", paddingLeft: "5px" }}>{props.advice}</div>
+            </div>
+            <Divider></Divider>
+        </div>
+    );
+};
+
 export const ViewReportDialog = () => {
+
+    const { gender } = useContext(UserContext);
+    const { reportNotes, setReportNotes } = useContext(UserContext);
+    const { reportScores, setReportScores } = useContext(UserContext);
+    const { reportMaxScores, setReportMaxScores } = useContext(UserContext);
+    const { reportRanges, setReportRanges } = useContext(UserContext);
+    const { reportCurrentValues, setReportCurrentValues } = useContext(UserContext);
+    const { reportMeasurementNames, setReportMeasurementNames } = useContext(UserContext);
+
+    useEffect(() => {
+        console.log(reportNotes, reportScores, reportMaxScores);
+    }, [reportNotes]);
+
+    const reportTableRowList = reportNotes.map((note, index) => {
+        return <ReportTableRow key={index} measurement={reportMeasurementNames[index]} value={reportCurrentValues[index]} score={reportScores[index]} note={note} advice="temp" />
+    });
 
     return (
         <Dialog modalType="alert">
@@ -106,7 +151,7 @@ export const ViewReportDialog = () => {
                             <div style={{ color: "purple", }}>68% Facial harmony</div>
                         </div>
                     </DialogTitle>
-                    <DialogContent>
+                    <DialogContent style={{}}>
                         <div>
                             <div style={{ display: "flex" }}>
 
@@ -118,38 +163,9 @@ export const ViewReportDialog = () => {
                             </div>
                         </div>
                         <Divider style={{ padding: "20px" }}></Divider>
-                        <Table arial-label="Default table">
-                            <TableHeader>
-                                <TableRow>
-                                    {columns.map((column) => (
-                                        <TableHeaderCell key={column.columnKey}>
-                                            {column.label}
-                                        </TableHeaderCell>
-                                    ))}
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {items.map((item) => (
-                                    <TableRow key={item.measurement.label}>
-                                        <TableCell styles={{ root: { width: '100px' } }}>
-                                            <Image shape="circular" src={item.photo.src} width={70} style={{border:"2px solid purple"}}></Image>
-                                        </TableCell>
-                                        <TableCell idealWidth="100px">
-                                                {item.measurement.label}
-                                        </TableCell>
-                                        <TableCell>
-                                            <TableCellLayout>
-                                                {item.value.value}
-                                            </TableCellLayout>
-                                        </TableCell>
-                                        <TableCell>{item.score.getScore}/{item.score.maxScore} points</TableCell>
-                                        <TableCell>{item.ideal.min}-{item.ideal.max}</TableCell>
-                                        <TableCell>{item.meaning.label}</TableCell>
-                                        <TableCell>{item.advice.label}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                        <ReportTableHeader />
+                        <Divider></Divider>
+                        <div className="custom-scroll" style={{ height: "500px" }}>{reportTableRowList}</div>
                     </DialogContent>
                     <DialogActions>
                         <DialogTrigger disableButtonEnhancement>

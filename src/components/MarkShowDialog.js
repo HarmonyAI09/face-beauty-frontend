@@ -68,6 +68,12 @@ export const ScoreAlert = (props) => {
     const { frontProfileMark, setFrontProfileMark } = useContext(UserContext);
     const { sideProfileMark, setSideProfileMark } = useContext(UserContext);
     const { gender } = useContext(UserContext);
+    const { reportNotes, setReportNotes } = useContext(UserContext);
+    const { reportScores, setReportScores } = useContext(UserContext);
+    const { reportMaxScores, setReportMaxScores } = useContext(UserContext);
+    const { reportRanges, setReportRanges } = useContext(UserContext);
+    const { reportCurrentValues, setReportCurrentValues } = useContext(UserContext);
+    const { reportMeasurementNames, setReportMeasurementNames } = useContext(UserContext);
 
     /*********************** I N D I V I D U A L   S T A T E ***********************/
     const [showingScore, setShowingScore] = useState([0.0, 0.0]);
@@ -112,6 +118,27 @@ export const ScoreAlert = (props) => {
                 const mark = data.mark;
                 setFrontProfileMark(mark);
                 setShowingScore([data.mark, data.percent]);
+                console.log(data.scores.length, "front")
+                const tempNotes = [...reportNotes];
+                const templateScores = [...reportScores];
+                const templateMaxScores = [...reportMaxScores];
+                const templateRanges = [...reportRanges];
+                const templateValues = [...reportCurrentValues];
+                const templateMeasurements = [...reportMeasurementNames];
+                for (let i = 22; i < 45; i++) {
+                    tempNotes[i] = data.notes[i - 22];
+                    templateScores[i] = data.scores[i - 22];
+                    templateMaxScores[i] = data.max_scores[i - 22];
+                    templateRanges[i] = data.ranges[i - 22];
+                    templateValues[i] = data.current_values[i - 22];
+                    templateMeasurements[i] = data.measurement_names[i - 22];
+                }
+                setReportNotes(tempNotes);
+                setReportScores(templateScores);
+                setReportMaxScores(templateMaxScores);
+                setReportRanges(templateRanges);
+                setReportCurrentValues(templateValues);
+                setReportMeasurementNames(templateMeasurements);
             })
             .catch(error => {
                 // Handle any errors
@@ -157,10 +184,30 @@ export const ScoreAlert = (props) => {
             .then(response => response.json())
             .then(data => {
                 // Handle the response data
-                console.log(data);
                 const mark = data.mark;
                 setSideProfileMark(mark);
                 setShowingScore([data.mark, data.percent]);
+                console.log(data.scores.length)
+                const tempNotes = [...reportNotes];
+                const templateScores = [...reportScores];
+                const templateMaxScores = [...reportMaxScores];
+                const templateRanges = [...reportRanges];
+                const templateValues = [...reportCurrentValues];
+                const templateMeasurements = [...reportMeasurementNames];
+                for (let i = 0; i < 23; i++) {
+                    tempNotes[i] = data.notes[i];
+                    templateScores[i] = data.scores[i];
+                    templateMaxScores[i] = data.max_scores[i];
+                    templateRanges[i] = data.ranges[i];
+                    templateValues[i] = data.current_values[i];
+                    templateMeasurements[i] = data.measurement_names[i];
+                }
+                setReportNotes(tempNotes);
+                setReportScores(templateScores);
+                setReportMaxScores(templateMaxScores);
+                setReportRanges(templateRanges);
+                setReportCurrentValues(templateValues);
+                setReportMeasurementNames(templateMeasurements);
             })
             .catch(error => {
                 // Handle any errors

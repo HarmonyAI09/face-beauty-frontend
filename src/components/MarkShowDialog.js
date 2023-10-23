@@ -74,6 +74,7 @@ export const ScoreAlert = (props) => {
     const { reportRanges, setReportRanges } = useContext(UserContext);
     const { reportCurrentValues, setReportCurrentValues } = useContext(UserContext);
     const { reportMeasurementNames, setReportMeasurementNames } = useContext(UserContext);
+    const { reportAdvices, setReportAdvices } = useContext(UserContext);
 
     /*********************** I N D I V I D U A L   S T A T E ***********************/
     const [showingScore, setShowingScore] = useState([0.0, 0.0]);
@@ -125,13 +126,15 @@ export const ScoreAlert = (props) => {
                 const templateRanges = [...reportRanges];
                 const templateValues = [...reportCurrentValues];
                 const templateMeasurements = [...reportMeasurementNames];
-                for (let i = 22; i < 45; i++) {
-                    tempNotes[i] = data.notes[i - 22];
-                    templateScores[i] = data.scores[i - 22];
-                    templateMaxScores[i] = data.max_scores[i - 22];
-                    templateRanges[i] = data.ranges[i - 22];
-                    templateValues[i] = data.current_values[i - 22];
-                    templateMeasurements[i] = data.measurement_names[i - 22];
+                const templateAdvices = [...reportAdvices];
+                for (let i = 0; i < 22; i++) {
+                    tempNotes[i] = data.notes[i];
+                    templateScores[i] = data.scores[i];
+                    templateMaxScores[i] = data.max_scores[i];
+                    templateRanges[i] = data.ranges[i];
+                    templateValues[i] = data.current_values[i];
+                    templateMeasurements[i] = data.measurement_names[i];
+                    templateAdvices[i] = data.advice[i];
                 }
                 setReportNotes(tempNotes);
                 setReportScores(templateScores);
@@ -139,6 +142,7 @@ export const ScoreAlert = (props) => {
                 setReportRanges(templateRanges);
                 setReportCurrentValues(templateValues);
                 setReportMeasurementNames(templateMeasurements);
+                setReportAdvices(templateAdvices);
             })
             .catch(error => {
                 // Handle any errors
@@ -194,13 +198,15 @@ export const ScoreAlert = (props) => {
                 const templateRanges = [...reportRanges];
                 const templateValues = [...reportCurrentValues];
                 const templateMeasurements = [...reportMeasurementNames];
+                const templateAdvices = [...reportAdvices];
                 for (let i = 0; i < 23; i++) {
-                    tempNotes[i] = data.notes[i];
-                    templateScores[i] = data.scores[i];
-                    templateMaxScores[i] = data.max_scores[i];
-                    templateRanges[i] = data.ranges[i];
-                    templateValues[i] = data.current_values[i];
-                    templateMeasurements[i] = data.measurement_names[i];
+                    tempNotes[i + 22] = data.notes[i];
+                    templateScores[i + 22] = data.scores[i];
+                    templateMaxScores[i + 22] = data.max_scores[i];
+                    templateRanges[i + 22] = data.ranges[i];
+                    templateValues[i + 22] = data.current_values[i];
+                    templateMeasurements[i + 22] = data.measurement_names[i];
+                    templateAdvices[i+22] = data.advice[i];
                 }
                 setReportNotes(tempNotes);
                 setReportScores(templateScores);
@@ -208,6 +214,7 @@ export const ScoreAlert = (props) => {
                 setReportRanges(templateRanges);
                 setReportCurrentValues(templateValues);
                 setReportMeasurementNames(templateMeasurements);
+                setReportAdvices(templateAdvices);
             })
             .catch(error => {
                 // Handle any errors

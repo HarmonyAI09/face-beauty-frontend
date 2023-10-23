@@ -35,8 +35,6 @@ export function SideDialogContent() {
     const handleSelectPointChange = (newSelectedPoint) =>{
         setSelectedPoint(newSelectedPoint);
     }
-
-
     return (
             <DialogContent style={{ display: "flex" }}>
                 <div style={{ width: "100%", display: "flex", justifyContent:"space-evenly" }}>

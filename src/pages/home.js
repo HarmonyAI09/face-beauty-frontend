@@ -152,6 +152,7 @@ function Home({ }) {
     const [reportRanges, setReportRanges] = useState(Array(45).fill([]));
     const [reportCurrentValues, setReportCurrentValues] = useState(Array(45).fill([]));
     const [reportMeasurementNames, setReportMeasurementNames] = useState(Array(45).fill([]));
+    const [reportAdvices, setReportAdvices] = useState(Array(45).fill([]));
 
     const handleGenderChange = React.useCallback(
         (ev) => {
@@ -249,7 +250,7 @@ function Home({ }) {
             setNasalTipAngle,
             markPoints, setMarkPoints, selectedFrontImage, selectedSideImage, frontProfileMark, setFrontProfileMark, sideProfileMark, setSideProfileMark, gender,
             reportNotes, setReportNotes, reportScores, setReportScores, reportMaxScores, setReportMaxScores, reportRanges, setReportRanges, 
-            reportCurrentValues, setReportCurrentValues, reportMeasurementNames, setReportMeasurementNames
+            reportCurrentValues, setReportCurrentValues, reportMeasurementNames, setReportMeasurementNames, reportAdvices, setReportAdvices
         }}>
             <div style={wrapperStyle}>
                 <Image src="images/left.jpg" height={100}></Image>

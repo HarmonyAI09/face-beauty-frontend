@@ -92,6 +92,9 @@ export const ViewReportDialog = () => {
     const { reportMeasurementNames, setReportMeasurementNames } = useContext(UserContext);
     const { reportAdvices, setReportAdvices } = useContext(UserContext);
 
+    const {frontProfileMark, setFrontProfileMark} = useContext(UserContext);
+    const {sideProfileMark, setSideProfileMark} = useContext(UserContext);
+
     useEffect(() => {
         console.log(reportNotes, reportScores, reportMaxScores);
     }, [reportNotes]);
@@ -114,14 +117,14 @@ export const ViewReportDialog = () => {
                             <h4>&nbsp;by creatingattractive</h4>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center", position: "relative" }}>
-                            <div style={{ color: "purple", }}>68% Facial harmony</div>
+                            <div style={{ color: "purple", }}>{((sideProfileMark+frontProfileMark)/5).toFixed(2)}% Facial harmony</div>
                         </div>
                     </DialogTitle>
                     <DialogContent style={{}}>
                         <div>
                             <div style={{ display: "flex", flexDirection:"column" }}>
                                 <div>{"Harmony report "}</div>
-                                <div>&nbsp;{" male, caucasian"}</div>
+                                <div>{gender ? "male" : "female"} caucasian</div>
                             </div>
                             <div>
                                 Welcome to Harmony’s full facial analysis. Below you will find a list of over 45 facial assessments, what they indicate about your face, and any potential improvements associated with each measurement. We hope this information is insightful and helps you on your journey to looking your best!

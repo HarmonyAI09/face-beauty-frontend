@@ -7,13 +7,14 @@ import Resource from './pages/resource';
 import Pricing from './pages/pricing';
 import About from './pages/about';
 import BeautyNavbar from './components/BeautyNavbar';
+import BeautyFootbar from './components/BeautyFootbar';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 function App() {
   return (
     <Router>
       {/* , backgroundColor:"pink" */}
-      <div className="App" style={{width:"100%", height:"100vh"}}>
+      <div className="App" style={{width:"100%", height:"100vh", position:"relative"}}>
         <BeautyNavbar></BeautyNavbar>
         <Routes>
           <Route exact path="/home" element={<Home/>} />

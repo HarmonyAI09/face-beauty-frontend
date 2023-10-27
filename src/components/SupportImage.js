@@ -179,7 +179,6 @@ export function SideSupportImage({ selectedPoint }) {
             [{ x: 235, y: 352 }], //57
             [{ x: 210, y: 494 }], //58
         ];
-
         const animate = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
             markPoints.forEach((markPoint, index) => {

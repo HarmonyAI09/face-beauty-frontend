@@ -161,13 +161,13 @@
 }
 
 .main_child {
-    border: 1px solid purple;
+    height: 100%;
 }
 
 .front_profile {
 
     display: flex;
-    width: 50%;
+    /* width: 100%; */
     justify-content: flex-end;
 }
 
@@ -198,76 +198,5 @@
 .fvgz9i8{
     max-width: 1920px;
 }
-
-
-@media only screen and (max-width: 1800px) {
-
-    /* For mobile phones: */
-    [class*="m_reference"] {
-        /* display: none; */
-    }
-
-    [class*="m_profile"] {
-        /* width: 100%;
-        transition: width 0.3s ease; */
-        width: 80%;
-        margin: auto;
-    }
-}
-
-@media only screen and (max-width: 1560px) {
-
-    /* For mobile phones: */
-    [class*="m_reference"] {
-        /* display: none; */
-    }
-
-    [class*="m_setting"] {
-        display: none;
-    }
-
-    [class*="m_profile"] {
-        width: 100%;
-        margin: auto;
-    }
-}
-
-@media only screen and (max-width: 1250px) {
-
-    /* For mobile phones: */
-    .side_profile {
-        display: none;
-    }
-
-    .front_profile {
-        width: 100%;
-    }
-
-    .front_photo_area {
-        flex-direction: row;
-        margin: auto;
-    }
-}
-
-@media only screen and (max-width: 940px) {
-
-    /* For mobile phones: */
-    .side_profile {
-        display: none;
-    }
-
-    .front_profile {
-        width: 100%;
-    }
-
-    .front_photo_area {
-        flex-direction: row;
-        margin: auto;
-    }
-    .photo_div.example{
-        display: none;
-    }
-}
-
 /* position: "relative", display: "flex", width: "50%", justifyContent: "space-between" }} onMouseOver={unavailableAreaInHandle} onMouseOut={unavailableAreaOutHandle}>
                             <div style={{ display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center" */

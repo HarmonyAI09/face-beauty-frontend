@@ -549,5 +549,3 @@ export const SideTargetMapping = ({
     </div>
   );
 };
-
-// {/* <Image src="./images/front.jpg" width={800} height={800}></Image> */}

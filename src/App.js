@@ -8,6 +8,7 @@ import Pricing from './pages/pricing';
 import About from './pages/about';
 import BeautyNavbar from './components/BeautyNavbar';
 import Contact from './pages/contact';
+import Community from './pages/community';
 import BeautyFootbar from './components/BeautyFootbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/resources" element={<Resource />} />
             <Route exact path="/pricing" element={<Pricing />} />
             <Route exact path="/about" element={<About />} />
+            <Route exact path="/community" element={<Community />} />
             {/* <Route exact path="/contact" element={<Contact/>} /> */}
           </Routes >
         </div>

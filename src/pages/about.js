@@ -33,51 +33,65 @@ const useStyles = makeStyles({
     },
 });
 
+function InfoGraphic (props) {
+    return(
+        <div style={{width:"180px", height:"120px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", color:"purple", margin:"10px"}}
+        title = {props.desc}>
+            <br/>
+            <div style={{color:"purple", fontSize:"60px", display:"flex", }}><b>{props.times}</b></div>
+            <br/>
+            <br/>
+            <div style={{marginLeft:"auto", marginRight:"auto"}}><b>{props.string}</b></div>
+        </div>
+    );
+};
+
+function OnlyTextIntro (props) {
+    return(
+        <div style={{width:"200px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", 
+            alignItems:"center", justifyContent:"center", color:"purple", margin:"10px", padding:"10px", fontSize:"14px"}}>
+            <b>{props.string}</b>
+        </div>
+    );
+};
+
 function About() {
     const styles = useStyles();
     return (
         <div style={{ width: "100%", paddingTop: "30px", paddingBottom: "30px" }}>
             <Card className={styles.card}>
-                <CardHeader
-                    image={
-                        <img
-                            src={resolveAsset("avatar_elvia.svg")}
-                            alt="Elvia Atkins avatar picture"
-                        />
-                    }
-                    header={
-                        <Body1>
-                            <b>About US</b>
-                        </Body1>
-                    }
-                    description={<Caption1>5h ago · Upgraded</Caption1>}
-                ></CardHeader>
 
                 <CardPreview style={{ padding: "20px" }}>
+                    <div style={{display:"flex", justifyContent:"center", fontSize:"32px", margin:"20px"}}>About Us</div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-                        <div style={{ padding: "15px", color: "purple", fontSize: "14px" }}>
-                            <div>Harmony is a Machine-learning model that accurately predicts facial attractiveness – it is available across our web-app and mobile devices (App store & Google Play store).
-                                Ditmar Hoxha, Harmony’s founder, set out to create a unique way to quantify beauty and solve the aesthetic concerns of regular people and clinicians alike. Along with measuring facial attractiveness, Harmony gives our users an extensive look at exactly what makes up their face and provides general advice in accordance with one’s specific facial features.
-                                Our aim is to make information that would typically cost hundreds of dollars accessible to as many people as possible for a fraction of the cost.</div>
+                        <div style={{ padding: "15px", color: "darkslategray", fontSize: "14px" }}>
+                            <div>Harmony is a machine learning model that accurately predicts facial attractiveness. 
+                                It is available through our web app and mobile devices, including the App Store and Google Play. 
+                                Alongside its facial attractiveness assessment, Harmony offers a comprehensive analysis of facial features, providing personalized advice tailored to one's unique facial attributes. 
+                                Our mission is to make information that would typically cost hundreds of dollars accessible to as many people as possible.</div>
                             <br />
-                            <div>We offer the most accurate assessment of facial attractiveness on the market due to the methodological diligence behind our beauty formula.
-                                There are a lot of different beauty calculators out there, but they all seem to fall short of being considered accurate.
-                                We’re changing that through our revolutionary methods of assessing beauty -- this includes our robust ML algorithms to accurately detect facial landmarks and our novel facial assessments invented exclusively for Harmony.
-                                All other facial analysis services on the market consider only a few parameters, often fewer  than 10 facial assessments.
-                                As a result, they will gloss over meaningful portions of your face and end up with inaccurate and inconsistent results across different faces.
-                                Harmony also makes sure to account for the subtle variations in facial features between ethnic groups.</div>
+                            <div>We take pride in providing the most accurate facial attractiveness assessment on the market, thanks to our revolutionary beauty formula. 
+                                While numerous beauty calculators exist, we've set ourselves apart through our innovative methods. 
+                                These methods include robust machine learning algorithms for detecting facial landmarks and novel facial assessments. 
+                                Unlike other facial analysis services, which often consider fewer than ten facial parameters, we delve into the nuances of your facial structure, 
+                                ensuring accuracy across various faces. Harmony also accounts for subtle facial feature variations between different ethnic groups.</div>
                             <br />
-                            <div>While specific standards of beauty are always changing, the foundational standards of facial harmony have not.
-                                We can now quantify those standards due to the rapid advancements in technology and large amounts of empirical data available at our fingertips.
-                                Everyone is curious about their physical appearance – we help address that curiosity.</div>
+                            <div>While specific beauty standards may evolve, the fundamental principles of facial harmony remain consistent. 
+                                With the rapid advancements in technology and the wealth of empirical data at our fingertips, we can now quantify these standards. 
+                                Harmony aims to satisfy the curiosity surrounding one’s physical appearance.
+                                Our material is highly technical, but we present it in a user-friendly manner to foster future beauty experts. 
+                                We source our data from scientific literature and our predictive AI models, packaging it to be accessible and informative. </div>
                             <br />
-                            <div>The material presented by Harmony is highly technical, but we try to present it in a digestible manner for the average person in the hopes of creating future beauty experts.
-                                We source our data from scientific literature as well as our own predictive AI models and package it in a way that helps you.
-                                As new literature on facial attractiveness, orthodontics, and plastic surgery become available, we will update our models to ensure maximal predictive accuracy.</div>
+                            <div>As new research emerges in the fields of facial attractiveness, orthodontics, and plastic surgery, we continuously update our models to ensure maximum predictive accuracy.</div>
                             <br />
-                            <div>Harmony and the information therein are not intended as a substitute to a consultation with a plastic surgeon.
-                                Along with satisfying the curiosity of the average user, this service aims to provide precursory insight for those who are seeking cosmetic surgery; you are more than welcome to show your report to your surgeon to help you achieve your desired goals.
-                                In fact, we believe this service can be a useful tool for surgeons and patients alike, providing all of the information a surgeon needs to determine the best plan for your face.</div>
+                            <div>It's essential to clarify that Harmony and the information it provides are not intended to replace a consultation with a plastic surgeon. 
+                                While we cater to the curiosity of the average user, our service also aims to offer preliminary insights to those considering cosmetic surgery. 
+                                You are welcome to share your Harmony report with your surgeon to help them plan your facial enhancements. 
+                                We believe our service can be a valuable tool for both surgeons and patients, providing the necessary information for the best approach to facial transformation.</div>
+                            <br/>
+                            <div>We hope you enjoy using Harmony.</div>
+                            <br/>
+                            <div style={{textAlign:"end"}}><b>Ditmar - Harmony Founder</b></div>
                         </div>
                         {/* <div>
                             <Image style={{ margin: "20px" }} src="./images/about1.jpg"></Image>
@@ -85,6 +99,24 @@ function About() {
                             <Image style={{ margin: "20px" }} src="./images/about3.jpg"></Image>
                             <Image style={{ margin: "20px" }} src="./images/about4.jpg"></Image>
                         </div> */}
+                        <div style={{display:"flex", flexDirection:"row"}}>
+                            <InfoGraphic times={"10×"} string={"Cheapter than GPT-4"}></InfoGraphic>
+                            <InfoGraphic times={"7×"} string={"Faster than GPT-4"}></InfoGraphic>
+                            <InfoGraphic times={"30×"} string={"Cost Saving on Average"}></InfoGraphic>
+                            <InfoGraphic times={"3×"} string={"Latency Reduction"}></InfoGraphic>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"row"}}>
+                            <OnlyTextIntro string={"5x+ More facial assessments than competitors"}></OnlyTextIntro>
+                            <OnlyTextIntro string={"Robust ML algorithms catering to your specific face"}></OnlyTextIntro>
+                            <OnlyTextIntro string={"15x Value for your money within Harmony report alone"}></OnlyTextIntro>
+                            <OnlyTextIntro string={"80 Combined facial landmarks in the front and side profile"}></OnlyTextIntro>
+                        </div>
+                        <div style={{display:"flex", flexDirection:"row"}}>
+                            <OnlyTextIntro string={"More detail than an initial consultation with a surgeon at a fraction of the cost"}></OnlyTextIntro>
+                            <OnlyTextIntro string={"Time effective -- get 3 hours’ worth of human analysis in seconds(helps surgeons too!)"}></OnlyTextIntro>
+                            <OnlyTextIntro string={"First-of-its-kind features like “idealize”, only possible through Harmony’s unique beauty formula and algorithms."}></OnlyTextIntro>
+                            <OnlyTextIntro string={"Continual improvements based on user feedback  "}></OnlyTextIntro>
+                        </div>
                     </div>
                 </CardPreview>
             </Card>

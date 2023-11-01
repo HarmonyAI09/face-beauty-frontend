@@ -93,12 +93,6 @@ function About() {
                             <br/>
                             <div style={{textAlign:"end"}}><b>Ditmar - Harmony Founder</b></div>
                         </div>
-                        {/* <div>
-                            <Image style={{ margin: "20px" }} src="./images/about1.jpg"></Image>
-                            <Image style={{ margin: "20px" }} src="./images/about2.jpg"></Image>
-                            <Image style={{ margin: "20px" }} src="./images/about3.jpg"></Image>
-                            <Image style={{ margin: "20px" }} src="./images/about4.jpg"></Image>
-                        </div> */}
                         <div style={{display:"flex", flexDirection:"row"}}>
                             <InfoGraphic times={"10×"} string={"Cheapter than GPT-4"}></InfoGraphic>
                             <InfoGraphic times={"7×"} string={"Faster than GPT-4"}></InfoGraphic>

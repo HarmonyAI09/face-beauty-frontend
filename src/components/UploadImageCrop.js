@@ -12,8 +12,6 @@ function UploadImageCrop() {
     const [width, setWidth] = useState(1600);
     const handleSliderChange = (event, newValue) =>{
         setScale(newValue);
-        console.log(scale.value);
-        console.log((scale.value*width)/100);
     }
     return (
         <DialogContent style={{ display: "flex" }}>

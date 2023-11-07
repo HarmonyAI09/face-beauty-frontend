@@ -304,12 +304,10 @@ function Home({ }) {
   const sidefileInput = useRef(null);
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
-    console.log(selectedFrontImage);
   };
 
   const handleSideImageSelect = (event) => {
     setSelectedSideImage(event.target.files[0]);
-    console.log(selectedFrontImage);
   };
 
   const handleFrontUploadButtonClick = () => {

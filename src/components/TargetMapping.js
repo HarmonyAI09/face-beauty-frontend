@@ -180,17 +180,11 @@ export const FrontTargetMapping = ({
       const data = await response.json();
 
       const updatedMarkPoints = { ...markPoints };
-      console.log(data.points.length);
 
       const width = imageRef.current.naturalWidth;
       const height = imageRef.current.naturalHeight;
 
       setImageOffsetX((800 - (800 * width) / height) / 2);
-
-      console.log((800 - (800 * width) / height) / 2);
-      console.log(width / height);
-      console.log("Image width:", width);
-      console.log("Image height:", height);
 
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i][0] = {
@@ -201,9 +195,6 @@ export const FrontTargetMapping = ({
           x: data.points[i][1][0] + (800 - (800 * width) / height) / 2,
           y: data.points[i][1][1],
         };
-        console.log("updated", updatedMarkPoints[i][0]);
-        console.log("backend", data.points[i][0][0], data.points[i][0][1]);
-        console.log(imageOffsetX);
       }
 
       setMarkPoints(updatedMarkPoints);
@@ -384,27 +375,17 @@ export const SideTargetMapping = ({
       const data = await response.json();
 
       const updatedMarkPoints = { ...markPoints };
-      console.log(data);
-      console.log(data.points.length);
 
       const width = imageRef.current.naturalWidth;
       const height = imageRef.current.naturalHeight;
 
       setImageOffsetX((800 - (800 * width) / height) / 2);
 
-      console.log((800 - (800 * width) / height) / 2);
-      console.log(width / height);
-      console.log("Image width:", width);
-      console.log("Image height:", height);
-
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i + 30][0] = {
           x: data.points[i][0] + (800 - (800 * width) / height) / 2,
           y: data.points[i][1],
         };
-        console.log("updated", updatedMarkPoints[i]);
-        console.log("backend", data.points[i][0], data.points[i][1]);
-        console.log(i);
       }
 
       setMarkPoints(updatedMarkPoints);

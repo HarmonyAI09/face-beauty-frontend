@@ -12,12 +12,10 @@ function Profile() {
 
     const handleFrontImageSelect = (event) => {
         setSelectedFrontImage(event.target.files[0]);
-        console.log(selectedFrontImage);
     };
 
     const handleSideImageSelect = (event) => {
         setSelectedSideImage(event.target.files[0]);
-        console.log(selectedFrontImage);
     };
 
     const handleFrontUploadButtonClick = () => {
@@ -50,12 +48,10 @@ function Profile() {
 
     const unavailableAreaInHandle = () => {
         setLock(true);
-        console.log(lock);
     };
 
     const unavailableAreaOutHandle = () => {
         setLock(false);
-        console.log(lock);
     };
 
 

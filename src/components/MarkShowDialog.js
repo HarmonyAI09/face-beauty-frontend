@@ -138,7 +138,6 @@ export const ScoreAlert = (props) => {
         const mark = data.mark;
         setFrontProfileMark(mark);
         setShowingScore([data.mark, data.percent]);
-        console.log(data.scores.length, "front");
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -211,7 +210,6 @@ export const ScoreAlert = (props) => {
         const mark = data.mark;
         setSideProfileMark(mark);
         setShowingScore([data.mark, data.percent]);
-        console.log(data.scores.length);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];

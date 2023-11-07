@@ -136,11 +136,9 @@ export const ViewReportDialog = () => {
   const { sideProfileMark, setSideProfileMark } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(reportNotes, reportScores, reportMaxScores);
   }, [reportNotes]);
 
   const reportTableRowList = reportNotes.map((note, index) => {
-    console.log(note, reportMeasurementNames[index]);
     return (
       <ReportTableRow
         key={index}

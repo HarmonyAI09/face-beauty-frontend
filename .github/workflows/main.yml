@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Modify this to match your main branch name
+      - master  # Modify this to match your main branch name
 
 jobs:
   deploy:

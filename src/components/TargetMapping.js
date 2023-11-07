@@ -166,7 +166,7 @@ export const FrontTargetMapping = ({
       formData.append("image", selectedFrontImage);
 
       const response = await fetch(
-        "https://6urqw6v408bi06-8000.proxy.runpod.net/frontmagic",
+        "https://d7pxwnyh16qdcm-8000.proxy.runpod.net/frontmagic",        
         {
           method: "POST",
           body: formData,
@@ -201,7 +201,6 @@ export const FrontTargetMapping = ({
     } catch (error) {
       // Handle any errors
       console.error(error);
-      console.error("Wanna die?");
     }
   };
 
@@ -361,7 +360,7 @@ export const SideTargetMapping = ({
       formData.append("image", selectedSideImage);
 
       const response = await fetch(
-        "https://6urqw6v408bi06-8000.proxy.runpod.net/sidemagic",
+        "https://d7pxwnyh16qdcm-8000.proxy.runpod.net/sidemagic",        
         {
           method: "POST",
           body: formData,

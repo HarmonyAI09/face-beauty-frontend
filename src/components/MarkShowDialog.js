@@ -125,7 +125,7 @@ export const ScoreAlert = (props) => {
       medialCanthalAngle: medialCanthalAngle,
     };
 
-    fetch("http://127.0.0.1:8000/getfrontmark/", {
+    fetch("https://d7pxwnyh16qdcm-8000.proxy.runpod.net/getfrontmark/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -197,7 +197,7 @@ export const ScoreAlert = (props) => {
       nasalTipAngle: nasalTipAngle,
     };
 
-    fetch("http://127.0.0.1:8000/getsidemark/", {
+    fetch("https://d7pxwnyh16qdcm-8000.proxy.runpod.net/getsidemark/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

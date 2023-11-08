@@ -247,6 +247,11 @@ export const ScoreAlert = (props) => {
     if (props.title === "Side") {
       handleSideProfileCalc();
     }
+    if (props.title === "Total"){
+      // handleFrontProfileCalc();
+      // handleSideProfileCalc();
+      setShowingScore([frontProfileMark+sideProfileMark, (frontProfileMark+sideProfileMark)/5]);
+    }
   };
 
   useEffect(() => {

@@ -593,11 +593,14 @@ function Home({ }) {
             justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
+            width: "70%",
+            border: "1px solid purple",
+            justifyContent: "center"
           }}
         >
-          <div style={{ display: "flex", width: "100%" }}>
+          <div style={{ display: "flex", width: "100%", justifyContent:"center" }}>
             <div className="front_profile">
-              <div style={{ border: "solid 1px purple", width: "300px" }}>
+              {/* <div style={{ border: "solid 1px purple", width: "300px" }}>
                 <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   Front Profile
                 </div>
@@ -758,7 +761,7 @@ function Home({ }) {
                     &nbsp;
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="front_photo_area">
                 <div className="photo_div example">
                   <Image
@@ -837,8 +840,6 @@ function Home({ }) {
             </div>
             <div
               className="side_profile"
-              onMouseOver={unavailableAreaInHandle}
-              onMouseOut={unavailableAreaOutHandle}
             >
               <div
                 style={{
@@ -938,7 +939,7 @@ function Home({ }) {
                   </div>
                 </div>
               </div>
-              <div style={{ border: "solid 1px purple", width: "300px" }}>
+              {/* <div style={{ border: "solid 1px purple", width: "300px" }}>
                 <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>Side Profile</div>
                 <div className="custom-scroll" style={{ padding: "7px", color: "purple" }}>
                   <div className="measurement-div">
@@ -1114,7 +1115,7 @@ function Home({ }) {
                     &nbsp;
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* {lock && (<div className="lock-div" style={{ position: "absolute", top: "0%", right: "0%", color: "purple", height: "100%" }}>
                                 <div style={{ margin: "10px", border: "dashed 2px purple", height: "630px", borderRadius: "0px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                     <Image src="./images/lock.png"></Image>

@@ -35,10 +35,10 @@ const useStyles = makeStyles({
 
 function InfoGraphic (props) {
     return(
-        <div style={{width:"180px", height:"120px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", color:"purple", margin:"10px"}}
+        <div style={{width:"180px", height:"180px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", color:"purple", margin:"10px", padding:"20px"}}
         title = {props.desc}>
             <br/>
-            <div style={{color:"purple", fontSize:"60px", display:"flex", }}><b>{props.times}</b></div>
+            <div style={{color:"purple", fontSize:"50px", display:"flex", }}><b>{props.times}</b></div>
             <br/>
             <br/>
             <div style={{marginLeft:"auto", marginRight:"auto"}}><b>{props.string}</b></div>
@@ -94,16 +94,10 @@ function About() {
                             <div style={{textAlign:"end"}}><b>Ditmar - Harmony Founder</b></div>
                         </div>
                         <div style={{display:"flex", flexDirection:"row"}}>
-                            <InfoGraphic times={"10×"} string={"Cheapter than GPT-4"}></InfoGraphic>
-                            <InfoGraphic times={"7×"} string={"Faster than GPT-4"}></InfoGraphic>
-                            <InfoGraphic times={"30×"} string={"Cost Saving on Average"}></InfoGraphic>
-                            <InfoGraphic times={"3×"} string={"Latency Reduction"}></InfoGraphic>
-                        </div>
-                        <div style={{display:"flex", flexDirection:"row"}}>
-                            <OnlyTextIntro string={"5x+ More facial assessments than competitors"}></OnlyTextIntro>
-                            <OnlyTextIntro string={"Robust ML algorithms catering to your specific face"}></OnlyTextIntro>
-                            <OnlyTextIntro string={"15x Value for your money within Harmony report alone"}></OnlyTextIntro>
-                            <OnlyTextIntro string={"80 Combined facial landmarks in the front and side profile"}></OnlyTextIntro>
+                            <InfoGraphic times={"5x+"} string={"More facial assessments than competitors"}></InfoGraphic>
+                            <InfoGraphic times={"Robust"} string={"ML algorithms catering to your specific face"}></InfoGraphic>
+                            <InfoGraphic times={"15x"} string={"Value for your money within Harmony report alone"}></InfoGraphic>
+                            <InfoGraphic times={"80"} string={"Combined facial landmarks in the front and side profile"}></InfoGraphic>
                         </div>
                         <div style={{display:"flex", flexDirection:"row"}}>
                             <OnlyTextIntro string={"More detail than an initial consultation with a surgeon at a fraction of the cost"}></OnlyTextIntro>

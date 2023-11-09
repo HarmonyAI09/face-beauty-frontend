@@ -21,7 +21,7 @@ import {
   Image,
   Input,
 } from "@fluentui/react-components";
-// import { DatePicker } from "@fluentui/react-datepicker-compat";
+import { Dismiss24Regular } from "@fluentui/react-icons";
 import { UserContext } from "../pages/home";
 import { useContext, useState, useEffect } from "react";
 
@@ -30,13 +30,13 @@ import "react-circular-progressbar/dist/styles.css";
 const ReportTableHeader = () => {
   return (
     <div style={{ display: "flex", width: "100%", textAlign: "center" }}>
-      <div style={{ width: "10%" }}>Image</div>
-      <div style={{ width: "10%" }}>Measurement Name</div>
-      <div style={{ width: "5%" }}>Value</div>
-      <div style={{ width: "5%" }}>Your Score</div>
-      <div style={{ width: "5%" }}>Ideal Range</div>
-      <div style={{ width: "35%" }}>Your Measurement's Meaning</div>
-      <div style={{ width: "30%" }}>Improvement Advice (if applicable)</div>
+      <div style={{ width: "10%" }}><b>Image</b></div>
+      <div style={{ width: "10%" }}><b>Measurement Name</b></div>
+      <div style={{ width: "5%" }}><b>Value</b></div>
+      <div style={{ width: "5%" }}><b>Your Score</b></div>
+      <div style={{ width: "5%" }}><b>Ideal Range</b></div>
+      <div style={{ width: "35%" }}><b>Your Measurement's Meaning</b></div>
+      <div style={{ width: "30%" }}><b>Improvement Advice (if applicable)</b></div>
     </div>
   );
 };
@@ -66,26 +66,26 @@ const ReportTableRow = (props) => {
           {typeof props.value === "number" && Number.isInteger(props.value)
             ? props.value
             : typeof props.value === "number"
-            ? props.value.toFixed(1)
-            : typeof props.value === "string"
-            ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
-            : Array.isArray(props.value)
-            ? props.value
-                .map((item) =>
-                  typeof item === "number" ? item.toFixed(1) : item
-                )
-                .join(" : ")
-            : ""}
+              ? props.value.toFixed(1)
+              : typeof props.value === "string"
+                ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
+                : Array.isArray(props.value)
+                  ? props.value
+                    .map((item) =>
+                      typeof item === "number" ? item.toFixed(1) : item
+                    )
+                    .join(" : ")
+                  : ""}
         </div>
         <div style={{ width: "5%" }}>{props.score}</div>
         <div style={{ width: "5%" }}>
           {Array.isArray(props.range)
             ? props.range.map((item, index) => (
-                <React.Fragment key={index}>
-                  {item.toFixed(2)}
-                  {index !== props.range.length - 1 && "-"}
-                </React.Fragment>
-              ))
+              <React.Fragment key={index}>
+                {item.toFixed(2)}
+                {index !== props.range.length - 1 && "-"}
+              </React.Fragment>
+            ))
             : props.range}
         </div>
         <div
@@ -164,7 +164,17 @@ export const ViewReportDialog = () => {
         style={{ width: "90vw", maxWidth: "1920px", height: "90vh" }}
       >
         <DialogBody>
-          <DialogTitle>
+          <DialogTitle
+            action={
+              <DialogTrigger action="close">
+                <Button
+                  appearance="subtle"
+                  aria-label="close"
+                  icon={<Dismiss24Regular />}
+                />
+              </DialogTrigger>
+            }
+          >
             <div
               style={{
                 display: "flex",
@@ -223,14 +233,8 @@ export const ViewReportDialog = () => {
             <div className="custom-scroll" style={{ height: "500px" }}>
               {reportTableRowList}
             </div>
+            <Divider></Divider>
           </DialogContent>
-          <DialogActions>
-            <DialogTrigger disableButtonEnhancement>
-              <Button shape="square" appearance="secondary">
-                Close
-              </Button>
-            </DialogTrigger>
-          </DialogActions>
         </DialogBody>
       </DialogSurface>
     </Dialog>

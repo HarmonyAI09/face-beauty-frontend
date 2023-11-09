@@ -209,8 +209,9 @@ export const FrontTargetMapping = ({
       {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
       
       
-      <div style={{position:"absolute", top:"20px", zIndex:7, backgroundColor:"#ffffff80", width:"100%", display:"flex", justifyContent:"center", color:"red"}}>
-        Move points around as needed to copy the left image
+      <div style={{position:"absolute", top:"0px", zIndex:7, backgroundColor:"#ffffffc0", width:"100%", height:"40px", display:"flex", justifyContent:"center", color:"red", 
+      fontSize:"24px", alignItems:"center"}}>
+        <b>Move points around as needed to copy the left image</b>
       </div>
       <div
         style={{
@@ -461,8 +462,9 @@ export const SideTargetMapping = ({
   return (
     <div style={{ position: "relative" }}>
       {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
-      <div style={{position:"absolute", top:"20px", zIndex:7, backgroundColor:"#ffffff80", width:"100%", display:"flex", justifyContent:"center", color:"red"}}>
-        Move points around as needed to copy the left image
+      <div style={{position:"absolute", top:"0px", zIndex:7, backgroundColor:"#ffffffc0", width:"100%", height:"40px", display:"flex", justifyContent:"center", color:"red", 
+      fontSize:"24px", alignItems:"center"}}>
+        <b>Move points around as needed to copy the left image</b>
       </div>
       <div
         style={{

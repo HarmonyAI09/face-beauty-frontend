@@ -44,6 +44,11 @@ function Home({ }) {
     setSelectedOption(event.target.value);
   };
 
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+    console.log(gender);
+  };
+
   const [frontProfileMark, setFrontProfileMark] = useState(0.0);
   const [sideProfileMark, setSideProfileMark] = useState(0.0);
 
@@ -267,16 +272,7 @@ function Home({ }) {
   );
   const [reportAdvices, setReportAdvices] = useState(Array(45).fill([]));
 
-  const handleGenderChange = React.useCallback(
-    (ev) => {
-      if (ev.currentTarget.checked === true) {
-        setGender(1);
-      } else {
-        setGender(0);
-      }
-    },
-    [setGender]
-  );
+  
 
   const unavailableAreaInHandle = () => {
     setLock(true);
@@ -317,26 +313,6 @@ function Home({ }) {
   const handleSideUploadButtonClick = () => {
     sidefileInput.current.click();
   };
-
-  function startMarquee1() {
-    const marqueeContent = document.querySelectorAll(".marquee-content")[0];
-    marqueeContent.classList.add("marquee");
-  }
-
-  function stopMarquee1() {
-    const marqueeContent = document.querySelectorAll(".marquee-content")[0];
-    marqueeContent.classList.remove("marquee");
-  }
-
-  function startMarquee2() {
-    const marqueeContent = document.querySelectorAll(".marquee-content")[1];
-    marqueeContent.classList.add("marquee");
-  }
-
-  function stopMarquee2() {
-    const marqueeContent = document.querySelectorAll(".marquee-content")[1];
-    marqueeContent.classList.remove("marquee");
-  }
 
   return (
     <UserContext.Provider
@@ -501,13 +477,23 @@ function Home({ }) {
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                flexDirection:"column"
               }}
             >
-              Female
-              <Switch onChange={handleGenderChange}></Switch>
-              Male
+              <RadioGroup style={{ display: "contents" }}>
+                <Radio
+                  value="1"
+                  label="Male"
+                  checked={gender === "1"}
+                  onChange={handleGenderChange}
+                />
+                <Radio
+                  value="0"
+                  label="Female"
+                  checked={gender === "0"}
+                  onChange={handleGenderChange}
+                />
+              </RadioGroup>
             </div>
             <Divider style={{ padding: "8px", color: "purple" }}>
               Ethnicities / Racial
@@ -590,7 +576,6 @@ function Home({ }) {
           className="main_child m_profile"
           style={{
             backgroundColor: "#ebd9e9",
-            justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
             width: "70%",
@@ -598,7 +583,7 @@ function Home({ }) {
             justifyContent: "center"
           }}
         >
-          <div style={{ display: "flex", width: "100%", justifyContent:"center" }}>
+          <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
             <div className="front_profile">
               {/* <div style={{ border: "solid 1px purple", width: "300px" }}>
                 <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>

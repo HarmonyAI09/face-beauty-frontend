@@ -161,7 +161,12 @@
 }
 
 .main_child {
-    height: 100%;
+    /* height: 100%; */
+    /* height:300px; */
+    max-height: 90%;
+    min-width: 300px;
+    overflow-y: auto;
+    z-index: 99;
 }
 
 .front_profile {

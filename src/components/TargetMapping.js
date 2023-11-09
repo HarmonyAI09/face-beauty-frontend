@@ -1,4 +1,4 @@
-import { CompoundButton, Image } from "@fluentui/react-components";
+import { CompoundButton } from "@fluentui/react-components";
 import React from "react";
 import Draggable from "react-draggable";
 import { useEffect, useRef, useState, useContext } from "react";
@@ -125,6 +125,26 @@ export const FrontTargetMapping = ({
     { id: 29, color: "green", issymmetry: false, position: { x: 300, y: 300 } },
   ]);
 
+  const [uploadImageheight, setUploadImageHeight] = useState(0);
+  const [uploadImagewidth, setUploadImageWidth] = useState(0);
+
+  useEffect(()=>{
+    const file = selectedFrontImage;
+    var img;
+    var _URL = window.URL || window.webkitURL;
+    if (file) {
+      img = new Image();
+      var objectUrl = _URL.createObjectURL(file);
+      img.onload = function () {        
+        setUploadImageHeight(this.height);
+        setUploadImageWidth(this.width);
+        console.log(uploadImageheight, uploadImagewidth, "width, height");
+        _URL.revokeObjectURL(objectUrl);
+      };
+      img.src = objectUrl;
+    }
+  }, [selectedFrontImage]);
+
   const handleDrag = (data, id) => {
     const updatedCircles = circles.map((circle) => {
       if (circle.id * 2 === id) {
@@ -156,6 +176,12 @@ export const FrontTargetMapping = ({
       return circle;
     });
     setCircles(updatedCircles);
+  };
+
+  const uploadImageStyle = {
+    width : uploadImageheight>uploadImagewidth ? "auto" : "800px",
+    height :uploadImageheight>uploadImagewidth ? "800px" : "auto",
+    margin:"5px"
   };
 
   const canvasRef = useRef(null);
@@ -205,10 +231,7 @@ export const FrontTargetMapping = ({
   };
 
   return (
-    <div style={{ position: "relative" }}>
-      {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
-      
-      
+    <div style={{ position: "relative" }}>     
       <div style={{position:"absolute", top:"0px", zIndex:7, backgroundColor:"#ffffffc0", width:"100%", height:"40px", display:"flex", justifyContent:"center", color:"red", 
       fontSize:"24px", alignItems:"center"}}>
         <b>Move points around as needed to copy the left image</b>
@@ -225,19 +248,10 @@ export const FrontTargetMapping = ({
         }}
       >
         {selectedFrontImage && (
-          <img
-            ref={imageRef}
-            style={{ zIndex: 2, height: "800px" }}
-            src={URL.createObjectURL(selectedFrontImage)}
-          ></img>
+          <img src={URL.createObjectURL(selectedFrontImage)} alt="Image description" style={uploadImageStyle} ref={imageRef}></img>
         )}
         {!selectedFrontImage && (
-          <Image
-            width={800}
-            height={800}
-            style={{ zIndex: 2 }}
-            src={"./images/front_blank.jpg"}
-          ></Image>
+          <img src={"./images/front_blank.jpg"} style={{width:"800px", height:"800px"}}></img>
         )}
       </div>
       <div
@@ -485,12 +499,7 @@ export const SideTargetMapping = ({
           ></img>
         )}
         {!selectedSideImage && (
-          <Image
-            width={800}
-            height={800}
-            style={{ zIndex: 2 }}
-            src={"./images/side_blank.jpg"}
-          ></Image>
+          <img src={"./images/side_blank.jpg"} style={{width:"800px", height:"800px"}}></img>
         )}
       </div>
       <div

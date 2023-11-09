@@ -191,6 +191,9 @@
     width: 375px;
     height: 375px;
     margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .fvgz9i8{

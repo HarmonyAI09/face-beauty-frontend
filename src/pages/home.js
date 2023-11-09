@@ -2,7 +2,7 @@ import * as React from "react";
 import { Switch, Radio, RadioGroup, Label } from "@fluentui/react-components";
 import { Input, Badge, Button, Card } from "@fluentui/react-components";
 import {
-  Image,
+  // Image,
   Divider,
   Tooltip,
   CompoundButton,
@@ -271,8 +271,10 @@ function Home({ }) {
     Array(45).fill([])
   );
   const [reportAdvices, setReportAdvices] = useState(Array(45).fill([]));
+  const [uploadImageheight, setUploadImageHeight] = useState(0);
+  const [uploadImagewidth, setUploadImageWidth] = useState(0);
 
-  
+
 
   const unavailableAreaInHandle = () => {
     setLock(true);
@@ -298,8 +300,30 @@ function Home({ }) {
 
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
+
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
+
+    const file = event.target.files[0];
+    var img;
+    var _URL = window.URL || window.webkitURL;
+    if (file) {
+      img = new Image();
+      var objectUrl = _URL.createObjectURL(file);
+      img.onload = function () {        
+        setUploadImageHeight(this.height);
+        setUploadImageWidth(this.width);
+        console.log(uploadImageheight, uploadImagewidth, "width, height");
+        _URL.revokeObjectURL(objectUrl);
+      };
+      img.src = objectUrl;
+    }
+  };
+
+  const uploadImageStyle = {
+    width : uploadImageheight>uploadImagewidth ? "auto" : "365px",
+    height :uploadImageheight>uploadImagewidth ? "365px" : "auto",
+    margin:"5px"
   };
 
   const handleSideImageSelect = (event) => {
@@ -477,7 +501,7 @@ function Home({ }) {
             <div
               style={{
                 display: "flex",
-                flexDirection:"column"
+                flexDirection: "column"
               }}
             >
               <RadioGroup style={{ display: "contents" }}>
@@ -749,12 +773,7 @@ function Home({ }) {
               </div> */}
               <div className="front_photo_area">
                 <div className="photo_div example">
-                  <Image
-                    width={365}
-                    height={365}
-                    style={{ margin: "5px" }}
-                    src="./images/front.jpg"
-                  ></Image>
+                  <img src="./images/front.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
                 </div>
                 <div className="photo_div upload">
                   <input
@@ -805,19 +824,10 @@ function Home({ }) {
                     }}
                   >
                     {selectedFrontImage && (
-                      <Image
-                        height={365}
-                        style={{ margin: "5px" }}
-                        src={URL.createObjectURL(selectedFrontImage)}
-                      ></Image>
+                      <img src={URL.createObjectURL(selectedFrontImage)} alt="Image description" style={uploadImageStyle}></img>
                     )}
                     {!selectedFrontImage && (
-                      <Image
-                        width={365}
-                        height={365}
-                        style={{ margin: "5px" }}
-                        src={"./images/front_blank.jpg"}
-                      ></Image>
+                      <img src="./images/front_blank.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
                     )}
                   </div>
                 </div>
@@ -843,12 +853,7 @@ function Home({ }) {
                     border: "solid 1px purple",
                   }}
                 >
-                  <Image
-                    width={365}
-                    height={365}
-                    style={{ margin: "5px" }}
-                    src="./images/side.jpg"
-                  ></Image>
+                  <img src="./images/side.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
                 </div>
                 <div
                   style={{
@@ -875,19 +880,10 @@ function Home({ }) {
                     }}
                   >
                     {selectedSideImage && (
-                      <Image
-                        height={365}
-                        style={{ margin: "5px" }}
-                        src={URL.createObjectURL(selectedSideImage)}
-                      ></Image>
+                      <img src={URL.createObjectURL(selectedSideImage)} alt="Image description" style={uploadImageStyle}></img>
                     )}
                     {!selectedSideImage && (
-                      <Image
-                        width={365}
-                        height={365}
-                        style={{ margin: "5px" }}
-                        src={"./images/side_blank.jpg"}
-                      ></Image>
+                      <img src={"./images/side_blank.jpg"} alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
                     )}
                   </div>
                   <CompoundButton

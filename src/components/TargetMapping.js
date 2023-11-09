@@ -70,7 +70,7 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
           top: "-15px",
           borderRadius: "0%",
           backgroundColor: color,
-          cursor: "move",
+          cursor: "none",
           position: "relative",
         }}
       >

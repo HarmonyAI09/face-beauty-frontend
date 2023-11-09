@@ -37,7 +37,7 @@ function Home({ }) {
   const [lock, setLock] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const [gender, setGender] = useState(0);
+  const [gender, setGender] = useState("1");
   const [selectedOption, setSelectedOption] = useState("Caucasian");
 
   const handleRadioChange = (event) => {

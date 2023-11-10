@@ -10,16 +10,19 @@ import BeautyNavbar from './components/BeautyNavbar';
 import Contact from './pages/contact';
 import Community from './pages/community';
 import BeautyFootbar from './components/BeautyFootbar';
+import Login from './pages/login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 function App() {
   return (
     <Router>
       {/* , backgroundColor:"pink" */}
-      <div className="App" style={{ width: "100%", height: "100vh", position: "relative" }}>
+      <div className="App" style={{ width: "100%", height: "100vh", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
         <BeautyNavbar></BeautyNavbar>
         <div>
           <Routes>
+            <Route exact path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/resources" element={<Resource />} />
             <Route exact path="/pricing" element={<Pricing />} />

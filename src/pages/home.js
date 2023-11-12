@@ -9,6 +9,7 @@ import {
 } from "@fluentui/react-components";
 import { ArrowUploadFilled, Connected20Filled } from "@fluentui/react-icons";
 import { useEffect, useState, useRef, createContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./home.css";
 
@@ -32,6 +33,8 @@ const wrapperStyle: React.CSSProperties = {
 };
 
 function Home({ }) {
+  const navigate = useNavigate();
+
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
   const [lock, setLock] = useState(false);
@@ -338,6 +341,10 @@ function Home({ }) {
     sidefileInput.current.click();
   };
 
+  const handleRedirect = (path) => {
+    navigate(path);
+};
+
   return (
     <UserContext.Provider
       value={{
@@ -459,7 +466,7 @@ function Home({ }) {
       }}
     >
 
-      <div className="main_parent" style={{ display: "flex", position: "relative", justifyContent: "space-between",}}>
+      <div className="main_parent" style={{ display: "flex", position: "relative", justifyContent: "space-between", }}>
         <div className="main_child m_setting"
           style={{
             width: "15%",
@@ -584,6 +591,7 @@ function Home({ }) {
               }}
             >
               <ViewReportDialog></ViewReportDialog>
+              <Button size="large" shape="square" appearance="primary" style={{marginTop:"50px"}} onClick={() => handleRedirect('/pricing')}>Buy Premium</Button>
             </div>
           </div>
         </div>
@@ -761,10 +769,11 @@ function Home({ }) {
             zIndex: "100",
           }}
         >
-          <div style={{ height: "30px", backgroundColor: "#b16aaa", color: "#4f234b", fontSize: "16px", display: "flex", alignItems: "center", paddingLeft: "10px",
-              justifyContent: "space-between",
-              paddingRight: "10px",
-            }}
+          <div style={{
+            height: "30px", backgroundColor: "#b16aaa", color: "#4f234b", fontSize: "16px", display: "flex", alignItems: "center", paddingLeft: "10px",
+            justifyContent: "space-between",
+            paddingRight: "10px",
+          }}
           >
             Reference
           </div>

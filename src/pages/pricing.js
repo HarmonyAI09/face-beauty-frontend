@@ -1,192 +1,151 @@
-import Header from "../components/Header";
-import { Label, Divider, Image, CompoundButton } from "@fluentui/react-components";
-import "./pricing.css";
+import * as React from "react";
+import {
+    makeStyles,
+    shorthands,
+    Button,
+    Caption1,
+    tokens,
+    Text,
+} from "@fluentui/react-components";
+import { MoreHorizontal20Regular } from "@fluentui/react-icons";
+import {
+    Card,
+    CardHeader,
+    CardPreview,
+    CardProps,
+} from "@fluentui/react-components";
 
-function Pricing() {
+const useStyles = makeStyles({
+    main: {
+        ...shorthands.gap("16px"),
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
+    },
+
+    card: {
+        width: "400px",
+        maxWidth: "100%",
+        height: "auto",
+        justifyContent:"flex-start"
+        
+    },
+
+    caption: {
+        color: tokens.colorNeutralForeground3,
+    },
+
+    smallRadius: {
+        ...shorthands.borderRadius(tokens.borderRadiusSmall),
+    },
+
+    grayBackground: {
+        backgroundColor: tokens.colorNeutralBackground3,
+    },
+
+    logoBadge: {
+        ...shorthands.padding("5px"),
+        ...shorthands.borderRadius(tokens.borderRadiusSmall),
+        backgroundColor: "#FFF",
+        boxShadow:
+            "0px 1px 2px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12)",
+    },
+});
+
+const CardExample = (props: CardProps) => {
+    const styles = useStyles();
+
     return (
-        <div >
-            <div style={{ display: "flex", justifyContent: "space-evenly", alignItems:"center" }}>
-                <div style={{ width: "400px", position: "relative", height: "100%", backgroundColor: "white", margin: "30px" }}>
-                    <div style={{ backgroundColor: "white", height: "600px", border: "2px solid purple" }}>
-                        <div style={{ height: "30px", backgroundColor: "#4e224a", color: "#d8b5d5", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>BASIC</div>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "24px", color: "purple" }}>Default(free)</div>
-                        <Divider style={{ paddingLeft: "30px", paddingRight: "30px" }}></Divider>
-                        <div style={{ marginLeft: "40px", marginRight: "40px" }}>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Full harmony score</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Access to our community</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Best and worst feature breakdown</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Celebrity score match</Label>
-                                <Divider></Divider>
-                            </div>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", bottom: "40px", left: "40px" }}>
-                            <Image width={300} src="./images/usingmark.png"></Image>
-                        </div>
-                    </div>
-                </div>
-                <div style={{ width: "400px", position: "relative", height: "100%", backgroundColor: "white", margin: "30px" }}>
-                    
-                    <div style={{ backgroundColor: "white", height: "600px", border: "2px solid purple" }}>
-                        <div style={{ height: "30px", backgroundColor: "#4e224a", color: "#d8b5d5", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>Premium</div>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "24px", color: "purple" }}>$24.99/Month</div>
-                        <Divider style={{ paddingLeft: "30px", paddingRight: "30px" }}></Divider>
-                        <div style={{ marginLeft: "40px", marginRight: "40px" }}>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Full harmony score</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Full 50+ pages auto-generated report on your face</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>(over $200 of value in a single report)</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>45+ facial assessments</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Explanation</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Advice where applicable</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Access to our community</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Celebrity score match</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Up to 5 saved reports at a time</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Cross-platform access to subscription</Label>
-                            </div>
-                        </div>
-                        <Divider style={{ paddingLeft: "30px", paddingRight: "30px" }}></Divider>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "24px", color: "purple" }}>OR 30% off</div>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "32px", color: "purple" }}>$99.99/Year</div>
-                    </div>
-                    <Image src="./images/bookmark.png" width={40} style={{position:"absolute", right:"0px", top:"-13px"}}></Image>
-                </div>
-                <div style={{ width: "400px", height: "100%", backgroundColor: "white", margin: "30px" }}>
-                    <div style={{ backgroundColor: "white", height: "700px", border: "2px solid purple" }}>
-                        <div style={{ height: "30px", backgroundColor: "#4e224a", color: "#d8b5d5", width: "100%", alignItems: "center", display: "flex", justifyContent: "center" }}>Professional</div>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "24px", color: "purple" }}>$35.99/Month</div>
-                        <Divider style={{ paddingLeft: "30px", paddingRight: "30px" }}></Divider>
-                        <div style={{ marginLeft: "40px", marginRight: "40px" }}>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Full harmony score</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Full 50+ pages auto-generated report on your face</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>(over $200 of value in a single report)</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>45+ facial assessments</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Explanation</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "white", padding: "10px" }}> </i>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Advice where applicable</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Access to our community</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Celebrity score match</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Up to 5 saved reports at a time</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Cross-platform access to subscription</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>"Idealize" : AI-gen beauty simulation</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>"Professional" : profile badge</Label>
-                                <Divider></Divider>
-                            </div>
-                            <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", padding: "10px" }}> </i>
-                                <Label size="small" style={{ color: "purple" }}>Early access to newly developed features</Label>
-                            </div>
-                        </div>
-                        <Divider style={{ paddingLeft: "30px", paddingRight: "30px" }}></Divider>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "24px", color: "purple" }}>OR 35% off</div>
-                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", height: "60px", fontSize: "32px", color: "purple" }}>$124.99/Year</div>
-                    </div>
-                </div>
+        <Card className={styles.card} {...props} onClick={()=>{console.log("Hello")}}>
+            <CardPreview
+                className={styles.grayBackground}
+            >
+                <img
+                    className={styles.smallRadius}
+                    src={props.resource}
+                    alt="Presentation Preview"
+                />
+            </CardPreview>
+            <CardHeader
+                header={<Text weight="semibold">{props.version}</Text>}
+                description={
+                    <Caption1 className={styles.caption}>{props.monthly_price}</Caption1>
+                }
+            />
 
-            </div>
+
+            <CardPreview className={styles.grayBackground}>
+                <div style={{margin:"10px"}}>
+                    {props.benefits.map((benefit, index) => (
+                        <div key={index}>{benefit.replace(/ /g, "\u00A0")}</div>
+                    ))}
+                </div>
+            </CardPreview>
+        </Card>
+    );
+};
+
+export const Pricing = () => {
+    const styles = useStyles();
+    const basic_benefits = [
+        "Full harmony score",
+        "Access to our community",
+        "Best and worst feature breakdown",
+        "Celebrity score match",
+    ];
+    const premium_benefits = [
+        "Full harmony score",
+        "Full auto-generated report on your face",
+        "   45+ facial assessments",
+        "   Scoring breakdown",
+        "   Advice where applicable",
+        "Access to our community",
+        "Up to 5 saved reports at a time",
+        "Cross-platform access to subscription"
+    ];
+    const professional_benefits = [
+        "Full harmony score",
+        "Full page auto-generated report on your face",
+        "   45+ facial assessments",
+        "   Scoring breakdown",
+        "   Advice where applicable",
+        "Access to our community",
+        "Unlimited reports saved at one time",
+        "Cross-platform access to subscription",
+        "Idealize : AI-gen beauty simulation",
+        "Professional profile badge",
+        "Early access to newly developed features"
+    ];
+
+    const [selected1, setSelected1] = React.useState(true);
+    const [selected2, setSelected2] = React.useState(true);
+    const [selected3, setSelected3] = React.useState(true);
+
+    return (
+        <div className={styles.main}>
+            <CardExample
+                selected={selected1}
+                benefits={basic_benefits}
+                version = {"Basic"}
+                monthly_price = {"Default (free)"}
+                resource = {"./images/basic.jpg"}
+            />
+            <CardExample
+                selected={selected2}
+                benefits={premium_benefits}
+                version = {"Premium"}
+                monthly_price = {"$17.99 per month"}
+                resource = {"./images/premium.jpg"}
+            />
+            <CardExample
+                selected={selected3}
+                benefits={professional_benefits}
+                version = {"Professional"}
+                monthly_price = {"$22.99 per month"}
+                resource = {"./images/professional.jpg"}
+            />
         </div>
     );
-}
+};
 
 export default Pricing;

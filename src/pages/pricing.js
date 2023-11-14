@@ -19,6 +19,7 @@ import { AppContext } from "../App";
 import { useContext, useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStripe } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const premiumButtonID = "buy_btn_1OCNIrItQ91j83DiPlJXpWUN";
@@ -34,16 +35,16 @@ const useStyles = makeStyles({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    alignItems:"flex-start"
+    alignItems: "flex-start",
   },
 
   cardmother: {
     ...shorthands.gap("16px"),
     display: "flex",
     // flexWrap: "wrap",
-    flexDirection:"column",
+    flexDirection: "column",
     justifyContent: "space-around",
-    alignItems:"center"
+    alignItems: "center",
   },
 
   card: {
@@ -93,11 +94,11 @@ const CardExample = (props: CardProps) => {
         }
       />
 
-        <div style={{ margin: "10px" }}>
-          {props.benefits.map((benefit, index) => (
-            <div key={index}>{benefit.replace(/ /g, "\u00A0")}</div>
-          ))}
-        </div>
+      <div style={{ margin: "10px" }}>
+        {props.benefits.map((benefit, index) => (
+          <div key={index}>{benefit.replace(/ /g, "\u00A0")}</div>
+        ))}
+      </div>
     </Card>
   );
 };
@@ -149,31 +150,21 @@ export const Pricing = () => {
   const [cvc, setCVC] = useState("");
 
   const premiumDetails = {};
-  const handlePayment = () => {
-    axios
-      .post(
-        "http://ec2-54-226-24-108.compute-1.amazonaws.com/api/create-checkout-session",
-        {}
-      )
-      .then((res) => {
-        if (res.data.url) {
-          window.location.href = res.data.url;
-        }
-      });
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const stripeButton = document.querySelector('stripe-buy-button');
-  
+    const stripeButton = document.querySelector("stripe-buy-button");
+
     const handlePaymentSuccess = () => {
       // Code to run when payment is successful
-      console.log('Payment successful!');
+      navigate.path("/home");
+      console.log("Payment successful!");
     };
-  
-    stripeButton.addEventListener('paymentSuccess', handlePaymentSuccess);
-  
+
+    stripeButton.addEventListener("paymentSuccess", handlePaymentSuccess);
+
     return () => {
-      stripeButton.removeEventListener('paymentSuccess', handlePaymentSuccess);
+      stripeButton.removeEventListener("paymentSuccess", handlePaymentSuccess);
     };
   }, []);
 

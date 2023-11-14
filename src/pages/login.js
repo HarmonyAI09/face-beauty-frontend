@@ -49,7 +49,7 @@ const Login = ({ setIsLoggedIn }) => {
         const handleSubmit = (e) => {
             e.preventDefault();
             // Make a POST request to the sign-in endpoint in your backend API
-            fetch('http://ec2-54-226-24-108.compute-1.amazonaws.com/api/signin', {
+            fetch('https://ec2-54-226-24-108.compute-1.amazonaws.com/api/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -124,7 +124,7 @@ const Login = ({ setIsLoggedIn }) => {
                 return;
             }
             // Make a POST request to the sign-up endpoint in your backend API
-            fetch('http://ec2-54-242-2-25.compute-1.amazonaws.com/api/signup', {
+            fetch('https://ec2-54-242-2-25.compute-1.amazonaws.com/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password }),

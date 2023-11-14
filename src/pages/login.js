@@ -1,5 +1,6 @@
 import { Image } from "@fluentui/react-components";
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from "../App";
 import {
     makeStyles,
     shorthands,
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 
-const Login = ({setIsLoggedIn}) => {
+const Login = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
     const styles = useStyles();
     const [isSignIn, setIsSignIn] = useState(true);
@@ -39,10 +40,16 @@ const Login = ({setIsLoggedIn}) => {
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
 
+        const { userName } = useContext(AppContext);
+        const { userEmail,  } = useContext(AppContext);
+        const { userLevel,  } = useContext(AppContext);
+        const { expireDate,  } = useContext(AppContext);
+        const { setUserName, setUserEmail, setUserLevel, setExpireDate } = useContext(AppContext);
+
         const handleSubmit = (e) => {
             e.preventDefault();
             // Make a POST request to the sign-in endpoint in your backend API
-            fetch('http://ec2-54-242-2-25.compute-1.amazonaws.com/api/signin', {
+            fetch('http://ec2-54-226-24-108.compute-1.amazonaws.com/api/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -54,8 +61,19 @@ const Login = ({setIsLoggedIn}) => {
                         setAlertMessage(data.message);
                         setAlertColor("rgb(26,115,232)");
                         setIsLoggedIn(true);
+                        setUserName(data.name);
+                        setUserEmail(data.mail);
+                        setUserLevel(data.level);
+                        setExpireDate(data.expire);
+                        console.log(data);
+                        console.log(userName, "name");
+                        console.log(userLevel, "level");
+                        console.log(userEmail, "email");
+                        console.log(expireDate, "date");
+                        console.log(data.name, data.mail, data.level, data.expire);
+                        console.log(userName, userLevel, expireDate, userEmail);
+                        console.log("______________________________");
                         navigate("/home");
-                        
                     }
                     else {
                         setAlertMessage(data.detail);

@@ -13,21 +13,22 @@ import BeautyFootbar from './components/BeautyFootbar';
 import Login from './pages/login';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-export const appContext = createContext();
+export const AppContext = createContext();
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userName, setUserName] = useState("");
-  const [userLevel, setUserLevel] = useState(0);
-  const [exporeDate, setExpireDate] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("Dash");
+  const [userEmail, setUserEmail] = useState("crazydash@gmail.com");
+  const [userLevel, setUserLevel] = useState("2");
+  const [expireDate, setExpireDate] = useState("Tomorrow");
 
   return (
-    <appContext.Provider value={{}}>
+    <AppContext.Provider value={{userName, userEmail, userLevel, expireDate, setUserName, setUserEmail, setUserLevel, setExpireDate}}>
       <Router>
         {/* , backgroundColor:"pink" */}
         <div className="App" style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <BeautyNavbar ></BeautyNavbar>
-          <div>
+          <div style={{height:"-webkit-fill-available", justifyContent:"space-around", display:"flex", alignItems:"center"}}>
             {!isLoggedIn && <Login setIsLoggedIn={setIsLoggedIn} />}
             <Routes>
               {isLoggedIn && <Route exact path="/home" element={<Home />} />}
@@ -40,7 +41,7 @@ function App() {
           <BeautyFootbar></BeautyFootbar>
         </div>
       </Router>
-    </appContext.Provider>
+    </AppContext.Provider>
   );
 }
 

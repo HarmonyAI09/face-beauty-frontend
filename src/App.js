@@ -16,7 +16,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 export const AppContext = createContext();
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userName, setUserName] = useState("Dash");
   const [userEmail, setUserEmail] = useState("crazydash@gmail.com");
   const [userLevel, setUserLevel] = useState("2");

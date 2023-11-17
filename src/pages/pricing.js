@@ -29,6 +29,7 @@ const premiumStripePromise =
 const professionalStripePromise =
   "pk_live_51OAYN0ItQ91j83Di07u5o2hHnOhgrfEy1MCFm1lOW4w2siOlaiG2STV1OtlKlxrtvwmfFOm5ab4zI111mhepKVON00VcfYrhsW";
 
+const stripePromise = loadStripe("pk_live_51OAYN0ItQ91j83Di07u5o2hHnOhgrfEy1MCFm1lOW4w2siOlaiG2STV1OtlKlxrtvwmfFOm5ab4zI111mhepKVON00VcfYrhsW");
 const useStyles = makeStyles({
   main: {
     ...shorthands.gap("16px"),
@@ -103,6 +104,7 @@ const CardExample = (props: CardProps) => {
   );
 };
 
+
 export const Pricing = () => {
   const styles = useStyles();
 
@@ -151,22 +153,39 @@ export const Pricing = () => {
 
   const premiumDetails = {};
   const navigate = useNavigate();
+  const purchaseData = {
+    email: userEmail
+  };
 
-  useEffect(() => {
-    const stripeButton = document.querySelector("stripe-buy-button");
+  const handlePremiumCheckout = async () => {
+    const stripe = await stripePromise;
+    const response = await axios.post('http://localhost:8000/api/create-checkout-session', { plan: 'premium' });
+    const sessionId = response.data.sessionId;
 
-    const handlePaymentSuccess = () => {
-      // Code to run when payment is successful
-      navigate.path("/home");
-      console.log("Payment successful!");
-    };
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionId,
+    });
 
-    stripeButton.addEventListener("paymentSuccess", handlePaymentSuccess);
+    if (result.error) {
+      // Handle any errors that occur
+      console.log(result.error.message);
+    }
+  };
 
-    return () => {
-      stripeButton.removeEventListener("paymentSuccess", handlePaymentSuccess);
-    };
-  }, []);
+  const handleProfessionalCheckout = async () => {
+    const stripe = await stripePromise;
+    const response = await axios.post('http://localhost:8000/api/create-checkout-session', { plan: 'professional' });
+    const sessionId = response.data.sessionId;
+  
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionId,
+    });
+  
+    if (result.error) {
+      // Handle any errors that occur
+      console.log(result.error.message);
+    }
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -206,6 +225,7 @@ export const Pricing = () => {
             buy-button-id="buy_btn_1OCNIrItQ91j83DiPlJXpWUN"
             publishable-key="pk_live_51OAYN0ItQ91j83Di07u5o2hHnOhgrfEy1MCFm1lOW4w2siOlaiG2STV1OtlKlxrtvwmfFOm5ab4zI111mhepKVON00VcfYrhsW"
           ></stripe-buy-button>
+          {/* <button onClick={handlePremiumCheckout}>Click Here</button> */}
         </div>
         <div className={styles.cardmother}>
           <CardExample

@@ -16,11 +16,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 export const AppContext = createContext();
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userName, setUserName] = useState("Dash");
-  const [userEmail, setUserEmail] = useState("crazydash@gmail.com");
-  const [userLevel, setUserLevel] = useState("2");
-  const [expireDate, setExpireDate] = useState("Tomorrow");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userLevel, setUserLevel] = useState("");
+  const [expireDate, setExpireDate] = useState("");
+  // const [userName, setUserName] = useState("Dash");
+  // const [userEmail, setUserEmail] = useState("crazydash@gmail.com");
+  // const [userLevel, setUserLevel] = useState("2");
+  // const [expireDate, setExpireDate] = useState("Tomorrow");
 
   return (
     <AppContext.Provider value={{userName, userEmail, userLevel, expireDate, setUserName, setUserEmail, setUserLevel, setExpireDate}}>
@@ -28,7 +32,7 @@ function App() {
         {/* , backgroundColor:"pink" */}
         <div className="App" style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <BeautyNavbar ></BeautyNavbar>
-          <div style={{height:"-webkit-fill-available", justifyContent:"space-around", display:"flex", alignItems:"center"}}>
+          <div style={{height:"-webkit-fill-available", justifyContent:"space-around", display:"flex", alignItems:"center", overflowY: "auto"}}>
             {!isLoggedIn && <Login setIsLoggedIn={setIsLoggedIn} />}
             <Routes>
               {isLoggedIn && <Route exact path="/home" element={<Home />} />}

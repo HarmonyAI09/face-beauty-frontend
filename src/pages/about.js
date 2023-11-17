@@ -58,7 +58,7 @@ function OnlyTextIntro (props) {
 function About() {
     const styles = useStyles();
     return (
-        <div style={{ width: "100%", paddingTop: "30px", paddingBottom: "30px" }}>
+        <div style={{ width: "100%", paddingTop: "300px", paddingBottom: "30px" }}>
             <Card className={styles.card}>
 
                 <CardPreview style={{ padding: "20px" }}>

@@ -13,35 +13,13 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const circles = [
-      { radius: 0, alpha: 1 },
-      { radius: radius / 2, alpha: 0.5 },
-    ];
+    const radius = 2;
 
-    const animate = () => {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      circles.forEach((circle) => {
-        if (circle.radius >= radius) {
-          circle.radius = 0;
-          circle.alpha = 1;
-        }
-        context.beginPath();
-        context.arc(15, 15, circle.radius, 0, 2 * Math.PI);
-        context.fillStyle = `rgba(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]}, ${circle.alpha})`;
-        context.fill();
-
-        context.beginPath();
-        context.arc(15, 15, circle.radius, 0, 2 * Math.PI);
-        context.fillStyle = `rgba(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]}, ${circle.alpha})`;
-        context.fill();
-
-        circle.radius += radius / 100;
-        circle.alpha -= 0.01; // Adjust the increment value for smoother or faster changes
-      });
-      requestAnimationFrame(animate);
-    };
-
-    animate();
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.arc(15, 15, radius, 0, 2 * Math.PI);
+    context.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
+    context.fill();
   }, [currentColor]);
 
   const handleMouseOver = () => {
@@ -79,6 +57,32 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
         {/* style={{left:{radius}, top:{radius}}} */}
       </div>
     </Draggable>
+  );
+};
+
+const SubRectImage = ({ imageUrl, rect }) => {
+  const { x, y, width, height } = rect;
+
+  const styles = {
+    container: {
+      width: `${width}px`,
+      height: `${height}px`,
+      overflow: "hidden",
+      position: "relative",
+    },
+    image: {
+      position: "absolute",
+      top: `-${y}px`,
+      left: `-${x}px`,
+      width: "auto",
+      height: "auto",
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <img src={imageUrl} alt="Cropped" style={styles.image} />
+    </div>
   );
 };
 
@@ -127,25 +131,29 @@ export const FrontTargetMapping = ({
 
   const [uploadImageheight, setUploadImageHeight] = useState(0);
   const [uploadImagewidth, setUploadImageWidth] = useState(0);
+  const [magnifierMousePosition, setMaginifierMousePosition] = useState([0, 0]);
+  const [imgUrl, setImgUrl] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     const file = selectedFrontImage;
     var img;
     var _URL = window.URL || window.webkitURL;
     if (file) {
       img = new Image();
       var objectUrl = _URL.createObjectURL(file);
-      img.onload = function () {        
+      img.onload = function () {
         setUploadImageHeight(this.height);
         setUploadImageWidth(this.width);
         console.log(uploadImageheight, uploadImagewidth, "width, height");
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
+      setImgUrl(URL.createObjectURL(selectedFrontImage));
     }
   }, [selectedFrontImage]);
 
   const handleDrag = (data, id) => {
+    setMaginifierMousePosition([data.x, data.y]);
     const updatedCircles = circles.map((circle) => {
       if (circle.id * 2 === id) {
         const updatedMarkPoints = { ...markPoints };
@@ -179,9 +187,9 @@ export const FrontTargetMapping = ({
   };
 
   const uploadImageStyle = {
-    width : uploadImageheight>uploadImagewidth ? "auto" : "800px",
-    height :uploadImageheight>uploadImagewidth ? "800px" : "auto",
-    margin:"5px"
+    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
+    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
+    margin: "5px",
   };
 
   const canvasRef = useRef(null);
@@ -192,7 +200,7 @@ export const FrontTargetMapping = ({
       formData.append("image", selectedFrontImage);
 
       const response = await fetch(
-        "https://u2c4v91qavgm99-8000.proxy.runpod.net/frontmagic",        
+        "https://u2c4v91qavgm99-8000.proxy.runpod.net/frontmagic",
         {
           method: "POST",
           body: formData,
@@ -231,9 +239,22 @@ export const FrontTargetMapping = ({
   };
 
   return (
-    <div style={{ position: "relative" }}>     
-      <div style={{position:"absolute", top:"0px", zIndex:7, backgroundColor:"#ffffffc0", width:"100%", height:"40px", display:"flex", justifyContent:"center", color:"red", 
-      fontSize:"24px", alignItems:"center"}}>
+    <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "absolute",
+          top: "0px",
+          zIndex: 7,
+          backgroundColor: "#ffffffc0",
+          width: "100%",
+          height: "40px",
+          display: "flex",
+          justifyContent: "center",
+          color: "red",
+          fontSize: "24px",
+          alignItems: "center",
+        }}
+      >
         <b>Move points around as needed to copy the left image</b>
       </div>
       <div
@@ -248,10 +269,18 @@ export const FrontTargetMapping = ({
         }}
       >
         {selectedFrontImage && (
-          <img src={URL.createObjectURL(selectedFrontImage)} alt="Image description" style={uploadImageStyle} ref={imageRef}></img>
+          <img
+            src={imgUrl}
+            alt="Image description"
+            style={uploadImageStyle}
+            ref={imageRef}
+          ></img>
         )}
         {!selectedFrontImage && (
-          <img src={"./images/front_blank.jpg"} style={{width:"800px", height:"800px"}}></img>
+          <img
+            src={"./images/front_blank.jpg"}
+            style={{ width: "800px", height: "800px" }}
+          ></img>
         )}
       </div>
       <div
@@ -281,8 +310,6 @@ export const FrontTargetMapping = ({
             id={circle.id * 2}
             color={circle.color}
             position={markPoints[circle.id][0]}
-            // position={{x:markPoints[circle.id][0].x-markPoints[circle.id-1][0].x, y:markPoints[circle.id][0].y-markPoints[circle.id-1][0].y}}
-            // position={circle.position}
             onDrag={handleDrag}
             style={{ zIndex: 10 }}
           />
@@ -293,16 +320,15 @@ export const FrontTargetMapping = ({
             id={circle.id * 2 + 1}
             color={circle.color}
             position={markPoints[circle.id][1]}
-            // position={{x:markPoints[circle.id][0].x-markPoints[circle.id-1][0].x, y:markPoints[circle.id][0].y-markPoints[circle.id-1][0].y}}
-            // position={circle.position}
             onDrag={handleDrag}
             style={{ zIndex: 10 }}
           />
         ))}
       </div>
-      {/* <div style={{ position:"absolute", top:"0px", right:"0px", height: '800px', width: "800px" }}>
-            <canvas ref={canvasRef} width={800} height={800} style={{ zIndex: 9 }} />
-            </div> */}
+      <SubRectImage
+        imageUrl={imgUrl}
+        rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 100, height: 100 }}
+      />
     </div>
   );
 };
@@ -375,7 +401,7 @@ export const SideTargetMapping = ({
       formData.append("image", selectedSideImage);
 
       const response = await fetch(
-        "https://u2c4v91qavgm99-8000.proxy.runpod.net/sidemagic",        
+        "https://u2c4v91qavgm99-8000.proxy.runpod.net/sidemagic",
         {
           method: "POST",
           body: formData,
@@ -409,75 +435,24 @@ export const SideTargetMapping = ({
     }
   };
 
-  // useEffect(() => {
-  //     const canvas = canvasRef.current;
-  //     const context = canvas.getContext('2d');
-  //     const markPointLines = [
-  //         [1, 2], [1, 5],
-  //         [2, 3], [2, 17],
-  //         [3, 4], [3, 7], [3, 17],
-  //         [4, 8], [4, 17],
-  //         [5, 6], [5, 7],
-  //         [6, 8], [6, 16],
-  //         [7, 8],
-  //         [8, 16],
-  //         [9, 10], [9, 11], [9, 12], [9, 17],
-  //         [10, 12], [10, 13],
-  //         [11, 12], [11, 14],
-  //         [12, 13], [12, 14], [12, 15], [12, 16],
-  //         [13, 16],
-  //         [14, 15],
-  //         [15, 16],
-  //         [16, 18],
-  //         [17, 18], [17, 22],
-  //         [18,19], [18,22],
-  //         [19,20],
-  //         [20,21],
-  //         [22, 23], [22, 26],
-  //         [23, 24], [23, 25], [23, 26],[23, 28],
-  //         [24,25],
-  //         [25, 26], [25, 28], [25, 29],
-  //         [26, 27], [26, 28],
-  //         [27, 28],
-  //         [28, 29],
-  //     ];
-
-  //     // const animate = () => {
-  //     context.clearRect(0, 0, canvas.width, canvas.height);
-  //     context.lineWidth = 2;
-  //     context.strokeStyle = 'purple';
-  //     markPointLines.forEach(markPointLine => {
-  //         context.beginPath();
-  //         context.moveTo(markPoints[markPointLine[0]][0].x, markPoints[markPointLine[0]][0].y );
-  //         context.lineTo(markPoints[markPointLine[1]][0].x, markPoints[markPointLine[1]][0].y );
-
-  //         context.moveTo(markPoints[markPointLine[0]][1].x, markPoints[markPointLine[0]][1].y );
-  //         context.lineTo(markPoints[markPointLine[1]][1].x, markPoints[markPointLine[1]][1].y );
-
-  //         // context.moveTo(markPoints[1][0].x + 5, markPoints[1][0].y + 10);
-  //         // context.lineTo(markPoints[markPointLine[1]][0].x,markPoints[markPointLine[1]][0].y);
-  //         // context.lineTo(markPoints[2][0].x + 5, markPoints[2][0].y + 10);
-  //         context.stroke();
-  //         // context.beginPath();
-  //         // context.arc(markPoints[currentIndex][0].x, markPoints[currentIndex][0].y, circle.radius, 0, 2 * Math.PI);
-  //         // context.fillStyle = `rgba(0, 255, 0, ${circle.alpha})`;
-  //         // context.fill();
-
-  //         // circle.radius += 0.1;
-  //         // circle.alpha -= 0.005; // Adjust the increment value for smoother or faster changes
-
-  //     });
-  //     // requestAnimationFrame(animate);
-  //     // };
-
-  //     // animate();
-  // }, [markPoints]);
-
   return (
     <div style={{ position: "relative" }}>
       {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
-      <div style={{position:"absolute", top:"0px", zIndex:7, backgroundColor:"#ffffffc0", width:"100%", height:"40px", display:"flex", justifyContent:"center", color:"red", 
-      fontSize:"24px", alignItems:"center"}}>
+      <div
+        style={{
+          position: "absolute",
+          top: "0px",
+          zIndex: 7,
+          backgroundColor: "#ffffffc0",
+          width: "100%",
+          height: "40px",
+          display: "flex",
+          justifyContent: "center",
+          color: "red",
+          fontSize: "24px",
+          alignItems: "center",
+        }}
+      >
         <b>Move points around as needed to copy the left image</b>
       </div>
       <div
@@ -499,7 +474,10 @@ export const SideTargetMapping = ({
           ></img>
         )}
         {!selectedSideImage && (
-          <img src={"./images/side_blank.jpg"} style={{width:"800px", height:"800px"}}></img>
+          <img
+            src={"./images/side_blank.jpg"}
+            style={{ width: "800px", height: "800px" }}
+          ></img>
         )}
       </div>
       <div
@@ -534,9 +512,6 @@ export const SideTargetMapping = ({
           />
         ))}
       </div>
-      {/* <div style={{ position:"absolute", top:"0px", right:"0px", height: '800px', width: "800px" }}>
-            <canvas ref={canvasRef} width={800} height={800} style={{ zIndex: 9 }} />
-            </div> */}
     </div>
   );
 };

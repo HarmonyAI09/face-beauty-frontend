@@ -60,31 +60,6 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
   );
 };
 
-const SubRectImage = ({ imageUrl, rect }) => {
-  const { x, y, width, height } = rect;
-
-  const styles = {
-    container: {
-      width: `${width}px`,
-      height: `${height}px`,
-      overflow: "hidden",
-      position: "relative",
-    },
-    image: {
-      position: "absolute",
-      top: `-${y}px`,
-      left: `-${x}px`,
-      width: "auto",
-      height: "auto",
-    },
-  };
-
-  return (
-    <div style={styles.container}>
-      <img src={imageUrl} alt="Cropped" style={styles.image} />
-    </div>
-  );
-};
 
 export const FrontTargetMapping = ({
   selectedPoint,
@@ -131,8 +106,70 @@ export const FrontTargetMapping = ({
 
   const [uploadImageheight, setUploadImageHeight] = useState(0);
   const [uploadImagewidth, setUploadImageWidth] = useState(0);
+
   const [magnifierMousePosition, setMaginifierMousePosition] = useState([0, 0]);
   const [imgUrl, setImgUrl] = useState("");
+  const [scaleImageSize, setScaleImageSize] = useState([0.0, 0.0]);
+
+  const SubRectImage = ({ imageUrl, rect }) => {
+    const { x, y, width, height, scaleWidth, scaleHeight } = rect;
+    const maxLength = uploadImageheight > uploadImagewidth ? uploadImageheight : uploadImagewidth;
+    // const perX = x * (1600 / 100) - 50;
+    // const perY = y * (1600 / 100) - 50;
+    var perX, perY;
+    if (uploadImageheight > uploadImagewidth) {
+      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 50;
+      perY = y * 16 - 50;
+    }
+    else {
+      perX = x * 16 - 50;
+      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 50;
+    }
+
+    const styles = {
+      container: {
+        width: `${width}px`,
+        height: `${height}px`,
+        overflow: "hidden",
+        position: "relative",
+      },
+      image: {
+        position: "absolute",
+        top: `-${perY}px`,
+        left: `-${perX}px`,
+        width: scaleWidth,
+        height: scaleHeight,
+      },
+    };
+    const lineStyles = {
+      verticalLine: {
+        position: 'absolute',
+        top: '0',
+        left: '50%',
+        height: '100%',
+        width: '2px', // width of the line
+        backgroundColor: 'red',
+        transform: 'translateX(-50%)'
+      },
+      horizontalLine: {
+        position: 'absolute',
+        top: '50%',
+        left: '0',
+        width: '100%',
+        height: '2px', // height of the line
+        backgroundColor: 'red',
+        transform: 'translateY(-50%)'
+      }
+    };
+
+    return (
+      <div style={styles.container}>
+        <img src={imageUrl} alt="Cropped" style={styles.image} />
+        <div style={lineStyles.verticalLine}></div>
+        <div style={lineStyles.horizontalLine}></div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const file = selectedFrontImage;
@@ -146,6 +183,14 @@ export const FrontTargetMapping = ({
         setUploadImageWidth(this.width);
         console.log(uploadImageheight, uploadImagewidth, "width, height");
         _URL.revokeObjectURL(objectUrl);
+        console.log(this.width, this.height);
+        if (this.height > this.width) {
+          setScaleImageSize([1600 * this.width / this.height, 1600]);
+        } else {
+          setScaleImageSize([1600, 1600 * this.height / this.width]);
+        }
+
+        
       };
       img.src = objectUrl;
       setImgUrl(URL.createObjectURL(selectedFrontImage));
@@ -153,7 +198,21 @@ export const FrontTargetMapping = ({
   }, [selectedFrontImage]);
 
   const handleDrag = (data, id) => {
-    setMaginifierMousePosition([data.x, data.y]);
+    let x1 = 0.0;
+    let y1 = 0.0;
+    if(scaleImageSize[0] < scaleImageSize[1]){
+      x1 = (data.x-400+scaleImageSize[0]/4)*200/scaleImageSize[0];
+      y1 = data.y*0.125;
+    } else if (scaleImageSize[0] > scaleImageSize[1]) {
+      x1 = data.x*0.125;
+      y1 = (data.y-400+scaleImageSize[1]/4)*200/scaleImageSize[1];
+    } else {
+      x1 = data.x*0.125;
+      y1 = data.y*0.125;
+    }
+    console.log(x1, y1);
+    setMaginifierMousePosition([x1, y1]);
+    console.log(data.x, data.y);
     const updatedCircles = circles.map((circle) => {
       if (circle.id * 2 === id) {
         const updatedMarkPoints = { ...markPoints };
@@ -294,6 +353,12 @@ export const FrontTargetMapping = ({
           <i class="fa-solid fa-wand-magic-sparkles"></i>
         </CompoundButton>
       </div>
+      <div style={{ position: "absolute", bottom: "0px", right: "0px" }}>
+        <SubRectImage
+          imageUrl={imgUrl}
+          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 100, height: 100 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+        />
+      </div>
       <div
         style={{
           position: "absolute",
@@ -325,10 +390,7 @@ export const FrontTargetMapping = ({
           />
         ))}
       </div>
-      <SubRectImage
-        imageUrl={imgUrl}
-        rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 100, height: 100 }}
-      />
+
     </div>
   );
 };

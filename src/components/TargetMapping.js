@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { CompoundButton } from "@fluentui/react-components";
 import React from "react";
 import Draggable from "react-draggable";
@@ -13,7 +14,7 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const radius = 2;
+    const radius = 4;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
@@ -328,6 +329,7 @@ export const FrontTargetMapping = ({
         }}
       >
         {selectedFrontImage && (
+          // eslint-disable-next-line jsx-a11y/img-redundant-alt
           <img
             src={imgUrl}
             alt="Image description"
@@ -343,17 +345,16 @@ export const FrontTargetMapping = ({
         )}
       </div>
       <div
-        style={{ position: "absolute", top: "0px", right: "0px", zIndex: 9 }}
+        style={{ position: "absolute", bottom: "0px", zIndex: 9 }}
       >
         <CompoundButton
           appearance="square"
-          style={{ width: "30px", height: "30px" }}
           onClick={handleMagicButtonClick}
         >
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          Auto-Mapping
         </CompoundButton>
       </div>
-      <div style={{ position: "absolute", bottom: "0px", right: "0px" }}>
+      <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
         <SubRectImage
           imageUrl={imgUrl}
           rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 100, height: 100 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}

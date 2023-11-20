@@ -7,8 +7,6 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { UserContext } from "../pages/home";
 
 const DraggableCircle = ({ id, color, position, onDrag }) => {
-  const [currentColor, setCurrentColor] = useState([255, 0, 0]);
-  const [radius, setRadius] = useState(5.0);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -19,19 +17,9 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
     context.arc(15, 15, radius, 0, 2 * Math.PI);
-    context.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
+    context.fillStyle = `rgb(255,0,0)`;
     context.fill();
-  }, [currentColor]);
-
-  const handleMouseOver = () => {
-    setCurrentColor([255, 0, 0]);
-    setRadius(15);
-  };
-
-  const handleMouseOut = () => {
-    setCurrentColor([255, 0, 0]);
-    setRadius(5);
-  };
+  }, []);
 
   return (
     <Draggable
@@ -40,8 +28,6 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
       onDrag={(e, data) => onDrag(data, id)}
     >
       <div
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
         style={{
           width: "0px",
           height: "0px",
@@ -54,25 +40,17 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
         }}
       >
         <canvas ref={canvasRef} width={30} height={30} />
-        {/* style={{ left: "-5px", top: "-5px" }} */}
-        {/* style={{left:{radius}, top:{radius}}} */}
       </div>
     </Draggable>
   );
 };
 
 
-export const FrontTargetMapping = ({
-  selectedPoint,
-  handleSelectPointChange,
-}) => {
+export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
-
   const { markPoints, setMarkPoints } = useContext(UserContext);
-
   const { selectedFrontImage } = useContext(UserContext);
-
   const [circles, setCircles] = React.useState([
     { id: 1, color: "red", issymmetry: false, position: { x: 0, y: 0 } },
     { id: 2, color: "blue", issymmetry: true, position: { x: 0, y: 10 } },
@@ -104,10 +82,8 @@ export const FrontTargetMapping = ({
     { id: 28, color: "blue", issymmetry: true, position: { x: 150, y: 150 } },
     { id: 29, color: "green", issymmetry: false, position: { x: 300, y: 300 } },
   ]);
-
   const [uploadImageheight, setUploadImageHeight] = useState(0);
   const [uploadImagewidth, setUploadImageWidth] = useState(0);
-
   const [magnifierMousePosition, setMaginifierMousePosition] = useState([0, 0]);
   const [imgUrl, setImgUrl] = useState("");
   const [scaleImageSize, setScaleImageSize] = useState([0.0, 0.0]);
@@ -396,17 +372,11 @@ export const FrontTargetMapping = ({
   );
 };
 
-export const SideTargetMapping = ({
-  selectedPoint,
-  handleSelectPointChange,
-}) => {
+export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
-
   const { markPoints, setMarkPoints } = useContext(UserContext);
-
   const { selectedSideImage } = useContext(UserContext);
-
   const [circles, setCircles] = React.useState([
     { id: 30, color: "red", issymmetry: false, position: { x: 0, y: 0 } },
     { id: 31, color: "blue", issymmetry: false, position: { x: 0, y: 10 } },
@@ -438,8 +408,114 @@ export const SideTargetMapping = ({
     { id: 57, color: "green", issymmetry: false, position: { x: 300, y: 310 } },
     { id: 58, color: "green", issymmetry: false, position: { x: 300, y: 310 } },
   ]);
+  const [uploadImageheight, setUploadImageHeight] = useState(0);
+  const [uploadImagewidth, setUploadImageWidth] = useState(0);
+  const [magnifierMousePosition, setMaginifierMousePosition] = useState([0, 0]);
+  const [imgUrl, setImgUrl] = useState("");
+  const [scaleImageSize, setScaleImageSize] = useState([0.0, 0.0]);
+
+  const SubRectImage = ({ imageUrl, rect }) => {
+    const { x, y, width, height, scaleWidth, scaleHeight } = rect;
+    const maxLength = uploadImageheight > uploadImagewidth ? uploadImageheight : uploadImagewidth;
+    // const perX = x * (1600 / 100) - 50;
+    // const perY = y * (1600 / 100) - 50;
+    var perX, perY;
+    if (uploadImageheight > uploadImagewidth) {
+      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 50;
+      perY = y * 16 - 50;
+    }
+    else {
+      perX = x * 16 - 50;
+      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 50;
+    }
+
+    const styles = {
+      container: {
+        width: `${width}px`,
+        height: `${height}px`,
+        overflow: "hidden",
+        position: "relative",
+      },
+      image: {
+        position: "absolute",
+        top: `-${perY}px`,
+        left: `-${perX}px`,
+        width: scaleWidth,
+        height: scaleHeight,
+      },
+    };
+    const lineStyles = {
+      verticalLine: {
+        position: 'absolute',
+        top: '0',
+        left: '50%',
+        height: '100%',
+        width: '2px', // width of the line
+        backgroundColor: 'red',
+        transform: 'translateX(-50%)'
+      },
+      horizontalLine: {
+        position: 'absolute',
+        top: '50%',
+        left: '0',
+        width: '100%',
+        height: '2px', // height of the line
+        backgroundColor: 'red',
+        transform: 'translateY(-50%)'
+      }
+    };
+
+    return (
+      <div style={styles.container}>
+        <img src={imageUrl} alt="Cropped" style={styles.image} />
+        <div style={lineStyles.verticalLine}></div>
+        <div style={lineStyles.horizontalLine}></div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const file = selectedSideImage;
+    var img;
+    var _URL = window.URL || window.webkitURL;
+    if (file) {
+      img = new Image();
+      var objectUrl = _URL.createObjectURL(file);
+      img.onload = function () {
+        setUploadImageHeight(this.height);
+        setUploadImageWidth(this.width);
+        console.log(uploadImageheight, uploadImagewidth, "width, height");
+        _URL.revokeObjectURL(objectUrl);
+        console.log(this.width, this.height);
+        if (this.height > this.width) {
+          setScaleImageSize([1600 * this.width / this.height, 1600]);
+        } else {
+          setScaleImageSize([1600, 1600 * this.height / this.width]);
+        }
+
+        
+      };
+      img.src = objectUrl;
+      setImgUrl(URL.createObjectURL(selectedSideImage));
+    }
+  }, [selectedSideImage]);
 
   const handleDrag = (data, id) => {
+    let x1 = 0.0;
+    let y1 = 0.0;
+    if(scaleImageSize[0] < scaleImageSize[1]){
+      x1 = (data.x-400+scaleImageSize[0]/4)*200/scaleImageSize[0];
+      y1 = data.y*0.125;
+    } else if (scaleImageSize[0] > scaleImageSize[1]) {
+      x1 = data.x*0.125;
+      y1 = (data.y-400+scaleImageSize[1]/4)*200/scaleImageSize[1];
+    } else {
+      x1 = data.x*0.125;
+      y1 = data.y*0.125;
+    }
+    console.log(x1, y1);
+    setMaginifierMousePosition([x1, y1]);
+    console.log(data.x, data.y);
     const updatedCircles = circles.map((circle) => {
       if (circle.id === id) {
         const updatedMarkPoints = { ...markPoints };
@@ -454,6 +530,12 @@ export const SideTargetMapping = ({
       return circle;
     });
     setCircles(updatedCircles);
+  };
+
+  const uploadImageStyle = {
+    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
+    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
+    margin: "5px",
   };
 
   const canvasRef = useRef(null);
@@ -500,7 +582,6 @@ export const SideTargetMapping = ({
 
   return (
     <div style={{ position: "relative" }}>
-      {/* <Image src="./images/front.jpg" width={800} height={800} style={{ zIndex: 1 }}></Image> */}
       <div
         style={{
           position: "absolute",
@@ -531,10 +612,11 @@ export const SideTargetMapping = ({
       >
         {selectedSideImage && (
           <img
-            ref={imageRef}
-            style={{ zIndex: 2, height: "800px" }}
-            src={URL.createObjectURL(selectedSideImage)}
-          ></img>
+          src={imgUrl}
+          alt="Image description"
+          style={uploadImageStyle}
+          ref={imageRef}
+        ></img>
         )}
         {!selectedSideImage && (
           <img
@@ -544,15 +626,20 @@ export const SideTargetMapping = ({
         )}
       </div>
       <div
-        style={{ position: "absolute", top: "0px", right: "0px", zIndex: 9 }}
+        style={{ position: "absolute", bottom: "0px", zIndex: 9 }}
       >
         <CompoundButton
           appearance="square"
-          style={{ width: "30px", height: "30px" }}
           onClick={handleMagicButtonClick}
         >
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          Auto-Mapping
         </CompoundButton>
+      </div>
+      <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
+        <SubRectImage
+          imageUrl={imgUrl}
+          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 100, height: 100 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+        />
       </div>
       <div
         style={{

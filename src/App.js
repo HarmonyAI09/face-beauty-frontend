@@ -1,13 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import JSZip from 'jszip';
-import { useState, useContext, createContext } from 'react';
+import { useState, createContext } from 'react';
 import Home from './pages/home';
 import Resource from './pages/resource';
 import Pricing from './pages/pricing';
 import About from './pages/about';
 import BeautyNavbar from './components/BeautyNavbar';
-import Contact from './pages/contact';
 import Community from './pages/community';
 import BeautyFootbar from './components/BeautyFootbar';
 import Login from './pages/login';

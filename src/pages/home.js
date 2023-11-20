@@ -1,14 +1,15 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import * as React from "react";
-import { Switch, Radio, RadioGroup, Label } from "@fluentui/react-components";
-import { Input, Badge, Button, Card } from "@fluentui/react-components";
+import { Radio, RadioGroup, Label } from "@fluentui/react-components";
+import { Button} from "@fluentui/react-components";
 import {
   // Image,
   Divider,
   Tooltip,
   CompoundButton,
 } from "@fluentui/react-components";
-import { ArrowUploadFilled, Connected20Filled } from "@fluentui/react-icons";
-import { useEffect, useState, useRef, createContext } from "react";
+import { ArrowUploadFilled} from "@fluentui/react-icons";
+import { useState, useRef, createContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./home.css";
@@ -22,7 +23,8 @@ import { ViewReportDialog } from "../components/ViewReportModalDialog";
 
 export const UserContext = createContext();
 
-const wrapperStyle: React.CSSProperties = {
+// eslint-disable-next-line no-unused-vars
+const wrapperStyle: CSSProperties = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
@@ -32,7 +34,7 @@ const wrapperStyle: React.CSSProperties = {
   color: "white",
 };
 
-function Home({ }) {
+function Home() {
   const navigate = useNavigate();
 
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
@@ -276,30 +278,8 @@ function Home({ }) {
   const [reportAdvices, setReportAdvices] = useState(Array(45).fill([]));
   const [uploadImageheight, setUploadImageHeight] = useState(0);
   const [uploadImagewidth, setUploadImageWidth] = useState(0);
-
-
-
-  const unavailableAreaInHandle = () => {
-    setLock(true);
-  };
-  const unavailableAreaOutHandle = () => {
-    setLock(false);
-  };
-  const showDiv = () => {
-    setIsVisible(true);
-  };
-
-  const hideDiv = () => {
-    setIsVisible(false);
-  };
-
-  const lockStyle = {
-    display: "none",
-  };
-
-  const visibleDivStyle = {
-    display: isVisible ? "block" : "none",
-  };
+  const [sideImageheight, setSideImageHeight] = useState(0);
+  const [sideImagewidth, setSideImageWidth] = useState(0);
 
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
@@ -316,7 +296,6 @@ function Home({ }) {
       img.onload = function () {
         setUploadImageHeight(this.height);
         setUploadImageWidth(this.width);
-        console.log(uploadImageheight, uploadImagewidth, "width, height");
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
@@ -331,6 +310,26 @@ function Home({ }) {
 
   const handleSideImageSelect = (event) => {
     setSelectedSideImage(event.target.files[0]);
+
+    const file = event.target.files[0];
+    var img;
+    var _URL = window.URL || window.webkitURL;
+    if (file) {
+      img = new Image();
+      var objectUrl = _URL.createObjectURL(file);
+      img.onload = function () {
+        setSideImageHeight(this.height);
+        setSideImageWidth(this.width);
+        _URL.revokeObjectURL(objectUrl);
+      };
+      img.src = objectUrl;
+    }
+  };
+
+  const uploadSideImageStyle = {
+    width: sideImageheight > sideImagewidth ? "auto" : "365px",
+    height: sideImageheight > sideImagewidth ? "365px" : "auto",
+    margin: "5px"
   };
 
   const handleFrontUploadButtonClick = () => {
@@ -717,7 +716,7 @@ function Home({ }) {
                     }}
                   >
                     {selectedSideImage && (
-                      <img src={URL.createObjectURL(selectedSideImage)} alt="Image description" style={uploadImageStyle}></img>
+                      <img src={URL.createObjectURL(selectedSideImage)} alt="Image description" style={uploadSideImageStyle}></img>
                     )}
                     {!selectedSideImage && (
                       <img src={"./images/side_blank.jpg"} alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>

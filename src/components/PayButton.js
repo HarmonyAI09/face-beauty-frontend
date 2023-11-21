@@ -8,7 +8,7 @@ const PayButton = ({ btnTxt, userEmail}) => {
     
     const handleCheckout = (type) => {
         if (type === "Buy Premium") {
-            fetch('http://localhost:8000/create-checkout-session', {
+            fetch('https://43brl8gnkrl5mq-8000.proxy.runpod.net/create-checkout-session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const PayButton = ({ btnTxt, userEmail}) => {
             })
             .catch((error) => console.error('Error:', error));
         } else if(type === "Buy Enterprise"){
-            fetch('http://localhost:8000/create-checkout-session', {
+            fetch('https://43brl8gnkrl5mq-8000.proxy.runpod.net/create-checkout-session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

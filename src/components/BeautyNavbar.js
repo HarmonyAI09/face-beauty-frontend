@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, } from "@fluentui/react-components";
+import { Image } from "@fluentui/react-components";
 import { useNavigate } from 'react-router-dom';
 
 const BeautyNavbar = () => {

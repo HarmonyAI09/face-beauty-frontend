@@ -1,7 +1,25 @@
-import React from 'react';
-import './pricing.css'; // Make sure to create a corresponding CSS file
+import React, { useState, useContext, useEffect } from 'react';
+import './pricing.css';
+import PayButton from '../components/PayButton';
+import { AppContext,  } from "../App";
 
-const PricingOption = ({ plan, price, features }) => {
+
+
+const PricingOption = ({ plan, price, features, buttonText }) => {
+    // const [userEmail, setUserEmail] = useState("");
+
+    const storedUserEmail = localStorage.getItem('userEmail');
+
+    // useEffect(() => {
+    //     if (userEmail=="") {
+    //         const storedUserEmail = localStorage.getItem('userEmail');
+    //         if (userEmail) {
+    //             setUserEmail(storedUserEmail);
+    //         }
+    //     }
+    // }, [userEmail, setUserEmail]);
+    
+
     return (
         <div className="pricing-option">
             <h3 className="plan-name">{plan}</h3>
@@ -9,7 +27,7 @@ const PricingOption = ({ plan, price, features }) => {
             <ul className="features">
                 {features.map((feature, index) => <li key={index}>{feature}</li>)}
             </ul>
-            <button className="subscribe-button">Buy</button>
+            <PayButton btnTxt={buttonText} userEmail = {storedUserEmail}>{buttonText}</PayButton>
         </div>
     );
 };
@@ -20,50 +38,82 @@ const PricingComponent = () => {
             plan: "Basic",
             price: "Free",
             features: [
-              "Full harmony score",
-              "Access to our community",
-              "Best and worst feature breakdown",
-              "Celebrity score match",
+                "Full harmony score",
+                "Access to our community",
+                "Best and worst feature breakdown",
+                "Celebrity score match",
             ]
         },
         {
             plan: "Premium",
             price: "$17.99/month",
             features: [
-              "Full harmony score",
-              "Full auto-generated report on your face",
-              "   45+ facial assessments",
-              "   Scoring breakdown",
-              "   Advice where applicable",
-              "Access to our community",
-              "Up to 5 saved reports at a time",
-              "Cross-platform access to subscription",
+                "Full harmony score",
+                "Full auto-generated report on your face",
+                "   45+ facial assessments",
+                "   Scoring breakdown",
+                "   Advice where applicable",
+                "Access to our community",
+                "Up to 5 saved reports at a time",
+                "Cross-platform access to subscription",
             ]
         },
         {
             plan: "Enterprise",
             price: "$22.99/month",
             features: [
-              "Full harmony score",
-              "Full page auto-generated report on your face",
-              "   45+ facial assessments",
-              "   Scoring breakdown",
-              "   Advice where applicable",
-              "Access to our community",
-              "Unlimited reports saved at one time",
-              "Cross-platform access to subscription",
-              "Idealize : AI-gen beauty simulation",
-              "Professional profile badge",
-              "Early access to newly developed features",
+                "Full harmony score",
+                "Full page auto-generated report on your face",
+                "   45+ facial assessments",
+                "   Scoring breakdown",
+                "   Advice where applicable",
+                "Access to our community",
+                "Unlimited reports saved at one time",
+                "Cross-platform access to subscription",
+                "Idealize : AI-gen beauty simulation",
+                "Professional profile badge",
+                "Early access to newly developed features",
             ]
         }
     ];
 
     return (
         <div className="pricing-container">
-            {pricingData.map((option, index) => (
-                <PricingOption key={index} plan={option.plan} price={option.price} features={option.features} />
-            ))}
+            {pricingData.map((option, index) => {
+                // Render the component only if the plan is "Basic" or "Premium"
+                if (option.plan === "Basic") {
+                    return (
+                        <PricingOption
+                            key={index}
+                            plan={option.plan}
+                            price={option.price}
+                            features={option.features}
+                            buttonText="Free Trial"
+                        />
+                    );
+                } else if (option.plan === "Premium") {
+                    return (
+                        <PricingOption
+                            key={index}
+                            plan={option.plan}
+                            price={option.price}
+                            features={option.features}
+                            buttonText="Buy Premium"
+                        />
+                    );
+                } else {
+                    return (
+                        <PricingOption
+                            key={index}
+                            plan={option.plan}
+                            price={option.price}
+                            features={option.features}
+                            buttonText="Buy Enterprise"
+                        />
+                    );
+                }
+
+            })}
         </div>
     );
 };

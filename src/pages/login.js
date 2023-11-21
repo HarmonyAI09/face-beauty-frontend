@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ }) => {
     const navigate = useNavigate();
     const styles = useStyles();
     const [isSignIn, setIsSignIn] = useState(true);
@@ -41,15 +41,15 @@ const Login = ({ setIsLoggedIn }) => {
         const [password, setPassword] = useState('');
 
         const { userName } = useContext(AppContext);
-        const { userEmail,  } = useContext(AppContext);
-        const { userLevel,  } = useContext(AppContext);
-        const { expireDate,  } = useContext(AppContext);
+        const { userEmail, } = useContext(AppContext);
+        const { userLevel, } = useContext(AppContext);
+        const { expireDate, } = useContext(AppContext);
         const { setUserName, setUserEmail, setUserLevel, setExpireDate } = useContext(AppContext);
 
         const handleSubmit = (e) => {
             e.preventDefault();
             // Make a POST request to the sign-in endpoint in your backend API
-            fetch('https://u2c4v91qavgm99-8000.proxy.runpod.net/api/signin', {
+            fetch('https://43brl8gnkrl5mq-8000.proxy.runpod.net/api/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -60,7 +60,7 @@ const Login = ({ setIsLoggedIn }) => {
                     if (data.message) {
                         setAlertMessage(data.message);
                         setAlertColor("rgb(26,115,232)");
-                        setIsLoggedIn(true);
+                        // setIsLoggedIn(true);
                         setUserName(data.name);
                         setUserEmail(data.mail);
                         setUserLevel(data.level);
@@ -73,6 +73,10 @@ const Login = ({ setIsLoggedIn }) => {
                         console.log(data.name, data.mail, data.level, data.expire);
                         console.log(userName, userLevel, expireDate, userEmail);
                         console.log("______________________________");
+                        localStorage.setItem('userName', data.name);
+                        localStorage.setItem('userEmail', data.mail);
+                        localStorage.setItem('userLevel', data.level);
+                        localStorage.setItem('expireDate', data.expire);
                         navigate("/home");
                     }
                     else {
@@ -124,7 +128,7 @@ const Login = ({ setIsLoggedIn }) => {
                 return;
             }
             // Make a POST request to the sign-up endpoint in your backend API
-            fetch('https://u2c4v91qavgm99-8000.proxy.runpod.net/api/signup', {
+            fetch('https://43brl8gnkrl5mq-8000.proxy.runpod.net/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password }),

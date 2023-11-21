@@ -13,6 +13,10 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 10px;
     width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will push the button to the bottom */
+    height: 100%;
 }
 
 .plan-name {

@@ -125,7 +125,7 @@ export const ScoreAlert = (props) => {
       medialCanthalAngle: medialCanthalAngle,
     };
 
-    fetch("https://u2c4v91qavgm99-8000.proxy.runpod.net/getfrontmark", {
+    fetch("https://43brl8gnkrl5mq-8000.proxy.runpod.net/getfrontmark", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -197,7 +197,7 @@ export const ScoreAlert = (props) => {
       nasalTipAngle: nasalTipAngle,
     };
 
-    fetch("https://u2c4v91qavgm99-8000.proxy.runpod.net/getsidemark", {
+    fetch("https://43brl8gnkrl5mq-8000.proxy.runpod.net/getsidemark", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

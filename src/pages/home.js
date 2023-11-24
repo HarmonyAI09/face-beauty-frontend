@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import * as React from "react";
 import { Radio, RadioGroup, Label } from "@fluentui/react-components";
-import { Button} from "@fluentui/react-components";
+import { Button } from "@fluentui/react-components";
 import {
   // Image,
   Divider,
   Tooltip,
   CompoundButton,
 } from "@fluentui/react-components";
-import { ArrowUploadFilled} from "@fluentui/react-icons";
+import { ArrowUploadFilled } from "@fluentui/react-icons";
 import { useState, useRef, createContext } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./home.css";
 
@@ -263,6 +263,7 @@ function Home() {
     [{ x: 235, y: 352 }], //57
     [{ x: 210, y: 494 }], //58
     [{ x: 210, y: 494 }], //58
+    [{ x: 185, y: 428 }], //59
   ]);
 
   const [reportNotes, setReportNotes] = useState(Array(45).fill([]));
@@ -305,7 +306,7 @@ function Home() {
   const uploadImageStyle = {
     width: uploadImageheight > uploadImagewidth ? "auto" : "365px",
     height: uploadImageheight > uploadImagewidth ? "365px" : "auto",
-    margin: "5px"
+    margin: "5px",
   };
 
   const handleSideImageSelect = (event) => {
@@ -329,7 +330,7 @@ function Home() {
   const uploadSideImageStyle = {
     width: sideImageheight > sideImagewidth ? "auto" : "365px",
     height: sideImageheight > sideImagewidth ? "365px" : "auto",
-    margin: "5px"
+    margin: "5px",
   };
 
   const handleFrontUploadButtonClick = () => {
@@ -342,7 +343,7 @@ function Home() {
 
   const handleRedirect = (path) => {
     navigate(path);
-};
+  };
 
   return (
     <UserContext.Provider
@@ -464,15 +465,21 @@ function Home() {
         setReportAdvices,
       }}
     >
-
-      <div className="main_parent" style={{ display: "flex", position: "relative", justifyContent: "space-between", }}>
-        <div className="main_child m_setting"
+      <div
+        className="main_parent"
+        style={{
+          display: "flex",
+          position: "relative",
+          justifyContent: "space-between",
+        }}
+      >
+        <div
+          className="main_child m_setting"
           style={{
             width: "15%",
             color: "purple",
             backgroundColor: "white",
             zIndex: "100",
-
           }}
         >
           <div
@@ -498,7 +505,7 @@ function Home() {
             <div
               style={{
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
               }}
             >
               <RadioGroup style={{ display: "contents" }}>
@@ -517,7 +524,7 @@ function Home() {
               </RadioGroup>
             </div>
             <Divider style={{ padding: "8px", color: "purple" }}>
-              Ethnicities / Racial
+              Ethnicity / Race
             </Divider>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <RadioGroup style={{ display: "contents" }}>
@@ -590,7 +597,15 @@ function Home() {
               }}
             >
               <ViewReportDialog></ViewReportDialog>
-              <Button size="large" shape="square" appearance="primary" style={{marginTop:"50px"}} onClick={() => handleRedirect('/pricing')}>Buy Premium</Button>
+              <Button
+                size="large"
+                shape="square"
+                appearance="primary"
+                style={{ marginTop: "50px" }}
+                onClick={() => handleRedirect("/pricing")}
+              >
+                Buy Premium
+              </Button>
             </div>
           </div>
         </div>
@@ -602,14 +617,20 @@ function Home() {
             flexDirection: "column",
             width: "70%",
             border: "1px solid purple",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
-          <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+          <div
+            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+          >
             <div className="front_profile">
               <div className="front_photo_area">
                 <div className="photo_div example">
-                  <img src="./images/front.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
+                  <img
+                    src="./images/front.jpg"
+                    alt="Image description"
+                    style={{ width: "365px", height: "365px", margin: "5px" }}
+                  ></img>
                 </div>
                 <div className="photo_div upload">
                   <input
@@ -660,18 +681,28 @@ function Home() {
                     }}
                   >
                     {selectedFrontImage && (
-                      <img src={URL.createObjectURL(selectedFrontImage)} alt="Image description" style={uploadImageStyle}></img>
+                      <img
+                        src={URL.createObjectURL(selectedFrontImage)}
+                        alt="Image description"
+                        style={uploadImageStyle}
+                      ></img>
                     )}
                     {!selectedFrontImage && (
-                      <img src="./images/front_blank.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
+                      <img
+                        src="./images/front_blank.jpg"
+                        alt="Image description"
+                        style={{
+                          width: "365px",
+                          height: "365px",
+                          margin: "5px",
+                        }}
+                      ></img>
                     )}
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              className="side_profile"
-            >
+            <div className="side_profile">
               <div
                 style={{
                   display: "flex",
@@ -689,7 +720,11 @@ function Home() {
                     border: "solid 1px purple",
                   }}
                 >
-                  <img src="./images/side.jpg" alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
+                  <img
+                    src="./images/side.jpg"
+                    alt="Image description"
+                    style={{ width: "365px", height: "365px", margin: "5px" }}
+                  ></img>
                 </div>
                 <div
                   style={{
@@ -716,10 +751,22 @@ function Home() {
                     }}
                   >
                     {selectedSideImage && (
-                      <img src={URL.createObjectURL(selectedSideImage)} alt="Image description" style={uploadSideImageStyle}></img>
+                      <img
+                        src={URL.createObjectURL(selectedSideImage)}
+                        alt="Image description"
+                        style={uploadSideImageStyle}
+                      ></img>
                     )}
                     {!selectedSideImage && (
-                      <img src={"./images/side_blank.jpg"} alt="Image description" style={{ width: "365px", height: "365px", margin: "5px" }}></img>
+                      <img
+                        src={"./images/side_blank.jpg"}
+                        alt="Image description"
+                        style={{
+                          width: "365px",
+                          height: "365px",
+                          margin: "5px",
+                        }}
+                      ></img>
                     )}
                   </div>
                   <CompoundButton
@@ -768,11 +815,18 @@ function Home() {
             zIndex: "100",
           }}
         >
-          <div style={{
-            height: "30px", backgroundColor: "#b16aaa", color: "#4f234b", fontSize: "16px", display: "flex", alignItems: "center", paddingLeft: "10px",
-            justifyContent: "space-between",
-            paddingRight: "10px",
-          }}
+          <div
+            style={{
+              height: "30px",
+              backgroundColor: "#b16aaa",
+              color: "#4f234b",
+              fontSize: "16px",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: "10px",
+              justifyContent: "space-between",
+              paddingRight: "10px",
+            }}
           >
             Reference
           </div>

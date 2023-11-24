@@ -344,10 +344,11 @@ export function SideSupportImage({ selectedPoint }) {
       [{ x: 168, y: 327 }], //56
       [{ x: 235, y: 352 }], //57
       [{ x: 210, y: 494 }], //58
+      [{ x: 185, y: 428 }], //59
     ];
     context.clearRect(0, 0, canvas.width, canvas.height);
     markPoints.forEach((markPoint, index) => {
-      if (index >= 30) {
+      if (index >= 30 && index !==34 && index !==56 && index !==54) {        
         context.beginPath();
         context.arc(
           markPoint[0].x,

@@ -266,7 +266,7 @@ export const ScoreAlert = (props) => {
           style={{ width: "200px", margin: "5px" }}
           onClick={handleCalculateButtonClick}
         >
-          {props.title} Profile Calculate
+          {props.title} Profile
         </Button>
       </DialogTrigger>
       <DialogSurface>

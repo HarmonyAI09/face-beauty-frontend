@@ -22,7 +22,7 @@ function calculateDistance(point1, point2) {
     const xDiff = point2.x - point1.x;
     const yDiff = point2.y - point1.y;
     const distance = Math.sqrt(xDiff ** 2 + yDiff ** 2);
-    return distance;
+    return distance.toFixed(2);
 }
 
 function calculateSharpAngle(line1, line2) {
@@ -31,14 +31,14 @@ function calculateSharpAngle(line1, line2) {
     const magnitude2 = Math.sqrt(line2.x ** 2 + line2.y ** 2);
     const cosAngle = dotProduct / (magnitude1 * magnitude2);
     const sharpAngle = Math.acos(cosAngle) * (180 / Math.PI);
-    return sharpAngle;
+    return sharpAngle.toFixed(2);
 }
 
 function calculateDistanceFromPointToLine(point1, point2, point3) {
     let slope = (point3.y - point2.y) / (point3.x - point2.x);
     let yIntercept = point2.y - slope * point2.x;
     let distance = Math.abs(slope * point1.x - point1.y + yIntercept) / Math.sqrt(Math.pow(slope, 2) + 1);
-    return distance;
+    return distance.toFixed(2);
 }
 
 export function FrontProfileMappingModal() {
@@ -283,7 +283,7 @@ export function SideProfileMappingModal() {
     const CalculateRamus2MandibleRatio = () => {
         const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
         const b = calculateDistance(markPoints[54][0], markPoints[49][0]);
-        setRamus2MandibleRatio(a / b);
+        setRamus2MandibleRatio((a / b).toFixed);
     };
     const CalculateFacialConvexityGlabella = () => {
         const a = { x: markPoints[32][0].x - markPoints[43][0].x, y: markPoints[32][0].y - markPoints[43][0].y };
@@ -332,7 +332,7 @@ export function SideProfileMappingModal() {
         // setNasalProjection(0.6);
         const a = {x:1, y:0};
         const b = {x: markPoints[36][0].x-markPoints[40][0].x, y: markPoints[36][0].y - markPoints[40][0].y};
-        setNasalProjection(Math.cos(calculateSharpAngle(a, b)/180*Math.PI));
+        setNasalProjection((Math.cos(calculateSharpAngle(a, b)/180*Math.PI)).toFixed(2));
     };
     const CalculateNasalW2HRatio = () => {
         const a = markPoints[42][0].x - markPoints[40][0].x;

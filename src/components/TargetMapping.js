@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 
 import { UserContext } from "../pages/home";
 
-const DraggableCircle = ({ id, color, position, onDrag }) => {
+const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const DraggableCircle = ({ id, color, position, onDrag }) => {
           backgroundColor: color,
           cursor: "pointer",
           position: "relative",
-          display: id === 54 || id === 56 || id === 32 ? "none" : "block",
+          display: (isSide && (id === 54 || id === 56 || id === 34)) ? "none" : "block",
         }}
       >
         <canvas ref={canvasRef} width={30} height={30} />
@@ -362,6 +362,7 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
             key={circle.id * 2 + 1}
             id={circle.id * 2 + 1}
             color={circle.color}
+            isSide={false}
             position={markPoints[circle.id][1]}
             onDrag={handleDrag}
             style={{ zIndex: 10 }}
@@ -656,6 +657,7 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
           <DraggableCircle
             key={circle.id}
             id={circle.id}
+            isSide={true}
             color={circle.color}
             position={markPoints[circle.id][0]}
             onDrag={handleDrag}

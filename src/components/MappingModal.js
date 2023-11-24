@@ -337,7 +337,7 @@ export function SideProfileMappingModal() {
     const CalculateNasalW2HRatio = () => {
         const a = markPoints[42][0].x - markPoints[40][0].x;
         const b = markPoints[40][0].y - markPoints[56][0].y;
-        setNasalW2HRatio(a / b);
+        setNasalW2HRatio((a / b).toFixed(2));
     };
     const CalculateRickettsELine = () => {
         setRickettsELine("ideal");

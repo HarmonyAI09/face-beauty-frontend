@@ -96,12 +96,12 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
     // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
-      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 75;
-      perY = y * 16 - 75;
+      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 100;
+      perY = y * 16 - 100;
     }
     else {
-      perX = x * 16 - 75;
-      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 75;
+      perX = x * 16 - 100;
+      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 100;
     }
 
     const styles = {
@@ -334,7 +334,7 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
       <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
         <SubRectImage
           imageUrl={imgUrl}
-          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 150, height: 150 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 200, height: 200 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
         />
       </div>
       <div
@@ -409,6 +409,7 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
     { id: 56, color: "green", issymmetry: false, position: { x: 300, y: 300 } },
     { id: 57, color: "green", issymmetry: false, position: { x: 300, y: 310 } },
     { id: 58, color: "green", issymmetry: false, position: { x: 300, y: 310 } },
+    { id: 59, color: "green", issymmetry: false, position: { x: 300, y: 310 } },
   ]);
   const [uploadImageheight, setUploadImageHeight] = useState(0);
   const [uploadImagewidth, setUploadImageWidth] = useState(0);
@@ -423,12 +424,12 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
     // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
-      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 75;
-      perY = y * 16 - 75;
+      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 100;
+      perY = y * 16 - 100;
     }
     else {
-      perX = x * 16 - 75;
-      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 75;
+      perX = x * 16 - 100;
+      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 100;
     }
 
     const styles = {
@@ -640,7 +641,7 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
       <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
         <SubRectImage
           imageUrl={imgUrl}
-          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 150, height: 150 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 200, height: 200 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
         />
       </div>
       <div

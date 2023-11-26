@@ -298,7 +298,7 @@ export const ViewReportDialog = () => {
   const { markPoints } = useContext(UserContext);
   const [measurementImages, setMeasurementImages] = useState([]);
 
-  const getMeasurementImages = useCallback(async () => {
+  const getMeasurementImages = async () => {
     try {
       const formData = new FormData();
       formData.append("front", selectedFrontImage);
@@ -330,16 +330,13 @@ export const ViewReportDialog = () => {
         const imageUrl = URL.createObjectURL(blob);
 
         imageUrls.push(imageUrl);
+        setMeasurementImages(imageUrls);
       });
-      console.log("****************", imageUrls);
-      setMeasurementImages(imageUrls);
-      console.log("&&&&&&&&&&&&&&&&&&&&", measurementImages);
     } catch (error) {
       console.error(error);
     }
-  });
+  };
   useEffect(() => {
-    console.log(measurementImages);
   }, [measurementImages]);
 
   const ReportTableRow = (props) => {

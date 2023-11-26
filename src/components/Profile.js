@@ -66,14 +66,14 @@ function Profile() {
                             </div>
                             <div className="custom-scroll" style={{ padding: "7px", color: "purple" }}>
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eye Separation Ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name" style={{ width: "130px" }}>&nbsp;&nbsp;Facial Thirds :&nbsp;</div>
                                     <input type="text" class="badge-input" />&nbsp;
                                     <input type="text" class="badge-input" />&nbsp;
@@ -82,140 +82,140 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Cheekbone height:&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Bigonial width :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Neck width :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Bitemporal width :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-percent"></i>
+                                    <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Lower third proporation :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Deviation of IAA & JFA :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eyebrow tilt :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Ipsilateral alar angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Medial canthal angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Lateral Canthal Tilt :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Jaw frontal angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Facial W-H ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Total facial W-H ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Chin to Philtrum ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;MouthW - NoseW ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Midface ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eyebrow position ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eye spacing ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eye aspect ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;LowerLip - UpperLip ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
@@ -264,119 +264,119 @@ function Profile() {
                             <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>Side Profile</div>
                             <div className="custom-scroll" style={{ padding: "7px", color: "purple" }}>
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Gonial angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasofrontal angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Mandibular plane angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Facial convexity ( glabella ) :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Submental cervical angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasofacial angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasolabial angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Total facial convexity :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Mentolabial angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Facial convexity ( nasion ) :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasomental angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Browridge inclination angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-rotate-right"></i>
+                                    <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasal tip angle :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;&deg;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Ramus to Mandible ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasal projection :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-compass-drafting"></i>
+                                    <i className="fa-solid fa-compass-drafting"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Nasal W-H ratio :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     <div className="measurement-name" style={{ width: "150px" }}>&nbsp;&nbsp;Orbital vector :&nbsp;</div>
                                     <div class="badge-dropdown">
                                         <select>
@@ -391,7 +391,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     <div className="measurement-name" style={{ width: "150px" }}>&nbsp;&nbsp;Ricketts' E line :&nbsp;</div>
                                     <div class="badge-dropdown">
                                         <select>
@@ -404,7 +404,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     <div className="measurement-name" style={{ width: "150px" }}>&nbsp;&nbsp;Holdaway H line :&nbsp;</div>
                                     <div class="badge-dropdown">
                                         <select>
@@ -417,7 +417,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     <div className="measurement-name" style={{ width: "150px" }}>&nbsp;&nbsp;Steiner S line :&nbsp;</div>
                                     <div class="badge-dropdown">
                                         <select>
@@ -430,7 +430,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     <div className="measurement-name" style={{ width: "150px" }}>&nbsp;&nbsp;Burstone line :&nbsp;</div>
                                     <div class="badge-dropdown">
                                         <select>
@@ -443,7 +443,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     &nbsp;&nbsp;
                                     <div class="marquee-container" onMouseOver={startMarquee1} onMouseOut={stopMarquee1}>
                                         <div class="marquee-content">
@@ -463,7 +463,7 @@ function Profile() {
                                 </div>
 
                                 <div className="measurement-div">
-                                    <i class="fa-solid fa-bezier-curve"></i>
+                                    <i className="fa-solid fa-bezier-curve"></i>
                                     &nbsp;&nbsp;
                                     <div class="marquee-container" onMouseOver={startMarquee2} onMouseOut={stopMarquee2}>
                                         <div class="marquee-content">

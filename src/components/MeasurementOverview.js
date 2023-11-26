@@ -15,13 +15,15 @@ export const MeasurementOverview = (props) => {
   return (
     <Dialog>
       <DialogTrigger disableButtonEnhancement>
-        {/* <Button>Open dialog</Button> */}
         <Image
           shape="circular"
-          src={"./images/report/" + props.source + ".jpg"}
+          // src={"./images/report/" + props.source + ".jpg"}
+          src={props.source}
           width={70}
           style={{ border: "2px solid purple", cursor: "pointer" }}
         ></Image>
+        {/* <img></img> */}
+        {/* <img src={props.image_url}></img> */}
       </DialogTrigger>
       <DialogSurface>
         <DialogBody>
@@ -37,7 +39,7 @@ export const MeasurementOverview = (props) => {
               <Image
                 shape="rect"
                 width={500}
-                src={"./images/report/" + props.source + ".jpg"}
+                src={props.source}
               ></Image>
               <div>{props.overview}</div>
             </div>

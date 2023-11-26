@@ -254,9 +254,9 @@ export const ScoreAlert = (props) => {
     }
   };
 
-  useEffect(() => {
-    handleCalculateButtonClick();
-  }, [eyeSeparationRatio, gonialAngle]);
+  // useEffect(() => {
+  //   handleCalculateButtonClick();
+  // }, [eyeSeparationRatio, gonialAngle]);
 
   return (
     <Dialog modalType="alert">

@@ -15,35 +15,35 @@ function Reference() {
                         <Label size="small" style={{ color: "purple" }}>Follow the photo instructions carefully.</Label>
                         <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Generally no selfies to ensure maximal accuracy. </Label>
                             </div>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Lens distortion will warp your facial features if the camera lens is too close.</Label>
                             </div>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Hair should not be covering the forehead or sides of the face.</Label>
                             </div>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Photo should be well lit and good quality for AI to detect landmarks accurately.</Label>
                             </div>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Face should be turned completely to the front and side for each respective photo.</Label>
                             </div>
                             <div>
-                                <i className="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
+                                <i classNameName="fa-solid fa-check" style={{ color: "purple", paddingRight: "10px" }}> </i>
                                 <Label size="small" style={{ color: "purple" }}>Face should have a neutral expression (no smiling or excessive grinning).</Label>
                             </div>
                         </div>
                     </div>
-                    <Divider style={{ padding: "8px", color: "purple" }}><i className="fa-solid fa-circle-exclamation fa-lg" style={{ color: "purple" }} /></Divider>
+                    <Divider style={{ padding: "8px", color: "purple" }}><i classNameName="fa-solid fa-circle-exclamation fa-lg" style={{ color: "purple" }} /></Divider>
                     <div style={{ paddingLeft: "10px" }}>
                         <Label size="medium" style={{ color: "purple" }}>
-                            <i class="fa-regular fa-clipboard" style={{ color: "purple", paddingRight: "10px" }} />
+                            <i className="fa-regular fa-clipboard" style={{ color: "purple", paddingRight: "10px" }} />
                             Note:
                         </Label>
                         <div style={{ paddingLeft: "10px", paddingRight: "10px" }}>

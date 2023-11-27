@@ -31,8 +31,8 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
         style={{
           width: "0px",
           height: "0px",
-          left: "-15px",
-          top: "-15px",
+          left: "-10px",
+          top: "-10px",
           borderRadius: "0%",
           backgroundColor: color,
           cursor: "pointer",
@@ -40,7 +40,7 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
           display: (isSide && (id === 54 || id === 56 || id === 34)) ? "none" : "block",
         }}
       >
-        <canvas ref={canvasRef} width={30} height={30} />
+        <canvas ref={canvasRef} width={20} height={20} />
       </div>
     </Draggable>
   );

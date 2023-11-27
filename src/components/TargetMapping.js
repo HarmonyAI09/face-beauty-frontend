@@ -31,8 +31,8 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
         style={{
           width: "0px",
           height: "0px",
-          left: "-10px",
-          top: "-10px",
+          left: "-15px",
+          top: "-15px",
           borderRadius: "0%",
           backgroundColor: color,
           cursor: "pointer",

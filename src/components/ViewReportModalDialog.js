@@ -308,7 +308,7 @@ export const ViewReportDialog = () => {
       console.log(formData);
 
       const response = await fetch(
-        "https://43brl8gnkrl5mq-8000.proxy.runpod.net/generatemeasurementimages",
+        "https://ld6vweb0h3ycbt-8000.proxy.runpod.net/generatemeasurementimages",
         {
           method: "POST",
           body: formData,

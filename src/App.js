@@ -10,6 +10,9 @@ import BeautyFootbar from './components/BeautyFootbar';
 import Login from './pages/login';
 import PaySuccess from './pages/PaySuccess';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css'
+import 'animate.css/animate.compat.css'; // If you're using animation}
 
 export const AppContext = createContext();
 
@@ -27,6 +30,7 @@ function App() {
     <Router>
       <AppContext.Provider value={{ userName, userEmail, userLevel, expireDate, setUserName, setUserEmail, setUserLevel, setExpireDate }}>
         <div className="App" style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <ReactNotifications/>
           <BeautyNavbar ></BeautyNavbar>
           <div style={{ height: "-webkit-fill-available", justifyContent: "space-around", display: "flex", alignItems: "center", overflowY: "auto" }}>
             {!storedEmail && <Login setIsLoggedIn={setIsLoggedIn} />}

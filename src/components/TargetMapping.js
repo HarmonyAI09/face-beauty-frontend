@@ -5,6 +5,7 @@ import Draggable from "react-draggable";
 import { useEffect, useRef, useState, useContext } from "react";
 
 import { UserContext } from "../pages/home";
+import { LoadingComponent } from "./Loading";
 
 const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   const canvasRef = useRef(null);
@@ -37,7 +38,8 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
           backgroundColor: color,
           cursor: "pointer",
           position: "relative",
-          display: (isSide && (id === 54 || id === 56 || id === 34)) ? "none" : "block",
+          display:
+            isSide && (id === 54 || id === 56 || id === 34) ? "none" : "block",
         }}
       >
         <canvas ref={canvasRef} width={20} height={20} />
@@ -46,8 +48,11 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   );
 };
 
-
-export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
+export const FrontTargetMapping = ({
+  selectedPoint,
+  handleSelectPointChange,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
   const { markPoints, setMarkPoints } = useContext(UserContext);
@@ -91,17 +96,19 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
 
   const SubRectImage = ({ imageUrl, rect }) => {
     const { x, y, width, height, scaleWidth, scaleHeight } = rect;
-    const maxLength = uploadImageheight > uploadImagewidth ? uploadImageheight : uploadImagewidth;
+    const maxLength =
+      uploadImageheight > uploadImagewidth
+        ? uploadImageheight
+        : uploadImagewidth;
     // const perX = x * (1600 / 100) - 50;
     // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
-      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 100;
+      perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
       perY = y * 16 - 100;
-    }
-    else {
+    } else {
       perX = x * 16 - 100;
-      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 100;
+      perY = y * ((uploadImageheight * 16) / uploadImagewidth) - 100;
     }
 
     const styles = {
@@ -121,23 +128,23 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
     };
     const lineStyles = {
       verticalLine: {
-        position: 'absolute',
-        top: '0',
-        left: '50%',
-        height: '100%',
-        width: '2px', // width of the line
-        backgroundColor: 'red',
-        transform: 'translateX(-50%)'
+        position: "absolute",
+        top: "0",
+        left: "50%",
+        height: "100%",
+        width: "2px", // width of the line
+        backgroundColor: "red",
+        transform: "translateX(-50%)",
       },
       horizontalLine: {
-        position: 'absolute',
-        top: '50%',
-        left: '0',
-        width: '100%',
-        height: '2px', // height of the line
-        backgroundColor: 'red',
-        transform: 'translateY(-50%)'
-      }
+        position: "absolute",
+        top: "50%",
+        left: "0",
+        width: "100%",
+        height: "2px", // height of the line
+        backgroundColor: "red",
+        transform: "translateY(-50%)",
+      },
     };
 
     return (
@@ -163,12 +170,10 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
         _URL.revokeObjectURL(objectUrl);
         console.log(this.width, this.height);
         if (this.height > this.width) {
-          setScaleImageSize([1600 * this.width / this.height, 1600]);
+          setScaleImageSize([(1600 * this.width) / this.height, 1600]);
         } else {
-          setScaleImageSize([1600, 1600 * this.height / this.width]);
+          setScaleImageSize([1600, (1600 * this.height) / this.width]);
         }
-
-        
       };
       img.src = objectUrl;
       setImgUrl(URL.createObjectURL(selectedFrontImage));
@@ -178,15 +183,15 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
   const handleDrag = (data, id) => {
     let x1 = 0.0;
     let y1 = 0.0;
-    if(scaleImageSize[0] < scaleImageSize[1]){
-      x1 = (data.x-400+scaleImageSize[0]/4)*200/scaleImageSize[0];
-      y1 = data.y*0.125;
+    if (scaleImageSize[0] < scaleImageSize[1]) {
+      x1 = ((data.x - 400 + scaleImageSize[0] / 4) * 200) / scaleImageSize[0];
+      y1 = data.y * 0.125;
     } else if (scaleImageSize[0] > scaleImageSize[1]) {
-      x1 = data.x*0.125;
-      y1 = (data.y-400+scaleImageSize[1]/4)*200/scaleImageSize[1];
+      x1 = data.x * 0.125;
+      y1 = ((data.y - 400 + scaleImageSize[1] / 4) * 200) / scaleImageSize[1];
     } else {
-      x1 = data.x*0.125;
-      y1 = data.y*0.125;
+      x1 = data.x * 0.125;
+      y1 = data.y * 0.125;
     }
     console.log(x1, y1);
     setMaginifierMousePosition([x1, y1]);
@@ -229,9 +234,8 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
     margin: "5px",
   };
 
-  const canvasRef = useRef(null);
-
   const handleMagicButtonClick = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("image", selectedFrontImage);
@@ -267,7 +271,7 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
           y: data.points[i][1][1],
         };
       }
-
+      setIsLoading(false);
       setMarkPoints(updatedMarkPoints);
     } catch (error) {
       // Handle any errors
@@ -321,20 +325,29 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
           ></img>
         )}
       </div>
-      <div
-        style={{ position: "absolute", bottom: "0px", zIndex: 9 }}
-      >
-        <CompoundButton
-          appearance="square"
-          onClick={handleMagicButtonClick}
-        >
+      <div style={{ position: "absolute", bottom: "0px", zIndex: 9 }}>
+        <CompoundButton appearance="square" onClick={handleMagicButtonClick}>
           Auto-Mapping
         </CompoundButton>
       </div>
-      <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0px",
+          right: "0px",
+          border: "2px solid purple",
+        }}
+      >
         <SubRectImage
           imageUrl={imgUrl}
-          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 200, height: 200 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+          rect={{
+            x: magnifierMousePosition[0],
+            y: magnifierMousePosition[1],
+            width: 200,
+            height: 200,
+            scaleWidth: scaleImageSize[0],
+            scaleHeight: scaleImageSize[1],
+          }}
         />
       </div>
       <div
@@ -369,12 +382,14 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
           />
         ))}
       </div>
-
     </div>
   );
 };
 
-export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
+export const SideTargetMapping = ({
+  selectedPoint,
+  handleSelectPointChange,
+}) => {
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
   const { markPoints, setMarkPoints } = useContext(UserContext);
@@ -419,17 +434,19 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
 
   const SubRectImage = ({ imageUrl, rect }) => {
     const { x, y, width, height, scaleWidth, scaleHeight } = rect;
-    const maxLength = uploadImageheight > uploadImagewidth ? uploadImageheight : uploadImagewidth;
+    const maxLength =
+      uploadImageheight > uploadImagewidth
+        ? uploadImageheight
+        : uploadImagewidth;
     // const perX = x * (1600 / 100) - 50;
     // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
-      perX = x * (uploadImagewidth * 16 / uploadImageheight) - 100;
+      perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
       perY = y * 16 - 100;
-    }
-    else {
+    } else {
       perX = x * 16 - 100;
-      perY = y * (uploadImageheight * 16 / uploadImagewidth) - 100;
+      perY = y * ((uploadImageheight * 16) / uploadImagewidth) - 100;
     }
 
     const styles = {
@@ -449,23 +466,23 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
     };
     const lineStyles = {
       verticalLine: {
-        position: 'absolute',
-        top: '0',
-        left: '50%',
-        height: '100%',
-        width: '2px', // width of the line
-        backgroundColor: 'red',
-        transform: 'translateX(-50%)'
+        position: "absolute",
+        top: "0",
+        left: "50%",
+        height: "100%",
+        width: "2px", // width of the line
+        backgroundColor: "red",
+        transform: "translateX(-50%)",
       },
       horizontalLine: {
-        position: 'absolute',
-        top: '50%',
-        left: '0',
-        width: '100%',
-        height: '2px', // height of the line
-        backgroundColor: 'red',
-        transform: 'translateY(-50%)'
-      }
+        position: "absolute",
+        top: "50%",
+        left: "0",
+        width: "100%",
+        height: "2px", // height of the line
+        backgroundColor: "red",
+        transform: "translateY(-50%)",
+      },
     };
 
     return (
@@ -491,12 +508,10 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
         _URL.revokeObjectURL(objectUrl);
         console.log(this.width, this.height);
         if (this.height > this.width) {
-          setScaleImageSize([1600 * this.width / this.height, 1600]);
+          setScaleImageSize([(1600 * this.width) / this.height, 1600]);
         } else {
-          setScaleImageSize([1600, 1600 * this.height / this.width]);
+          setScaleImageSize([1600, (1600 * this.height) / this.width]);
         }
-
-        
       };
       img.src = objectUrl;
       setImgUrl(URL.createObjectURL(selectedSideImage));
@@ -506,15 +521,15 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
   const handleDrag = (data, id) => {
     let x1 = 0.0;
     let y1 = 0.0;
-    if(scaleImageSize[0] < scaleImageSize[1]){
-      x1 = (data.x-400+scaleImageSize[0]/4)*200/scaleImageSize[0];
-      y1 = data.y*0.125;
+    if (scaleImageSize[0] < scaleImageSize[1]) {
+      x1 = ((data.x - 400 + scaleImageSize[0] / 4) * 200) / scaleImageSize[0];
+      y1 = data.y * 0.125;
     } else if (scaleImageSize[0] > scaleImageSize[1]) {
-      x1 = data.x*0.125;
-      y1 = (data.y-400+scaleImageSize[1]/4)*200/scaleImageSize[1];
+      x1 = data.x * 0.125;
+      y1 = ((data.y - 400 + scaleImageSize[1] / 4) * 200) / scaleImageSize[1];
     } else {
-      x1 = data.x*0.125;
-      y1 = data.y*0.125;
+      x1 = data.x * 0.125;
+      y1 = data.y * 0.125;
     }
     console.log(x1, y1);
     setMaginifierMousePosition([x1, y1]);
@@ -615,11 +630,11 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
       >
         {selectedSideImage && (
           <img
-          src={imgUrl}
-          alt="Image description"
-          style={uploadImageStyle}
-          ref={imageRef}
-        ></img>
+            src={imgUrl}
+            alt="Image description"
+            style={uploadImageStyle}
+            ref={imageRef}
+          ></img>
         )}
         {!selectedSideImage && (
           <img
@@ -628,20 +643,29 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
           ></img>
         )}
       </div>
-      <div
-        style={{ position: "absolute", bottom: "0px", zIndex: 9 }}
-      >
-        <CompoundButton
-          appearance="square"
-          onClick={handleMagicButtonClick}
-        >
+      <div style={{ position: "absolute", bottom: "0px", zIndex: 9 }}>
+        <CompoundButton appearance="square" onClick={handleMagicButtonClick}>
           Auto-Mapping
         </CompoundButton>
       </div>
-      <div style={{ position: "absolute", bottom: "0px", right: "0px", border: "2px solid purple" }}>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "0px",
+          right: "0px",
+          border: "2px solid purple",
+        }}
+      >
         <SubRectImage
           imageUrl={imgUrl}
-          rect={{ x: magnifierMousePosition[0], y: magnifierMousePosition[1], width: 200, height: 200 , scaleWidth: scaleImageSize[0], scaleHeight: scaleImageSize[1]}}
+          rect={{
+            x: magnifierMousePosition[0],
+            y: magnifierMousePosition[1],
+            width: 200,
+            height: 200,
+            scaleWidth: scaleImageSize[0],
+            scaleHeight: scaleImageSize[1],
+          }}
         />
       </div>
       <div

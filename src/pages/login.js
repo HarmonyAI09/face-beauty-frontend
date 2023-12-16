@@ -3,29 +3,17 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from "../App";
 import {
     makeStyles,
-    shorthands,
 } from "@fluentui/react-components";
 import {
-    Card,
-    CardPreview,
     Input,
     Button,
 } from "@fluentui/react-components";
 import { useNavigate } from 'react-router-dom';
-
-const useStyles = makeStyles({
-    card: {
-        // ...shorthands.margin("auto"),
-        // width: "1024px",
-        // maxWidth: "100%",
-        // height:"100%",
-    },
-});
+import { showNotification } from "../components/NotificationCreator";
 
 
 const Login = ({ }) => {
     const navigate = useNavigate();
-    const styles = useStyles();
     const [isSignIn, setIsSignIn] = useState(true);
 
     const [alertMessage, setAlertMessage] = useState("");
@@ -49,39 +37,32 @@ const Login = ({ }) => {
         const handleSubmit = (e) => {
             e.preventDefault();
             // Make a POST request to the sign-in endpoint in your backend API
+            const formData = {
+                mail: email,
+                pswd: password,
+            }
             fetch('https://vvfd6049pnayrd-8000.proxy.runpod.net/api/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify(formData),
             })
                 .then((response) => response.json())
                 .then((data) => {
                     // Handle success or error response from the backend
-                    if (data.message) {
-                        setAlertMessage(data.message);
-                        setAlertColor("rgb(26,115,232)");
-                        // setIsLoggedIn(true);
+                    if (data.success) {
+                        showNotification("Success",data.status,"success")
                         setUserName(data.name);
-                        setUserEmail(data.mail);
+                        setUserEmail(data.email);
                         setUserLevel(data.level);
                         setExpireDate(data.expire);
-                        console.log(data);
-                        console.log(userName, "name");
-                        console.log(userLevel, "level");
-                        console.log(userEmail, "email");
-                        console.log(expireDate, "date");
-                        console.log(data.name, data.mail, data.level, data.expire);
-                        console.log(userName, userLevel, expireDate, userEmail);
-                        console.log("______________________________");
                         localStorage.setItem('userName', data.name);
-                        localStorage.setItem('userEmail', data.mail);
+                        localStorage.setItem('userEmail', data.email);
                         localStorage.setItem('userLevel', data.level);
                         localStorage.setItem('expireDate', data.expire);
                         navigate("/home");
                     }
                     else {
-                        setAlertMessage(data.detail);
-                        setAlertColor("rgb(255,0,0)");
+                        showNotification("Failed",data.status,"danger")
                     }
 
                 })
@@ -127,25 +108,26 @@ const Login = ({ }) => {
                 console.log('Please fill in all the fields');
                 return;
             }
+            const formData = {
+                name: username,
+                mail: email,
+                pswd: password,
+            }
             // Make a POST request to the sign-up endpoint in your backend API
             fetch('https://vvfd6049pnayrd-8000.proxy.runpod.net/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify(formData),
             })
                 .then((response) => response.json())
                 .then((data) => {
                     // Handle success or error response from the backend
-                    if (data.message) {
-                        setAlertMessage(data.message);
-                        setAlertColor("rgb(26,115,232)");
+                    if (data.success) {
+                        showNotification("Success",data.status,"success")
                     }
                     else {
-                        setAlertMessage(data.detail);
-                        setAlertColor("rgb(255,0,0)");
+                        showNotification("Failed",data.status,"danger")
                     }
-
-
                 })
                 .catch((error) => {
                     // Handle error

@@ -10,14 +10,13 @@ import {
   Button,
 } from "@fluentui/react-components";
 import { UserContext } from "../pages/home";
-import { useContext, useState, useEffect } from "react";
-
-import { CircularProgressbar } from "react-circular-progressbar";
+import { useContext, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
-import { easeQuadInOut, easeQuadIn } from "d3-ease";
-import AnimatedProgressProvider from "./AnimatedProgressProvider";
+import { LoadingComponent } from "./Loading";
 
 export const ScoreAlert = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { eyeSeparationRatio, setEyeSeparationRatio } = useContext(UserContext);
   const { facialThirds, setFacialThirds } = useContext(UserContext);
   const { lateralCanthalTilt, setLateralCanthalTilt } = useContext(UserContext);
@@ -98,6 +97,7 @@ export const ScoreAlert = (props) => {
   const [showingScore, setShowingScore] = useState([0.0, 0.0]);
 
   const handleFrontProfileCalc = async () => {
+    setIsLoading(true);
     const requestBody = {
       gender: gender,
       racial: selectedOption,
@@ -125,7 +125,7 @@ export const ScoreAlert = (props) => {
       medialCanthalAngle: medialCanthalAngle,
     };
 
-    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getfrontmark", {
+    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getfrontscore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -134,10 +134,10 @@ export const ScoreAlert = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         // Handle the response data
-        const mark = data.mark;
-        setFrontProfileMark(mark);
-        setShowingScore([data.mark, data.percent]);
+        setFrontProfileMark(data.score);
+        setShowingScore([data.score, 100]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -148,11 +148,11 @@ export const ScoreAlert = (props) => {
         for (let i = 0; i < 22; i++) {
           tempNotes[i] = data.notes[i];
           templateScores[i] = data.scores[i];
-          templateMaxScores[i] = data.max_scores[i];
+          templateMaxScores[i] = data.maxs[i];
           templateRanges[i] = data.ranges[i];
-          templateValues[i] = data.current_values[i];
-          templateMeasurements[i] = data.measurement_names[i];
-          templateAdvices[i] = data.advice[i];
+          templateValues[i] = data.values[i];
+          templateMeasurements[i] = data.names[i];
+          templateAdvices[i] = data.advices[i];
         }
         setReportNotes(tempNotes);
         setReportScores(templateScores);
@@ -161,6 +161,7 @@ export const ScoreAlert = (props) => {
         setReportCurrentValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
+        setIsLoading(false);
       })
       .catch((error) => {
         // Handle any errors
@@ -169,6 +170,7 @@ export const ScoreAlert = (props) => {
   };
 
   const handleSideProfileCalc = async () => {
+    setIsLoading(true);
     const requestBody = {
       gender: gender,
       racial: selectedOption,
@@ -197,7 +199,7 @@ export const ScoreAlert = (props) => {
       nasalTipAngle: nasalTipAngle,
     };
 
-    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getsidemark", {
+    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getsidescore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -207,9 +209,8 @@ export const ScoreAlert = (props) => {
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
-        const mark = data.mark;
-        setSideProfileMark(mark);
-        setShowingScore([data.mark, data.percent]);
+        setSideProfileMark(data.score);
+        setShowingScore([data.score, 100]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -220,11 +221,11 @@ export const ScoreAlert = (props) => {
         for (let i = 0; i < 23; i++) {
           tempNotes[i + 22] = data.notes[i];
           templateScores[i + 22] = data.scores[i];
-          templateMaxScores[i + 22] = data.max_scores[i];
+          templateMaxScores[i + 22] = data.maxs[i];
           templateRanges[i + 22] = data.ranges[i];
-          templateValues[i + 22] = data.current_values[i];
-          templateMeasurements[i + 22] = data.measurement_names[i];
-          templateAdvices[i + 22] = data.advice[i];
+          templateValues[i + 22] = data.values[i];
+          templateMeasurements[i + 22] = data.names[i];
+          templateAdvices[i + 22] = data.advices[i];
         }
         setReportNotes(tempNotes);
         setReportScores(templateScores);
@@ -233,6 +234,7 @@ export const ScoreAlert = (props) => {
         setReportCurrentValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
+        setIsLoading(false);
       })
       .catch((error) => {
         // Handle any errors
@@ -247,16 +249,15 @@ export const ScoreAlert = (props) => {
     if (props.title === "Side") {
       handleSideProfileCalc();
     }
-    if (props.title === "Total"){
+    if (props.title === "Total") {
       // handleFrontProfileCalc();
       // handleSideProfileCalc();
-      setShowingScore([frontProfileMark+sideProfileMark, (frontProfileMark+sideProfileMark)/5]);
+      setShowingScore([
+        frontProfileMark + sideProfileMark,
+        (frontProfileMark + sideProfileMark) / 5,
+      ]);
     }
   };
-
-  // useEffect(() => {
-  //   handleCalculateButtonClick();
-  // }, [eyeSeparationRatio, gonialAngle]);
 
   return (
     <Dialog modalType="alert">
@@ -273,8 +274,14 @@ export const ScoreAlert = (props) => {
         <DialogBody>
           <DialogTitle>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              {props.title} Profile Harmony Score {" - "}
-              {Math.max(parseFloat(showingScore[1]).toFixed(1), 0)}%
+              {isLoading ? (
+                <LoadingComponent />
+              ) : (
+                <>
+                  {props.title} Profile Harmony Score {" - "}
+                  {Math.max(parseFloat(showingScore[1]).toFixed(1), 0)}%
+                </>
+              )}
             </div>
           </DialogTitle>
           <DialogActions>

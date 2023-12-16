@@ -49,7 +49,7 @@ const Login = ({ }) => {
         const handleSubmit = (e) => {
             e.preventDefault();
             // Make a POST request to the sign-in endpoint in your backend API
-            fetch('https://ld6vweb0h3ycbt-8000.proxy.runpod.net/api/signin', {
+            fetch('https://vvfd6049pnayrd-8000.proxy.runpod.net/api/signin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -128,7 +128,7 @@ const Login = ({ }) => {
                 return;
             }
             // Make a POST request to the sign-up endpoint in your backend API
-            fetch('https://ld6vweb0h3ycbt-8000.proxy.runpod.net/api/signup', {
+            fetch('https://vvfd6049pnayrd-8000.proxy.runpod.net/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password }),

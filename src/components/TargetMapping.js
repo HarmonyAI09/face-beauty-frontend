@@ -237,7 +237,7 @@ export const FrontTargetMapping = ({selectedPoint,handleSelectPointChange,}) => 
       formData.append("image", selectedFrontImage);
 
       const response = await fetch(
-        "https://ld6vweb0h3ycbt-8000.proxy.runpod.net/frontmagic",
+        "https://vvfd6049pnayrd-8000.proxy.runpod.net/frontmagic",
         {
           method: "POST",
           body: formData,
@@ -549,7 +549,7 @@ export const SideTargetMapping = ({selectedPoint,handleSelectPointChange,}) => {
       formData.append("image", selectedSideImage);
 
       const response = await fetch(
-        "https://ld6vweb0h3ycbt-8000.proxy.runpod.net/sidemagic",
+        "https://vvfd6049pnayrd-8000.proxy.runpod.net/sidemagic",
         {
           method: "POST",
           body: formData,

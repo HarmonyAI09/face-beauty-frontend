@@ -381,7 +381,8 @@ export const ViewReportDialog = () => {
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
                   <React.Fragment key={index}>
-                    {item.toFixed(2)}
+                    {/* {item.toFixed(2)} */}
+                    {item}
                     {index !== props.range.length - 1 && "-"}
                   </React.Fragment>
                 ))

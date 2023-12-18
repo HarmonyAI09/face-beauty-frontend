@@ -134,8 +134,7 @@ export const ScoreAlert = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        // Handle the response data
+        console.log("front**************", data)
         setFrontProfileMark(data.score);
         setShowingScore([data.score, data.score/3.055]);
         const tempNotes = [...reportNotes];
@@ -211,6 +210,7 @@ export const ScoreAlert = (props) => {
         // Handle the response data
         setSideProfileMark(data.score);
         setShowingScore([data.score, data.score/1.945]);
+        console.log("side**************", data)
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -218,14 +218,14 @@ export const ScoreAlert = (props) => {
         const templateValues = [...reportCurrentValues];
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
-        for (let i = 0; i < 23; i++) {
-          tempNotes[i + 22] = data.notes[i];
-          templateScores[i + 22] = data.scores[i];
-          templateMaxScores[i + 22] = data.maxs[i];
-          templateRanges[i + 22] = data.ranges[i];
-          templateValues[i + 22] = data.values[i];
-          templateMeasurements[i + 22] = data.names[i];
-          templateAdvices[i + 22] = data.advices[i];
+        for (let i = 0; i < 45; i++) {
+          tempNotes[i] = data.notes[i];
+          templateScores[i] = data.scores[i];
+          templateMaxScores[i] = data.maxs[i];
+          templateRanges[i] = data.ranges[i];
+          templateValues[i] = data.values[i];
+          templateMeasurements[i] = data.names[i];
+          templateAdvices[i] = data.advices[i];
         }
         setReportNotes(tempNotes);
         setReportScores(templateScores);

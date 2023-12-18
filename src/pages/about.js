@@ -4,18 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { Text, Image } from "@fluentui/react-components";
 import {
     makeStyles,
-    Body1,
-    Caption1,
-    Button,
     shorthands,
 } from "@fluentui/react-components";
-import { ArrowReplyRegular, ShareRegular } from "@fluentui/react-icons";
 import {
     Card,
-    CardFooter,
-    CardHeader,
     CardPreview,
-    Divider
 } from "@fluentui/react-components";
 
 const resolveAsset = (asset: string) => {
@@ -28,17 +21,17 @@ const resolveAsset = (asset: string) => {
 const useStyles = makeStyles({
     card: {
         ...shorthands.margin("auto"),
-        width: "1024px",
+        width: "90%",
         maxWidth: "100%",
     },
 });
 
 function InfoGraphic (props) {
     return(
-        <div style={{width:"180px", height:"180px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", color:"purple", margin:"10px", padding:"20px"}}
+        <div style={{width:"180px", height:"180px", border:"3px dashed #fe036a", borderRadius:"10px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", color:"#fe036a", margin:"10px", padding:"20px"}}
         title = {props.desc}>
             <br/>
-            <div style={{color:"purple", fontSize:"50px", display:"flex", }}><b>{props.times}</b></div>
+            <div style={{color:"#fe036a", fontSize:"50px", display:"flex", }}><b>{props.times}</b></div>
             <br/>
             <br/>
             <div style={{marginLeft:"auto", marginRight:"auto"}}><b>{props.string}</b></div>
@@ -48,8 +41,8 @@ function InfoGraphic (props) {
 
 function OnlyTextIntro (props) {
     return(
-        <div style={{width:"200px", border:"3px dashed purple", borderRadius:"10px", display:"flex", flexDirection:"column", 
-            alignItems:"center", justifyContent:"center", color:"purple", margin:"10px", padding:"10px", fontSize:"14px"}}>
+        <div style={{width:"200px", border:"3px dashed #fe036a", borderRadius:"10px", display:"flex", flexDirection:"column", 
+            alignItems:"center", justifyContent:"center", color:"#fe036a", margin:"10px", padding:"10px", fontSize:"14px"}}>
             <b>{props.string}</b>
         </div>
     );
@@ -58,10 +51,9 @@ function OnlyTextIntro (props) {
 function About() {
     const styles = useStyles();
     return (
-        <div style={{ width: "100%", paddingTop: "300px", paddingBottom: "30px" }}>
+        <div style={{ width: "100%", paddingTop: "250px", paddingBottom: "30px" }}>
             <Card className={styles.card}>
-
-                <CardPreview style={{ padding: "20px" }}>
+                <CardPreview style={{ padding: "20px", paddingLeft:"50px", paddingRight:"50px" }}>
                     <div style={{display:"flex", justifyContent:"center", fontSize:"32px", margin:"20px"}}>About Us</div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
                         <div style={{ padding: "15px", color: "darkslategray", fontSize: "14px" }}>
@@ -93,13 +85,13 @@ function About() {
                             <br/>
                             <div style={{textAlign:"end"}}><b>Ditmar - Harmony Founder</b></div>
                         </div>
-                        <div style={{display:"flex", flexDirection:"row"}}>
+                        <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
                             <InfoGraphic times={"5x+"} string={"More facial assessments than competitors"}></InfoGraphic>
                             <InfoGraphic times={"Robust"} string={"ML algorithms catering to your specific face"}></InfoGraphic>
                             <InfoGraphic times={"15x"} string={"Value for your money within Harmony report alone"}></InfoGraphic>
                             <InfoGraphic times={"80"} string={"Combined facial landmarks in the front and side profile"}></InfoGraphic>
                         </div>
-                        <div style={{display:"flex", flexDirection:"row"}}>
+                        <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
                             <OnlyTextIntro string={"More detail than an initial consultation with a surgeon at a fraction of the cost"}></OnlyTextIntro>
                             <OnlyTextIntro string={"Time effective -- get 3 hours’ worth of human analysis in seconds(helps surgeons too!)"}></OnlyTextIntro>
                             <OnlyTextIntro string={"First-of-its-kind features like “idealize”, only possible through Harmony’s unique beauty formula and algorithms."}></OnlyTextIntro>

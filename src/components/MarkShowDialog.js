@@ -125,7 +125,7 @@ export const ScoreAlert = (props) => {
       medialCanthalAngle: medialCanthalAngle,
     };
 
-    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getfrontscore", {
+    fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/getfrontscore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -137,7 +137,7 @@ export const ScoreAlert = (props) => {
         console.log(data);
         // Handle the response data
         setFrontProfileMark(data.score);
-        setShowingScore([data.score, 100]);
+        setShowingScore([data.score, data.score/3.055]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -199,7 +199,7 @@ export const ScoreAlert = (props) => {
       nasalTipAngle: nasalTipAngle,
     };
 
-    fetch("https://vvfd6049pnayrd-8000.proxy.runpod.net/getsidescore", {
+    fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/getsidescore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -210,7 +210,7 @@ export const ScoreAlert = (props) => {
       .then((data) => {
         // Handle the response data
         setSideProfileMark(data.score);
-        setShowingScore([data.score, 100]);
+        setShowingScore([data.score, data.score/1.945]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
@@ -259,13 +259,23 @@ export const ScoreAlert = (props) => {
     }
   };
 
+  const isFrontTitle = props.title === "Front";
+  const isSideTitle = props.title === "Side";
+  const isTotalTitle = props.title === "Total";
+
+  const isDisabled =
+    (isFrontTitle && eyeSeparationRatio === 0.0) ||
+    (isSideTitle && gonialAngle === 0.0) ||
+    (isTotalTitle && (eyeSeparationRatio === 0.0 || gonialAngle === 0.0));
+
   return (
     <Dialog modalType="alert">
       <DialogTrigger disableButtonEnhancement>
         <Button
-          shape="square"
+          shape="circular"
           style={{ width: "200px", margin: "5px" }}
           onClick={handleCalculateButtonClick}
+          disabled={isDisabled}
         >
           {props.title} Profile
         </Button>
@@ -286,7 +296,7 @@ export const ScoreAlert = (props) => {
           </DialogTitle>
           <DialogActions>
             <DialogTrigger disableButtonEnhancement>
-              <Button shape="square" appearance="secondary">
+              <Button shape="circular" appearance="secondary">
                 Close
               </Button>
             </DialogTrigger>

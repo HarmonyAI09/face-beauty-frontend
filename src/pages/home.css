@@ -27,16 +27,16 @@
     overflow-y: auto;
 }
 
-.image-viewer{
+.image-viewer {
     height: 100%;
     width: 50%;
-    overflow:auto;
+    overflow: auto;
 }
 
-.benefit-list-viewer{
+.benefit-list-viewer {
     height: 350px;
     width: 310px;
-    overflow-y:auto;
+    overflow-y: auto;
 }
 
 .badge-input {
@@ -77,6 +77,49 @@
     width: 100px;
     height: 16px;
     display: flex;
+}
+
+.main_parent {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 160px);
+    background-color: #fdd9e5;
+}
+
+.m_reference {
+    width: 15%;
+    margin: 10px;
+    border-radius: 10px;
+    height: calc(100% - 20px);
+    border: 1px solid #f4347f;
+    background-color: "#fdd9e5";
+    color: "#f4347f";
+    z-index: "100";
+}
+
+.m_profile {
+    width: 75vh;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: #fdd9e5;
+}
+
+.m_setting {
+    margin: 10px;
+    border-radius: 10px;
+    height: calc(100% - 20px);
+    border: 1px solid #f4347f;
+}
+
+.image_drawer {
+    width: 35vh;
+    border: 2px solid #f4347f;
+    border-radius: 20px;
 }
 
 .badge-dropdown select {
@@ -142,14 +185,46 @@
         /* Scroll the content to the left */
     }
 }
-
+.m_upload_button{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    color: #f4347f;
+    height: 50px;
+    width: 50px;
+    border: solid 2px #f4347f;
+    background-color: #fdc2d6;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.m_button{
+    color: #f4347f;
+    height: 40px;
+    width: 120px;
+    border: solid 2px #f4347f;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: medium;
+}
 .lock-div {
     position: relative;
-    top: 0;
-    right: 0;
+    top: calc(4% + 50px);
+    right: 2%;
     width: 100%;
+    color: #f4347f;
+    height: 50px;
+    width: 50px;
+    border: solid 2px #f4347f;
+    border-radius: 20px;
     z-index: 99;
-    background-color: rgba(235, 217, 233, 0.95);
+    background-color: #fdc2d6;
     /* Set a high z-index value to ensure it appears on top */
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -161,7 +236,6 @@
 }
 
 .main_child {
-    max-height: 90%;
     min-width: 300px;
     overflow-y: auto;
     z-index: 99;
@@ -183,24 +257,32 @@
 .front_photo_area {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
 }
 
-.photo_div{
+.side_photo_area {
     position: relative;
-    border: solid 1px purple;
-    width: 375px;
-    height: 375px;
-    margin: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.photo_div {
+    position: relative;
+    width: 35vh;
+    height: 35vh;
+    margin: 1px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.fvgz9i8{
+.fvgz9i8 {
     max-width: 1920px;
 }
+
 /* position: "relative", display: "flex", width: "50%", justifyContent: "space-between" }} onMouseOver={unavailableAreaInHandle} onMouseOut={unavailableAreaOutHandle}>
                             <div style={{ display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center" */

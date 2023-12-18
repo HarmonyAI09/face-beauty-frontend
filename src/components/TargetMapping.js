@@ -5,15 +5,16 @@ import Draggable from "react-draggable";
 import { useEffect, useRef, useState, useContext } from "react";
 
 import { UserContext } from "../pages/home";
-import { LoadingComponent } from "./Loading";
+import { FaRobot, FaSpinner } from "react-icons/fa";
 
+const tipSentence = "MOVE POINTS AROUND AS NEEDED TO COPY THE LEFT IMAGE";
 const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-    const radius = 4;
+    const radius = 2;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
@@ -25,7 +26,7 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   return (
     <Draggable
       bounds="parent"
-      position={{ x: position.x, y: position.y }}
+      position={{ x: position.x * 0.75, y: position.y * 0.75 }}
       onDrag={(e, data) => onDrag(data, id)}
     >
       <div
@@ -100,8 +101,6 @@ export const FrontTargetMapping = ({
       uploadImageheight > uploadImagewidth
         ? uploadImageheight
         : uploadImagewidth;
-    // const perX = x * (1600 / 100) - 50;
-    // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
       perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
@@ -117,6 +116,8 @@ export const FrontTargetMapping = ({
         height: `${height}px`,
         overflow: "hidden",
         position: "relative",
+        border: "3px solid #f4347f",
+        borderRadius: "99px",
       },
       image: {
         position: "absolute",
@@ -133,7 +134,7 @@ export const FrontTargetMapping = ({
         left: "50%",
         height: "100%",
         width: "2px", // width of the line
-        backgroundColor: "red",
+        backgroundColor: "#f4347f",
         transform: "translateX(-50%)",
       },
       horizontalLine: {
@@ -142,7 +143,7 @@ export const FrontTargetMapping = ({
         left: "0",
         width: "100%",
         height: "2px", // height of the line
-        backgroundColor: "red",
+        backgroundColor: "#f4347f",
         transform: "translateY(-50%)",
       },
     };
@@ -181,6 +182,8 @@ export const FrontTargetMapping = ({
   }, [selectedFrontImage]);
 
   const handleDrag = (data, id) => {
+    data.x = data.x / 0.75;
+    data.y = data.y / 0.75;
     let x1 = 0.0;
     let y1 = 0.0;
     if (scaleImageSize[0] < scaleImageSize[1]) {
@@ -229,8 +232,8 @@ export const FrontTargetMapping = ({
   };
 
   const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
-    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
+    width: uploadImageheight > uploadImagewidth ? "auto" : "600px",
+    height: uploadImageheight > uploadImagewidth ? "600px" : "auto",
     margin: "5px",
   };
 
@@ -241,7 +244,7 @@ export const FrontTargetMapping = ({
       formData.append("image", selectedFrontImage);
 
       const response = await fetch(
-        "https://vvfd6049pnayrd-8000.proxy.runpod.net/frontmagic",
+        "https://rxturftcn25yfu-8000.proxy.runpod.net/frontmagic",
         {
           method: "POST",
           body: formData,
@@ -275,6 +278,7 @@ export const FrontTargetMapping = ({
       setMarkPoints(updatedMarkPoints);
     } catch (error) {
       // Handle any errors
+      setIsLoading(false);
       console.error(error);
     }
   };
@@ -292,16 +296,16 @@ export const FrontTargetMapping = ({
           display: "flex",
           justifyContent: "center",
           color: "red",
-          fontSize: "24px",
+          fontSize: "18px",
           alignItems: "center",
         }}
       >
-        <b>Move points around as needed to copy the left image</b>
+        <b>{tipSentence}</b>
       </div>
       <div
         style={{
-          width: "800px",
-          height: "800px",
+          width: "600px",
+          height: "600px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -321,21 +325,40 @@ export const FrontTargetMapping = ({
         {!selectedFrontImage && (
           <img
             src={"./images/front_blank.jpg"}
-            style={{ width: "800px", height: "800px" }}
+            style={{ width: "600px", height: "600px" }}
           ></img>
         )}
-      </div>
-      <div style={{ position: "absolute", bottom: "0px", zIndex: 9 }}>
-        <CompoundButton appearance="square" onClick={handleMagicButtonClick}>
-          Auto-Mapping
-        </CompoundButton>
       </div>
       <div
         style={{
           position: "absolute",
-          bottom: "0px",
-          right: "0px",
-          border: "2px solid purple",
+          bottom: "1%",
+          left: "1%",
+          zIndex: 9,
+          height: "50px",
+          width: "50px",
+          border: "2px solid #f4347f",
+          backgroundColor: "#fdc2d6",
+          borderRadius: "20px",
+          color: "#f4347f",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor:"pointer",
+        }}
+        onClick={handleMagicButtonClick}
+      >
+        {isLoading ? (
+          <FaSpinner size={30} className="spin-animation" />
+        ) : (
+          <FaRobot size={30} />
+        )}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "1%",
+          right: "1%",
         }}
       >
         <SubRectImage
@@ -355,8 +378,8 @@ export const FrontTargetMapping = ({
           position: "absolute",
           top: "0px",
           right: "0px",
-          height: "800px",
-          width: "800px",
+          height: "600px",
+          width: "600px",
           zIndex: "5",
         }}
       >
@@ -390,6 +413,7 @@ export const SideTargetMapping = ({
   selectedPoint,
   handleSelectPointChange,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
   const { markPoints, setMarkPoints } = useContext(UserContext);
@@ -438,8 +462,6 @@ export const SideTargetMapping = ({
       uploadImageheight > uploadImagewidth
         ? uploadImageheight
         : uploadImagewidth;
-    // const perX = x * (1600 / 100) - 50;
-    // const perY = y * (1600 / 100) - 50;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
       perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
@@ -455,6 +477,8 @@ export const SideTargetMapping = ({
         height: `${height}px`,
         overflow: "hidden",
         position: "relative",
+        border: "3px solid #f4347f",
+        borderRadius: "99px",
       },
       image: {
         position: "absolute",
@@ -471,7 +495,7 @@ export const SideTargetMapping = ({
         left: "50%",
         height: "100%",
         width: "2px", // width of the line
-        backgroundColor: "red",
+        backgroundColor: "#f4347f",
         transform: "translateX(-50%)",
       },
       horizontalLine: {
@@ -480,7 +504,7 @@ export const SideTargetMapping = ({
         left: "0",
         width: "100%",
         height: "2px", // height of the line
-        backgroundColor: "red",
+        backgroundColor: "#f4347f",
         transform: "translateY(-50%)",
       },
     };
@@ -519,6 +543,8 @@ export const SideTargetMapping = ({
   }, [selectedSideImage]);
 
   const handleDrag = (data, id) => {
+    data.x = data.x / 0.75;
+    data.y = data.y / 0.75;
     let x1 = 0.0;
     let y1 = 0.0;
     if (scaleImageSize[0] < scaleImageSize[1]) {
@@ -551,20 +577,19 @@ export const SideTargetMapping = ({
   };
 
   const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
-    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
+    width: uploadImageheight > uploadImagewidth ? "auto" : "600px",
+    height: uploadImageheight > uploadImagewidth ? "600px" : "auto",
     margin: "5px",
   };
 
-  const canvasRef = useRef(null);
-
   const handleMagicButtonClick = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("image", selectedSideImage);
 
       const response = await fetch(
-        "https://vvfd6049pnayrd-8000.proxy.runpod.net/sidemagic",
+        "https://rxturftcn25yfu-8000.proxy.runpod.net/sidemagic",
         {
           method: "POST",
           body: formData,
@@ -590,10 +615,12 @@ export const SideTargetMapping = ({
           y: data.points[i][1],
         };
       }
-
+      
+      setIsLoading(false);
       setMarkPoints(updatedMarkPoints);
     } catch (error) {
       // Handle any errors
+      setIsLoading(false);
       console.error(error);
     }
   };
@@ -611,16 +638,16 @@ export const SideTargetMapping = ({
           display: "flex",
           justifyContent: "center",
           color: "red",
-          fontSize: "24px",
+          fontSize: "18px",
           alignItems: "center",
         }}
       >
-        <b>Move points around as needed to copy the left image</b>
+        <b>{tipSentence}</b>
       </div>
       <div
         style={{
-          width: "800px",
-          height: "800px",
+          width: "600px",
+          height: "600px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -639,21 +666,40 @@ export const SideTargetMapping = ({
         {!selectedSideImage && (
           <img
             src={"./images/side_blank.jpg"}
-            style={{ width: "800px", height: "800px" }}
+            style={{ width: "600px", height: "600px" }}
           ></img>
         )}
-      </div>
-      <div style={{ position: "absolute", bottom: "0px", zIndex: 9 }}>
-        <CompoundButton appearance="square" onClick={handleMagicButtonClick}>
-          Auto-Mapping
-        </CompoundButton>
       </div>
       <div
         style={{
           position: "absolute",
-          bottom: "0px",
-          right: "0px",
-          border: "2px solid purple",
+          bottom: "1%",
+          left: "1%",
+          zIndex: 9,
+          height: "50px",
+          width: "50px",
+          border: "2px solid #f4347f",
+          backgroundColor: "#fdc2d6",
+          borderRadius: "20px",
+          color: "#f4347f",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor:"pointer",
+        }}
+        onClick={handleMagicButtonClick}
+      >
+        {isLoading ? (
+          <FaSpinner size={30} className="spin-animation" />
+        ) : (
+          <FaRobot size={30} />
+        )}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "1%",
+          right: "1%"
         }}
       >
         <SubRectImage
@@ -673,8 +719,8 @@ export const SideTargetMapping = ({
           position: "absolute",
           top: "0px",
           right: "0px",
-          height: "800px",
-          width: "800px",
+          height: "600px",
+          width: "600px",
           zIndex: "5",
         }}
       >

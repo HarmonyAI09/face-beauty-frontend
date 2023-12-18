@@ -29,7 +29,7 @@ function App() {
 
     <Router>
       <AppContext.Provider value={{ userName, userEmail, userLevel, expireDate, setUserName, setUserEmail, setUserLevel, setExpireDate }}>
-        <div className="App" style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div className="App" style={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
           <ReactNotifications/>
           <BeautyNavbar ></BeautyNavbar>
           <div style={{ height: "-webkit-fill-available", justifyContent: "space-around", display: "flex", alignItems: "center", overflowY: "auto" }}>

@@ -7,53 +7,47 @@ import {
   DialogTitle,
   DialogContent,
   DialogBody,
-  DialogActions,
   Button,
   Divider,
-  TableBody,
-  TableCell,
-  TableRow,
-  Table,
-  TableHeader,
-  TableHeaderCell,
-  TableCellLayout,
-  PresenceBadgeStatus,
-  Avatar,
-  Image,
   Input,
   Tooltip,
 } from "@fluentui/react-components";
+import { FaExclamationTriangle } from "react-icons/fa";
+import { FaUserCheck } from "react-icons/fa";
+
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { UserContext } from "../pages/home";
-import { useContext, useState, useEffect, useCallback } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MeasurementOverview } from "./MeasurementOverview";
 
 import "react-circular-progressbar/dist/styles.css";
 import JSZip from "jszip";
+import EditableString from "./EditableString";
+import { showNotification } from "./NotificationCreator";
 
 const ReportTableHeader = () => {
   return (
-    <div style={{ display: "flex", width: "100%", textAlign: "center" }}>
+    <div style={{ display: "flex", width: "100%", textAlign: "center", fontSize:"14px", fontFamily:"monospace", fontWeight:"700" }}>
       <div style={{ width: "10%" }}>
-        <b>Image</b>
+        <b>IMAGE</b>
       </div>
       <div style={{ width: "10%" }}>
-        <b>Measurement Name</b>
+        <b>MEASURE NAME</b>
       </div>
       <div style={{ width: "5%" }}>
-        <b>Value</b>
+        <b>VALUE</b>
       </div>
       <div style={{ width: "5%" }}>
-        <b>Your Score</b>
+        <b>SCORE</b>
       </div>
-      <div style={{ width: "5%" }}>
-        <b>Ideal Range</b>
-      </div>
-      <div style={{ width: "35%" }}>
-        <b>Your Measurement's Meaning</b>
+      <div style={{ width: "10%" }}>
+        <b>IDEAL RANGE</b>
       </div>
       <div style={{ width: "30%" }}>
-        <b>Improvement Advice (if applicable)</b>
+        <b>MEANING</b>
+      </div>
+      <div style={{ width: "30%" }}>
+        <b>ADVICE</b>
       </div>
     </div>
   );
@@ -279,6 +273,7 @@ export const ViewReportDialog = () => {
       
       This angle is similar in some respects to the nasolabial angle, but it also provides unique information about the nasal tip itself. Similar to the NL angle, it can indicate whether the nose is perhaps too upturned.`,
   ];
+  const [isLoading, setIsLoading] = useState(false);
   const { gender } = useContext(UserContext);
   const { selectedOption } = useContext(UserContext);
   const { reportNotes, setReportNotes } = useContext(UserContext);
@@ -299,16 +294,17 @@ export const ViewReportDialog = () => {
   const [measurementImages, setMeasurementImages] = useState([]);
 
   const getMeasurementImages = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("front", selectedFrontImage);
       formData.append("side", selectedSideImage);
-      formData.append("points", JSON.stringify(markPoints));
+      formData.append("points", JSON.stringify({...markPoints}));
 
       console.log(formData);
 
       const response = await fetch(
-        "https://vvfd6049pnayrd-8000.proxy.runpod.net/generate",
+        "https://rxturftcn25yfu-8000.proxy.runpod.net/generate",
         {
           method: "POST",
           body: formData,
@@ -332,12 +328,15 @@ export const ViewReportDialog = () => {
         imageUrls.push(imageUrl);
         setMeasurementImages(imageUrls);
       });
+      setIsLoading(false);
+      showNotification("Success", "Successfully generate images.", "success");
     } catch (error) {
+      setIsLoading(false);
+      showNotification("Failed", "Image generation has been failed.", "danger");
       console.error(error);
     }
   };
-  useEffect(() => {
-  }, [measurementImages]);
+  useEffect(() => {}, [measurementImages]);
 
   const ReportTableRow = (props) => {
     return (
@@ -353,17 +352,12 @@ export const ViewReportDialog = () => {
         >
           <div style={{ width: "10%" }}>
             <Tooltip relationship="label" content={props.overview}>
-              {/* <Image src={measurementImages[0]}></Image> */}
               <MeasurementOverview
+                isLoading = {isLoading}
                 source={measurementImages[props.source]}
-                // image_url={
-                //   "blob:http://localhost:3000/d3471383-f55c-466a-a3b8-2f6a3b8a2a69"
-                // }
                 title={props.measurement}
                 overview={props.overview}
               ></MeasurementOverview>
-              {/* <img src={"blob:http://localhost:3000/d3471383-f55c-466a-a3b8-2f6a3b8a2a69"}></img> */}
-              {/* <img src={measurementImages[props.source]}></img> */}
             </Tooltip>
           </div>
           <div style={{ width: "10%" }}>{props.measurement}</div>
@@ -383,7 +377,7 @@ export const ViewReportDialog = () => {
               : ""}
           </div>
           <div style={{ width: "5%" }}>{props.score}</div>
-          <div style={{ width: "5%" }}>
+          <div style={{ width: "10%" }}>
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
                   <React.Fragment key={index}>
@@ -395,7 +389,7 @@ export const ViewReportDialog = () => {
           </div>
           <div
             style={{
-              width: "25%",
+              width: "30%",
               textAlign: "left",
               paddingLeft: "5px",
               height: "80px",
@@ -406,7 +400,7 @@ export const ViewReportDialog = () => {
           </div>
           <div
             style={{
-              width: "40%",
+              width: "30%",
               textAlign: "left",
               paddingLeft: "5px",
               height: "80px",
@@ -444,7 +438,7 @@ export const ViewReportDialog = () => {
     <Dialog modalType="alert">
       <DialogTrigger disableButtonEnhancement>
         <Button
-          shape="square"
+          shape="circular"
           onClick={getMeasurementImages}
           style={{ width: "200px", margin: "5px" }}
         >
@@ -452,7 +446,12 @@ export const ViewReportDialog = () => {
         </Button>
       </DialogTrigger>
       <DialogSurface
-        style={{ width: "90vw", maxWidth: "1920px", height: "90vh" }}
+        style={{
+          width: "90vw",
+          maxWidth: "1920px",
+          height: "90vh",
+          backgroundColor: "#fdd9e5",
+        }}
       >
         <DialogBody>
           <DialogTitle
@@ -469,52 +468,78 @@ export const ViewReportDialog = () => {
             <div
               style={{
                 display: "flex",
-                alignContent: "center",
-                justifyContent: "center",
-                alignItems: "baseline",
-              }}
-            >
-              <h1>Harmony </h1>
-              <h4>&nbsp;by creatingattractive</h4>
-            </div>
-            <div
-              style={{
-                display: "flex",
                 justifyContent: "center",
                 position: "relative",
               }}
             >
-              <div style={{ color: "purple", fontSize: "40px" }}>
+              <div
+                style={{
+                  color: "#fe036a",
+                  fontSize: "40px",
+                  fontWeight: "700",
+                }}
+              >
                 {Math.max(
                   ((sideProfileMark + frontProfileMark) / 5).toFixed(1),
                   0
                 )}
-                % Facial harmony
+                % FACIAL HARMONY
               </div>
             </div>
           </DialogTitle>
-          <DialogContent style={{}}>
+          <DialogContent style={{ color: "#f4347f" }}>
             <div>
               <div>
-                <div style={{ fontSize: "20px" }}>
-                  {"Harmony report : "}
-                  {gender ? " Male, " : " Female, "} {selectedOption}
+                <div
+                  style={{
+                    fontSize: "20px",
+                    display: "flex",
+                    color: "#f4347f",
+                    fontWeight: "600",
+                    fontFamily:"monospace",
+                  }}
+                >
+                  <FaExclamationTriangle />
+                  &nbsp;
+                  {"HARMONY REPORT"}
                 </div>
-                <div style={{ fontSize: "18px", marginTop: "8px" }}>
-                  <div>
-                    {"Name : "}
-                    <Input placeholder="Enter your name here" />
-                  </div>
-                  {/* <div>
-                    <DatePicker placeholder="Select a date..." />
-                  </div> */}
+                <div
+                  style={{
+                    fontWeight: "500",
+                    fontSize: "18px",
+                    marginTop: "8px",
+                    display: "flex",
+                    alignItems: "end",
+                    paddingLeft: "20px",
+                    color: "#fc72a6",
+                    fontFamily:"monospace",
+                  }}
+                >
+                  <FaUserCheck />
+                  &nbsp;
+                  {gender ? " Male, " : " Female, "} {selectedOption}, &nbsp;
+                  <EditableString />
                 </div>
               </div>
-              <div>
-                Welcome to Harmony’s full facial analysis. Below you will find a
+              <div
+                style={{
+                  width: "calc(100% - 32px)",
+                  padding: "16px",
+                  paddingBottom: "0px",
+                  color: "#f4347f",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  fontFamily:"monospace",
+                }}
+              >
+                Welcome to Harmony’s full facial analysis. 
+                <br/>
+                Below you will find a
                 list of over 45 facial assessments, what they indicate about
                 your face, and any potential improvements associated with each
-                measurement. We hope this information is insightful and helps
+                measurement. 
+                <br/>
+                We hope this information is insightful and helps
                 you on your journey to looking your best!
               </div>
             </div>

@@ -10,45 +10,50 @@ import {
   Button,
   Image,
 } from "@fluentui/react-components";
+import { FaSpinner } from "react-icons/fa";
 
 export const MeasurementOverview = (props) => {
   return (
     <Dialog>
       <DialogTrigger disableButtonEnhancement>
-        <Image
-          shape="circular"
-          // src={"./images/report/" + props.source + ".jpg"}
-          src={props.source}
-          width={70}
-          style={{ border: "2px solid purple", cursor: "pointer" }}
-        ></Image>
-        {/* <img></img> */}
-        {/* <img src={props.image_url}></img> */}
+        {props.isLoading ? (
+          <FaSpinner size={50} className="spin-animation"/>
+        ) : (
+          <Image
+            shape="circular"
+            src={props.source}
+            width={70}
+            style={{ border: "2px solid #f4347f", cursor: "pointer" }}
+          ></Image>
+        )}
       </DialogTrigger>
-      <DialogSurface>
+      <DialogSurface style={{ backgroundColor: "#fbe0e8" }}>
         <DialogBody>
-          <DialogTitle>{props.title}</DialogTitle>
+          <DialogTitle style={{ color: "#fe036a" }}>{props.title}</DialogTitle>
           <DialogContent>
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
+                border: "1px solid #fe036a",
+                backgroundColor: "#fdd9e5",
               }}
             >
-              <Image
-                shape="rect"
-                width={500}
-                src={props.source}
-              ></Image>
-              <div>{props.overview}</div>
+              {props.isLoading?<FaSpinner size={50} className="spin-animation"/>:<Image shape="rect" src={props.source}></Image>}              
+              <div
+                style={{
+                  fontWeight: "100",
+                  color: "#fe036a",
+                  height: "292px",
+                  overflowY: "auto",
+                  marginLeft: "20px",
+                  padding: "4px",
+                }}
+              >
+                <div>{props.overview}</div>
+              </div>
             </div>
           </DialogContent>
-          <DialogActions>
-            <DialogTrigger disableButtonEnhancement>
-              <Button appearance="secondary">Close</Button>
-            </DialogTrigger>
-          </DialogActions>
         </DialogBody>
       </DialogSurface>
     </Dialog>

@@ -11,3 +11,7 @@
 .spin-animation {
     animation: spin 2s linear infinite;
 }
+
+.App{
+    background-color: #fdd9e5;
+}

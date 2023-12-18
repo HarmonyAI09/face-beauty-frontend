@@ -20,6 +20,7 @@ import {
 } from "../components/MappingModal";
 import { ScoreAlert } from "../components/MarkShowDialog";
 import { ViewReportDialog } from "../components/ViewReportModalDialog";
+import { FaCloudUploadAlt } from "react-icons/fa";
 
 export const UserContext = createContext();
 
@@ -39,19 +40,16 @@ function Home() {
 
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
-  const [lock, setLock] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
-  const [gender, setGender] = useState("1");
+  const [gender, setGender] = useState(1);
   const [selectedOption, setSelectedOption] = useState("Caucasian");
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-    console.log(gender);
+  const handleGenderChange = (value) => {
+    setGender(value === "true");
   };
 
   const [frontProfileMark, setFrontProfileMark] = useState(0.0);
@@ -303,9 +301,8 @@ function Home() {
   };
 
   const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "365px",
-    height: uploadImageheight > uploadImagewidth ? "365px" : "auto",
-    margin: "5px",
+    width: uploadImageheight > uploadImagewidth ? "auto" : "35vh",
+    height: uploadImageheight > uploadImagewidth ? "35vh" : "auto",
   };
 
   const handleSideImageSelect = (event) => {
@@ -327,9 +324,8 @@ function Home() {
   };
 
   const uploadSideImageStyle = {
-    width: sideImageheight > sideImagewidth ? "auto" : "365px",
-    height: sideImageheight > sideImagewidth ? "365px" : "auto",
-    margin: "5px",
+    width: sideImageheight > sideImagewidth ? "auto" : "35vh",
+    height: sideImageheight > sideImagewidth ? "35vh" : "auto",
   };
 
   const handleFrontUploadButtonClick = () => {
@@ -464,28 +460,21 @@ function Home() {
         setReportAdvices,
       }}
     >
-      <div
-        className="main_parent"
-        style={{
-          display: "flex",
-          position: "relative",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="main_parent">
         <div
           className="main_child m_setting"
           style={{
             width: "15%",
-            color: "purple",
-            backgroundColor: "white",
+            color: "#f4347f",
+            backgroundColor: "#fdd9e5",
             zIndex: "100",
           }}
         >
           <div
             style={{
               height: "30px",
-              backgroundColor: "#4e224a",
-              color: "#d8b5d5",
+              backgroundColor: "#f4347f",
+              color: "#fdd9e5",
               fontSize: "16px",
               display: "flex",
               alignItems: "center",
@@ -496,9 +485,9 @@ function Home() {
           </div>
           <div
             className="custom-scroll"
-            style={{ padding: "7px", color: "purple" }}
+            style={{ padding: "7px", color: "#f4347f" }}
           >
-            <Divider style={{ padding: "8px", color: "purple" }}>
+            <Divider style={{ padding: "8px", color: "#f4347f" }}>
               Gender
             </Divider>
             <div
@@ -509,20 +498,20 @@ function Home() {
             >
               <RadioGroup style={{ display: "contents" }}>
                 <Radio
-                  value="1"
+                  value="true"
                   label="Male"
-                  checked={gender === "1"}
-                  onChange={handleGenderChange}
+                  checked={gender}
+                  onChange={() => handleGenderChange("true")}
                 />
                 <Radio
-                  value="0"
+                  value="false"
                   label="Female"
-                  checked={gender === "0"}
-                  onChange={handleGenderChange}
+                  checked={!gender}
+                  onChange={() => handleGenderChange("false")}
                 />
               </RadioGroup>
             </div>
-            <Divider style={{ padding: "8px", color: "purple" }}>
+            <Divider style={{ padding: "8px", color: "#f4347f" }}>
               Ethnicity / Race
             </Divider>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -571,7 +560,7 @@ function Home() {
                 />
               </RadioGroup>
             </div>
-            <Divider style={{ padding: "8px", color: "purple" }}>
+            <Divider style={{ padding: "8px", color: "#f4347f" }}>
               Calculate
             </Divider>
             <div
@@ -585,7 +574,7 @@ function Home() {
               <ScoreAlert title="Front"></ScoreAlert>
               <ScoreAlert title="Side"></ScoreAlert>
             </div>
-            <Divider style={{ padding: "8px", color: "purple" }}>
+            <Divider style={{ padding: "8px", color: "#f4347f" }}>
               Report
             </Divider>
             <div
@@ -598,7 +587,7 @@ function Home() {
               <ViewReportDialog></ViewReportDialog>
               <Button
                 size="large"
-                shape="square"
+                shape="circular"
                 appearance="primary"
                 style={{ marginTop: "50px" }}
                 onClick={() => handleRedirect("/pricing")}
@@ -608,29 +597,22 @@ function Home() {
             </div>
           </div>
         </div>
-        <div
-          className="main_child m_profile"
-          style={{
-            backgroundColor: "#ebd9e9",
-            display: "flex",
-            flexDirection: "column",
-            width: "70%",
-            border: "1px solid purple",
-            justifyContent: "center",
-          }}
-        >
+        <div className="main_child m_profile">
           <div
-            style={{ display: "flex", width: "100%", justifyContent: "center" }}
+            style={{
+              display: "flex",
+              width: "100%",
+              height: "100%",
+              justifyContent: "space-evenly",
+            }}
           >
             <div className="front_profile">
               <div className="front_photo_area">
-                <div className="photo_div example">
-                  <img
-                    src="./images/front.jpg"
-                    alt="Image description"
-                    style={{ width: "365px", height: "365px", margin: "5px" }}
-                  ></img>
-                </div>
+                <img
+                  className="image_drawer"
+                  src="./images/front.jpg"
+                  alt="Image description"
+                ></img>
                 <div className="photo_div upload">
                   <input
                     type="file"
@@ -639,101 +621,52 @@ function Home() {
                     onChange={handleFrontImageSelect}
                     style={{ display: "none" }}
                   />
-                  <CompoundButton
-                    icon={<ArrowUploadFilled />}
-                    style={{
-                      position: "absolute",
-                      top: "1%",
-                      right: "1%",
-                      color: "purple",
-                    }}
+                  <div
+                    className="m_upload_button"
                     onClick={handleFrontUploadButtonClick}
-                  ></CompoundButton>
-                  <div
-                    className={`lock-div ${lock ? "show" : "show"}`}
-                    style={{
-                      top: "1%",
-                      left: "1%",
-                      color: "purple",
-                      height: "50px",
-                      width: "50px",
-                      border: "dashed 2px purple",
-                    }}
                   >
-                    <div
-                      style={{
-                        borderRadius: "0px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FrontProfileMappingModal />
-                    </div>
+                    <FaCloudUploadAlt size={30} />
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "#6d546a",
-                    }}
-                  >
-                    {selectedFrontImage && (
-                      <img
-                        src={URL.createObjectURL(selectedFrontImage)}
-                        alt="Image description"
-                        style={uploadImageStyle}
-                      ></img>
-                    )}
-                    {!selectedFrontImage && (
-                      <img
-                        src="./images/front_blank.jpg"
-                        alt="Image description"
+                  {selectedFrontImage && (
+                    <div className={`lock-div show`}>
+                      <div
                         style={{
-                          width: "365px",
-                          height: "365px",
-                          margin: "5px",
+                          borderRadius: "0px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
-                      ></img>
-                    )}
-                  </div>
+                      >
+                        <FrontProfileMappingModal/>
+                      </div>
+                    </div>
+                  )}
+                  {selectedFrontImage && (
+                    <img
+                      className="image_drawer"
+                      src={URL.createObjectURL(selectedFrontImage)}
+                      alt="Image description"
+                      style={uploadImageStyle}
+                    ></img>
+                  )}
+                  {!selectedFrontImage && (
+                    <img
+                      className="image_drawer"
+                      src="./images/front_blank.jpg"
+                      alt="Image description"
+                    ></img>
+                  )}
                 </div>
               </div>
             </div>
             <div className="side_profile">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <div
-                  style={{
-                    position: "relative",
-                    width: "375px",
-                    height: "375px",
-                    margin: "5px",
-                    border: "solid 1px purple",
-                  }}
-                >
-                  <img
-                    src="./images/side.jpg"
-                    alt="Image description"
-                    style={{ width: "365px", height: "365px", margin: "5px" }}
-                  ></img>
-                </div>
-                <div
-                  style={{
-                    position: "relative",
-                    width: "375px",
-                    height: "375px",
-                    margin: "5px",
-                    border: "solid 1px purple",
-                  }}
-                >
+              <div className="side_photo_area">
+                <img
+                  className="image_drawer"
+                  src="./images/side.jpg"
+                  alt="Image description"
+                ></img>
+                <div className="photo_div upload">
                   <input
                     type="file"
                     ref={sidefileInput}
@@ -742,83 +675,51 @@ function Home() {
                     style={{ display: "none" }}
                   />
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "#6d546a",
-                    }}
-                  >
-                    {selectedSideImage && (
-                      <img
-                        src={URL.createObjectURL(selectedSideImage)}
-                        alt="Image description"
-                        style={uploadSideImageStyle}
-                      ></img>
-                    )}
-                    {!selectedSideImage && (
-                      <img
-                        src={"./images/side_blank.jpg"}
-                        alt="Image description"
-                        style={{
-                          width: "365px",
-                          height: "365px",
-                          margin: "5px",
-                        }}
-                      ></img>
-                    )}
-                  </div>
-                  <CompoundButton
-                    icon={<ArrowUploadFilled />}
-                    style={{
-                      position: "absolute",
-                      top: "1%",
-                      right: "1%",
-                      color: "purple",
-                    }}
+                    className="m_upload_button"
                     onClick={handleSideUploadButtonClick}
-                  ></CompoundButton>
-                  <div
-                    className={`lock-div ${lock ? "show" : "show"}`}
-                    style={{
-                      top: "1%",
-                      left: "1%",
-                      color: "purple",
-                      height: "50px",
-                      width: "50px",
-                      border: "dashed 2px purple",
-                    }}
                   >
-                    <div
-                      style={{
-                        borderRadius: "0px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <SideProfileMappingModal />
-                    </div>
+                    <FaCloudUploadAlt size={30} />
                   </div>
+                  {selectedSideImage && (
+                    <div className={`lock-div show`}>
+                      <div
+                        style={{
+                          borderRadius: "0px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <SideProfileMappingModal />
+                      </div>
+                    </div>
+                  )}
+                  {selectedSideImage && (
+                    <img
+                      className="image_drawer"
+                      src={URL.createObjectURL(selectedSideImage)}
+                      alt="Image description"
+                      style={uploadSideImageStyle}
+                    ></img>
+                  )}
+                  {!selectedSideImage && (
+                    <img
+                      className="image_drawer"
+                      src={"./images/side_blank.jpg"}
+                      alt="Image description"
+                    ></img>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div
-          className="main_child m_reference"
-          style={{
-            width: "15%",
-            color: "purple",
-            backgroundColor: "white",
-            zIndex: "100",
-          }}
-        >
+        <div className="main_child m_reference">
           <div
             style={{
               height: "30px",
-              backgroundColor: "#b16aaa",
-              color: "#4f234b",
+              backgroundColor: "#f4347f",
+              color: "#fdd9e5",
               fontSize: "16px",
               display: "flex",
               alignItems: "center",

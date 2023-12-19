@@ -26,7 +26,7 @@ const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
   return (
     <Draggable
       bounds="parent"
-      position={{ x: position.x * 0.75, y: position.y * 0.75 }}
+      position={{ x: position.x * 1, y: position.y * 1 }}
       onDrag={(e, data) => onDrag(data, id)}
     >
       <div
@@ -182,8 +182,8 @@ export const FrontTargetMapping = ({
   }, [selectedFrontImage]);
 
   const handleDrag = (data, id) => {
-    data.x = data.x / 0.75;
-    data.y = data.y / 0.75;
+    data.x = data.x / 1;
+    data.y = data.y / 1;
     let x1 = 0.0;
     let y1 = 0.0;
     if (scaleImageSize[0] < scaleImageSize[1]) {
@@ -232,8 +232,8 @@ export const FrontTargetMapping = ({
   };
 
   const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "600px",
-    height: uploadImageheight > uploadImagewidth ? "600px" : "auto",
+    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
+    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
     margin: "5px",
   };
 
@@ -304,8 +304,8 @@ export const FrontTargetMapping = ({
       </div>
       <div
         style={{
-          width: "600px",
-          height: "600px",
+          width: "800px",
+          height: "800px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -325,7 +325,7 @@ export const FrontTargetMapping = ({
         {!selectedFrontImage && (
           <img
             src={"./images/front_blank.jpg"}
-            style={{ width: "600px", height: "600px" }}
+            style={{ width: "800px", height: "800px" }}
           ></img>
         )}
       </div>
@@ -378,8 +378,8 @@ export const FrontTargetMapping = ({
           position: "absolute",
           top: "0px",
           right: "0px",
-          height: "600px",
-          width: "600px",
+          height: "800px",
+          width: "800px",
           zIndex: "5",
         }}
       >
@@ -543,8 +543,8 @@ export const SideTargetMapping = ({
   }, [selectedSideImage]);
 
   const handleDrag = (data, id) => {
-    data.x = data.x / 0.75;
-    data.y = data.y / 0.75;
+    data.x = data.x / 1;
+    data.y = data.y / 1;
     let x1 = 0.0;
     let y1 = 0.0;
     if (scaleImageSize[0] < scaleImageSize[1]) {
@@ -577,8 +577,8 @@ export const SideTargetMapping = ({
   };
 
   const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "600px",
-    height: uploadImageheight > uploadImagewidth ? "600px" : "auto",
+    width: uploadImageheight > uploadImagewidth ? "auto" : "800px",
+    height: uploadImageheight > uploadImagewidth ? "800px" : "auto",
     margin: "5px",
   };
 
@@ -646,8 +646,8 @@ export const SideTargetMapping = ({
       </div>
       <div
         style={{
-          width: "600px",
-          height: "600px",
+          width: "800px",
+          height: "800px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -666,7 +666,7 @@ export const SideTargetMapping = ({
         {!selectedSideImage && (
           <img
             src={"./images/side_blank.jpg"}
-            style={{ width: "600px", height: "600px" }}
+            style={{ width: "800px", height: "800px" }}
           ></img>
         )}
       </div>
@@ -719,8 +719,8 @@ export const SideTargetMapping = ({
           position: "absolute",
           top: "0px",
           right: "0px",
-          height: "600px",
-          width: "600px",
+          height: "800px",
+          width: "800px",
           zIndex: "5",
         }}
       >

@@ -312,8 +312,8 @@ export function FrontProfileMappingModal() {
         </DialogTrigger>
         <DialogSurface
           style={{
-            maxWidth: "1300px",
-            maxHeight: "800px",
+            maxWidth: "1700px",
+            maxHeight: "1000px",
             backgroundColor: "#fdd9e5",
           }}
         >
@@ -605,8 +605,8 @@ export function SideProfileMappingModal() {
         </DialogTrigger>
         <DialogSurface
           style={{
-            maxWidth: "1300px",
-            maxHeight: "800px",
+            maxWidth: "1700px",
+            maxHeight: "1000px",
             backgroundColor: "#fdd9e5",
           }}
         >

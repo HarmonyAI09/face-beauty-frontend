@@ -138,8 +138,8 @@ export function FrontSupportImage({ selectedPoint }) {
     markPoints.forEach((markPoint) => {
       context.beginPath();
       context.arc(
-        markPoint[0].x * 0.75,
-        markPoint[0].y * 0.75,
+        markPoint[0].x * 1,
+        markPoint[0].y * 1,
         circle_radius,
         0,
         2 * Math.PI
@@ -149,8 +149,8 @@ export function FrontSupportImage({ selectedPoint }) {
 
       context.beginPath();
       context.arc(
-        markPoint[1].x * 0.75,
-        markPoint[1].y * 0.75,
+        markPoint[1].x * 1,
+        markPoint[1].y * 1,
         circle_radius,
         0,
         2 * Math.PI
@@ -161,8 +161,8 @@ export function FrontSupportImage({ selectedPoint }) {
 
     context.beginPath();
     context.arc(
-      markPoints[selectedPoint[0]][selectedPoint[1]].x * 0.75,
-      markPoints[selectedPoint[0]][selectedPoint[1]].y * 0.75,
+      markPoints[selectedPoint[0]][selectedPoint[1]].x * 1,
+      markPoints[selectedPoint[0]][selectedPoint[1]].y * 1,
       moving_circle_radius,
       0,
       2 * Math.PI
@@ -173,11 +173,11 @@ export function FrontSupportImage({ selectedPoint }) {
 
   return (
     <div style={{ position: "relative" }}>
-      <Image src="./images/front.jpg" width={600} height={600} shape="rounded"></Image>
+      <Image src="./images/front.jpg" width={800} height={800} shape="rounded"></Image>
       <canvas
         ref={canvasRef}
-        width={600}
-        height={600}
+        width={800}
+        height={800}
         style={{ position: "absolute", left: "0px", top: "0px" }}
       />
     </div>
@@ -351,8 +351,8 @@ export function SideSupportImage({ selectedPoint }) {
       if (index >= 30 && index !==34 && index !==56 && index !==54) {        
         context.beginPath();
         context.arc(
-          markPoint[0].x * 0.75,
-          markPoint[0].y * 0.75,
+          markPoint[0].x * 1,
+          markPoint[0].y * 1,
           circle_radius,
           0,
           2 * Math.PI
@@ -364,8 +364,8 @@ export function SideSupportImage({ selectedPoint }) {
 
     context.beginPath();
     context.arc(
-      markPoints[selectedPoint[0]][selectedPoint[1]].x * 0.75,
-      markPoints[selectedPoint[0]][selectedPoint[1]].y * 0.75,
+      markPoints[selectedPoint[0]][selectedPoint[1]].x * 1,
+      markPoints[selectedPoint[0]][selectedPoint[1]].y * 1,
       moving_circle_radius,
       0,
       2 * Math.PI
@@ -376,11 +376,11 @@ export function SideSupportImage({ selectedPoint }) {
 
   return (
     <div style={{ position: "relative" }}>
-      <Image src="./images/side.jpg" width={600} height={600}></Image>
+      <Image src="./images/side.jpg" width={800} height={800}></Image>
       <canvas
         ref={canvasRef}
-        width={600}
-        height={600}
+        width={800}
+        height={800}
         style={{ position: "absolute", left: "0px", top: "0px" }}
       />
     </div>

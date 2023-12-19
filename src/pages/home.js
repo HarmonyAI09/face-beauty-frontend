@@ -610,7 +610,7 @@ function Home() {
               <div className="front_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/front.jpg"
+                  src="./images/front__.jpg"
                   alt="Image description"
                 ></img>
                 <div className="photo_div upload">
@@ -663,7 +663,7 @@ function Home() {
               <div className="side_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/side.jpg"
+                  src="./images/side__.jpg"
                   alt="Image description"
                 ></img>
                 <div className="photo_div upload">

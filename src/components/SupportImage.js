@@ -135,30 +135,6 @@ export function FrontSupportImage({ selectedPoint }) {
     ];
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-    markPoints.forEach((markPoint) => {
-      context.beginPath();
-      context.arc(
-        markPoint[0].x * 1,
-        markPoint[0].y * 1,
-        circle_radius,
-        0,
-        2 * Math.PI
-      );
-      context.fillStyle = `rgb(255, 0, 0})`;
-      context.fill();
-
-      context.beginPath();
-      context.arc(
-        markPoint[1].x * 1,
-        markPoint[1].y * 1,
-        circle_radius,
-        0,
-        2 * Math.PI
-      );
-      context.fillStyle = `rgb(255, 0, 0)`;
-      context.fill();
-    });
-
     context.beginPath();
     context.arc(
       markPoints[selectedPoint[0]][selectedPoint[1]].x * 1,
@@ -312,8 +288,8 @@ export function SideSupportImage({ selectedPoint }) {
         { x: 420, y: 557 },
       ], //28
       [
-        { x: 370, y: 565 },
-        { x: 370, y: 565 },
+        { x: 370, y: 570 },
+        { x: 370, y: 570 },
       ], //29
       [{ x: 244, y: 190 }], //30
       [{ x: 225, y: 226 }], //31
@@ -347,20 +323,6 @@ export function SideSupportImage({ selectedPoint }) {
       [{ x: 185, y: 428 }], //59
     ];
     context.clearRect(0, 0, canvas.width, canvas.height);
-    markPoints.forEach((markPoint, index) => {
-      if (index >= 30 && index !==34 && index !==56 && index !==54) {        
-        context.beginPath();
-        context.arc(
-          markPoint[0].x * 1,
-          markPoint[0].y * 1,
-          circle_radius,
-          0,
-          2 * Math.PI
-        );
-        context.fillStyle = `rgb(255, 0, 0)`;
-        context.fill();
-      }
-    });
 
     context.beginPath();
     context.arc(

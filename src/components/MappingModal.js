@@ -83,7 +83,7 @@ export function FrontProfileMappingModal() {
       markPoints[17][0],
       markPoints[17][1]
     );
-    setEyeSeparationRatio((point_12_distance * 100) / point_17_distance);
+    setEyeSeparationRatio(parseFloat((point_12_distance * 100) / point_17_distance).toFixed(2));
   };
   const CaculateFacialThirds = () => {
     const height_1_5 = markPoints[5][0].y - markPoints[1][0].y;
@@ -91,9 +91,9 @@ export function FrontProfileMappingModal() {
     const height_19_29 = markPoints[29][0].y - markPoints[19][0].y;
     const total = markPoints[29][0].y - markPoints[1][0].y;
     setFacialThirds([
-      (height_1_5 * 100) / total,
-      (height_5_19 * 100) / total,
-      (height_19_29 * 100) / total,
+      parseFloat((height_1_5 * 100) / total).toFixed(2),
+      parseFloat((height_5_19 * 100) / total).toFixed(2),
+      parseFloat((height_19_29 * 100) / total).toFixed(2),
     ]);
   };
   const CalculateLateralCanthalTilt = () => {
@@ -112,17 +112,17 @@ export function FrontProfileMappingModal() {
       }
     );
     setLateralCanthalTilt(
-      (left_lateralCanthalTilt + right_lateralCanthalTilt) / 2
+      parseFloat((left_lateralCanthalTilt + right_lateralCanthalTilt) / 2).toFixed(2)
     );
   };
   const CalculateFacialWHRatio = () => {
     const width_17s = markPoints[17][1].x - markPoints[17][0].x;
     const height_6_21 = markPoints[21][0].y - markPoints[6][0].y;
-    setFacialWHRatio(width_17s / height_6_21);
+    setFacialWHRatio(parseFloat(width_17s / height_6_21).toFixed(2));
   };
   const CalculateJawFrontalAngle = () => {
     setJawFrontalAngle(
-      calculateSharpAngle(
+      parseFloat(calculateSharpAngle(
         {
           x: markPoints[26][0].x - markPoints[28][0].x,
           y: markPoints[26][0].y - markPoints[28][0].y,
@@ -131,7 +131,7 @@ export function FrontProfileMappingModal() {
           x: markPoints[26][1].x - markPoints[28][1].x,
           y: markPoints[26][1].y - markPoints[28][1].y,
         }
-      )
+      )).toFixed(2)
     );
   };
   const CalculateCheekBoneHeight = () => {
@@ -139,38 +139,38 @@ export function FrontProfileMappingModal() {
       markPoints[21][0].y - (markPoints[17][0].y + markPoints[17][1].y) / 2;
     const b =
       markPoints[21][0].y - (markPoints[12][0].y + markPoints[12][1].y) / 2;
-    setCheekBoneHeight((a * 100) / b);
+    setCheekBoneHeight(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateTotalFacialWHRatio = () => {
     const a = calculateDistance(markPoints[1][0], markPoints[29][0]);
     const b = calculateDistance(markPoints[17][0], markPoints[17][1]);
-    setTotalFacialWHRatio(a / b);
+    setTotalFacialWHRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateBigonialWidth = () => {
     const a = calculateDistance(markPoints[22][0], markPoints[22][1]);
     const b = calculateDistance(markPoints[17][0], markPoints[17][1]);
-    setBigonialWidth((a * 100) / b);
+    setBigonialWidth(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateChin2PhiltrumRatio = () => {
     const a = calculateDistance(markPoints[29][0], markPoints[25][0]);
     const b = calculateDistance(markPoints[21][0], markPoints[20][0]);
-    setChin2PhiltrumRatio(a / b);
+    setChin2PhiltrumRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateNeckWidth = () => {
     const a = calculateDistance(markPoints[27][0], markPoints[27][1]);
     const b = calculateDistance(markPoints[22][0], markPoints[22][1]);
-    setNeckWidth((a * 100) / b);
+    setNeckWidth(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateMouthWidth2NoseWidthRatio = () => {
     const a = calculateDistance(markPoints[23][0], markPoints[23][1]);
     const b = calculateDistance(markPoints[18][0], markPoints[18][1]);
-    setMouseWidth2NoseWidthRatio(a / b);
+    setMouseWidth2NoseWidthRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateMidfaceRatio = () => {
     const a = calculateDistance(markPoints[12][0], markPoints[12][1]);
     const b =
       markPoints[21][0].y - (markPoints[12][0].y + markPoints[12][1].y) / 2;
-    setMidFaceRatio(a / b);
+    setMidFaceRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateEyebrowPositionRatio = () => {
     const a1 = calculateDistanceFromPointToLine(
@@ -185,25 +185,25 @@ export function FrontProfileMappingModal() {
     );
     const b1 = calculateDistance(markPoints[10][0], markPoints[14][0]);
     const b2 = calculateDistance(markPoints[10][1], markPoints[14][1]);
-    setEyebrowPositionRatio((a1 / b1 + a2 / b2) / 2);
+    setEyebrowPositionRatio(parseFloat((a1 / b1 + a2 / b2) / 2).toFixed(2));
   };
   const CalculateEyeSpacingRatio = () => {
     const a = markPoints[16][1].x - markPoints[16][0].x;
     const b1 = markPoints[16][0].x - markPoints[9][0].x;
     const b2 = markPoints[9][1].x - markPoints[16][1].x;
-    setEyeSpacingRatio((a / b1 + a / b2) / 2);
+    setEyeSpacingRatio(parseFloat((a / b1 + a / b2) / 2).toFixed(2));
   };
   const CalculateEyeAspectRatio = () => {
     const a1 = calculateDistance(markPoints[16][1], markPoints[11][1]);
     const b1 = calculateDistance(markPoints[10][1], markPoints[14][1]);
     const a2 = calculateDistance(markPoints[16][0], markPoints[11][0]);
     const b2 = calculateDistance(markPoints[10][0], markPoints[14][0]);
-    setEyeAspectRatio((a1 / b1 + a2 / b2) / 2);
+    setEyeAspectRatio(parseFloat((a1 / b1 + a2 / b2) / 2).toFixed(2));
   };
   const CalculateLowerLip2UpperLipRatio = () => {
     const a = markPoints[25][0].y - markPoints[24][0].y;
     const b = markPoints[24][0].y - markPoints[21][0].y;
-    setLowerLip2UpperLipRatio(a / b);
+    setLowerLip2UpperLipRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateIpsilateralAlarAngle = () => {
     const a = {
@@ -214,10 +214,10 @@ export function FrontProfileMappingModal() {
       x: markPoints[9][0].x - markPoints[19][0].x,
       y: markPoints[9][0].y - markPoints[19][0].y,
     };
-    setIpsilateralAlarAngle(calculateSharpAngle(a, b));
+    setIpsilateralAlarAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateDeviationOfJFA2IAA = () => {
-    setDeviationOfJFA2IAA(Math.abs(jawFrontalAngle - ipsilateralAlarAngle));
+    setDeviationOfJFA2IAA(parseFloat(Math.abs(jawFrontalAngle - ipsilateralAlarAngle)).toFixed(2));
   };
   const CalculateEyebrowTilt = () => {
     const a1 = {
@@ -238,17 +238,17 @@ export function FrontProfileMappingModal() {
       y: markPoints[4][0].y - markPoints[7][0].y,
     };
     const right = calculateSharpAngle(a2, b2);
-    setEyebrowTilt((left + right) / 2);
+    setEyebrowTilt(parseFloat((left + right) / 2).toFixed(2));
   };
   const CalculateBitemporalWidth = () => {
     const a = calculateDistance(markPoints[2][0], markPoints[2][1]);
     const b = calculateDistance(markPoints[17][0], markPoints[17][1]);
-    setBitemporalWidth((a * 100) / b);
+    setBitemporalWidth(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateLowerThirdProporation = () => {
     const a = markPoints[24][0].y - markPoints[19][0].y;
     const b = markPoints[29][0].y - markPoints[19][0].y;
-    setLowerThirdProporation((a * 100) / b);
+    setLowerThirdProporation(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateMedialCanthalAngle = () => {
     const a1 = {
@@ -269,7 +269,7 @@ export function FrontProfileMappingModal() {
     };
     const left = calculateSharpAngle(a2, b2);
     const right = calculateSharpAngle(a1, b1);
-    setMedialCanthalAngle((left + right) / 2);
+    setMedialCanthalAngle(parseFloat((left + right) / 2).toFixed(2));
   };
 
   const handleApplyButtonClick = () => {
@@ -385,7 +385,7 @@ export function SideProfileMappingModal() {
       x: markPoints[52][0].x - markPoints[49][0].x,
       y: markPoints[52][0].y - markPoints[49][0].y,
     };
-    setGonialAngle(calculateSharpAngle(a, b));
+    setGonialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasofrontalAngle = () => {
     const a = {
@@ -396,7 +396,7 @@ export function SideProfileMappingModal() {
       x: markPoints[39][0].x - markPoints[35][0].x,
       y: markPoints[39][0].y - markPoints[35][0].y,
     };
-    setNasofrontalAngle(calculateSharpAngle(a, b));
+    setNasofrontalAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateMandibularPlaneAngle = () => {
     const a = {
@@ -407,12 +407,12 @@ export function SideProfileMappingModal() {
       x: markPoints[52][0].x - markPoints[49][0].x,
       y: markPoints[52][0].y - markPoints[49][0].y,
     };
-    setMandibularPlaneAngle(calculateSharpAngle(a, b));
+    setMandibularPlaneAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateRamus2MandibleRatio = () => {
     const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
     const b = calculateDistance(markPoints[54][0], markPoints[49][0]);
-    setRamus2MandibleRatio(a / b);
+    setRamus2MandibleRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateFacialConvexityGlabella = () => {
     const a = {
@@ -423,7 +423,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[43][0].x,
       y: markPoints[50][0].y - markPoints[43][0].y,
     };
-    setFacialConvexityGlabella(calculateSharpAngle(a, b));
+    setFacialConvexityGlabella(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateSubmentalCervicalAngle = () => {
     const a = {
@@ -434,7 +434,7 @@ export function SideProfileMappingModal() {
       x: markPoints[55][0].x - markPoints[53][0].x,
       y: markPoints[55][0].y - markPoints[53][0].y,
     };
-    setSubmentalCervicalAngle(calculateSharpAngle(a, b));
+    setSubmentalCervicalAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasolabialAngle = () => {
     const a = {
@@ -445,7 +445,7 @@ export function SideProfileMappingModal() {
       x: markPoints[45][0].x - markPoints[44][0].x,
       y: markPoints[45][0].y - markPoints[44][0].y,
     };
-    setNasolabialAngle(calculateSharpAngle(a, b));
+    setNasolabialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateTotalFacialConvexity = () => {
     const a = {
@@ -456,7 +456,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[40][0].x,
       y: markPoints[50][0].y - markPoints[40][0].y,
     };
-    setTotalFacialConvexity(calculateSharpAngle(a, b));
+    setTotalFacialConvexity(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateFacialConvexityNasion = () => {
     const a = {
@@ -467,7 +467,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[43][0].x,
       y: markPoints[50][0].y - markPoints[43][0].y,
     };
-    setFacialConvexityNasion(calculateSharpAngle(a, b));
+    setFacialConvexityNasion(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateOrbitalVector = () => {
     if (markPoints[57][0].x > markPoints[33][0].x) {
@@ -487,7 +487,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[48][0].x,
       y: markPoints[50][0].y - markPoints[48][0].y,
     };
-    setMentolabialAngle(calculateSharpAngle(a, b));
+    setMentolabialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasalProjection = () => {
     // const a = markPoints[42][0].x - markPoints[40][0].x;
@@ -498,12 +498,12 @@ export function SideProfileMappingModal() {
       x: markPoints[36][0].x - markPoints[40][0].x,
       y: markPoints[36][0].y - markPoints[40][0].y,
     };
-    setNasalProjection(Math.cos((calculateSharpAngle(a, b) / 180) * Math.PI));
+    setNasalProjection(parseFloat(Math.cos((calculateSharpAngle(a, b) / 180) * Math.PI)).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {
     const a = markPoints[42][0].x - markPoints[40][0].x;
     const b = markPoints[40][0].y - markPoints[56][0].y;
-    setNasalW2HRatio(a / b);
+    setNasalW2HRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateRickettsELine = () => {
     setRickettsELine("ideal");
@@ -526,7 +526,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[35][0].x,
       y: markPoints[50][0].y - markPoints[35][0].y,
     };
-    setNasofacialAngle(calculateSharpAngle(a, b));
+    setNasofacialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasomentalAngle = () => {
     const a = {
@@ -537,7 +537,7 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[39][0].x,
       y: markPoints[50][0].y - markPoints[39][0].y,
     };
-    setNasomentalAngle(calculateSharpAngle(a, b));
+    setNasomentalAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateGonion2MouthRelationship = () => {
     setGonion2MouthRelationship("below");
@@ -551,7 +551,7 @@ export function SideProfileMappingModal() {
       x: markPoints[32][0].x - markPoints[31][0].x,
       y: markPoints[32][0].y - markPoints[31][0].y,
     };
-    setBrowridgeInclinationAngle(calculateSharpAngle(a, b));
+    setBrowridgeInclinationAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasalTipAngle = () => {
     const a = {
@@ -562,7 +562,7 @@ export function SideProfileMappingModal() {
       x: markPoints[41][0].x - markPoints[40][0].x,
       y: markPoints[41][0].y - markPoints[40][0].y,
     };
-    setNasalTipAngle(calculateSharpAngle(a, b));
+    setNasalTipAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
 
   const handleApplyButtonClick = () => {

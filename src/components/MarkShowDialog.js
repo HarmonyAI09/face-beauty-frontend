@@ -219,13 +219,13 @@ export const ScoreAlert = (props) => {
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
         for (let i = 0; i < 45; i++) {
-          tempNotes[i] = data.notes[i];
-          templateScores[i] = data.scores[i];
-          templateMaxScores[i] = data.maxs[i];
-          templateRanges[i] = data.ranges[i];
-          templateValues[i] = data.values[i];
-          templateMeasurements[i] = data.names[i];
-          templateAdvices[i] = data.advices[i];
+          tempNotes[i+22] = data.notes[i];
+          templateScores[i+22] = data.scores[i];
+          templateMaxScores[i+22] = data.maxs[i];
+          templateRanges[i+22] = data.ranges[i];
+          templateValues[i+22] = data.values[i];
+          templateMeasurements[i+22] = data.names[i];
+          templateAdvices[i+22] = data.advices[i];
         }
         setReportNotes(tempNotes);
         setReportScores(templateScores);

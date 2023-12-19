@@ -27,7 +27,16 @@ import { showNotification } from "./NotificationCreator";
 
 const ReportTableHeader = () => {
   return (
-    <div style={{ display: "flex", width: "100%", textAlign: "center", fontSize:"14px", fontFamily:"monospace", fontWeight:"700" }}>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        textAlign: "center",
+        fontSize: "14px",
+        fontFamily: "monospace",
+        fontWeight: "700",
+      }}
+    >
       <div style={{ width: "10%" }}>
         <b>IMAGE</b>
       </div>
@@ -299,7 +308,7 @@ export const ViewReportDialog = () => {
       const formData = new FormData();
       formData.append("front", selectedFrontImage);
       formData.append("side", selectedSideImage);
-      formData.append("points", JSON.stringify({...markPoints}));
+      formData.append("points", JSON.stringify({ ...markPoints }));
 
       console.log(formData);
 
@@ -353,7 +362,7 @@ export const ViewReportDialog = () => {
           <div style={{ width: "10%" }}>
             <Tooltip relationship="label" content={props.overview}>
               <MeasurementOverview
-                isLoading = {isLoading}
+                isLoading={isLoading}
                 source={measurementImages[props.source]}
                 title={props.measurement}
                 overview={props.overview}
@@ -419,21 +428,27 @@ export const ViewReportDialog = () => {
     );
   };
 
-  const reportTableRowList = reportNotes.map((note, index) => {
-    return (
-      <ReportTableRow
-        key={index}
-        measurement={reportMeasurementNames[index]}
-        value={reportCurrentValues[index]}
-        score={reportScores[index]}
-        range={reportRanges[index]}
-        note={note}
-        advice={reportAdvices[index]}
-        overview={measurement_overviews[index]}
-        source={index}
-      />
-    );
-  });
+  const startIndex = 0;
+  const endIndex = 45;
+
+  const reportTableRowList = reportNotes
+    .slice(startIndex, endIndex)
+    .map((note, index) => {
+      const actualIndex = startIndex + index; // Adjust index based on the start index
+      return (
+        <ReportTableRow
+          key={actualIndex}
+          measurement={reportMeasurementNames[actualIndex]}
+          value={reportCurrentValues[actualIndex]}
+          score={reportScores[actualIndex]}
+          range={reportRanges[actualIndex]}
+          note={note}
+          advice={reportAdvices[actualIndex]}
+          overview={measurement_overviews[actualIndex]}
+          source={actualIndex}
+        />
+      );
+    });
 
   return (
     <Dialog modalType="alert">
@@ -497,7 +512,7 @@ export const ViewReportDialog = () => {
                     display: "flex",
                     color: "#f4347f",
                     fontWeight: "600",
-                    fontFamily:"monospace",
+                    fontFamily: "monospace",
                   }}
                 >
                   <FaExclamationTriangle />
@@ -513,7 +528,7 @@ export const ViewReportDialog = () => {
                     alignItems: "end",
                     paddingLeft: "20px",
                     color: "#fc72a6",
-                    fontFamily:"monospace",
+                    fontFamily: "monospace",
                   }}
                 >
                   <FaUserCheck />
@@ -530,18 +545,17 @@ export const ViewReportDialog = () => {
                   color: "#f4347f",
                   fontWeight: "600",
                   fontSize: "16px",
-                  fontFamily:"monospace",
+                  fontFamily: "monospace",
                 }}
               >
-                Welcome to Harmony’s full facial analysis. 
-                <br/>
-                Below you will find a
-                list of over 45 facial assessments, what they indicate about
-                your face, and any potential improvements associated with each
-                measurement. 
-                <br/>
-                We hope this information is insightful and helps
-                you on your journey to looking your best!
+                Welcome to Harmony’s full facial analysis.
+                <br />
+                Below you will find a list of over 45 facial assessments, what
+                they indicate about your face, and any potential improvements
+                associated with each measurement.
+                <br />
+                We hope this information is insightful and helps you on your
+                journey to looking your best!
               </div>
             </div>
             <Divider style={{ padding: "20px" }}></Divider>

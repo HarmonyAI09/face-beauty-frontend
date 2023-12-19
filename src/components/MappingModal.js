@@ -17,6 +17,7 @@ import { Connected20Filled } from "@fluentui/react-icons";
 import { FrontDialogContent, SideDialogContent } from "./NewDialogContent";
 import { UserContext } from "../pages/home";
 import { useEffect, useRef, useState, useContext } from "react";
+import { showNotification } from "./NotificationCreator";
 
 function calculateDistance(point1, point2) {
   const xDiff = point2.x - point1.x;
@@ -295,11 +296,12 @@ export function FrontProfileMappingModal() {
     CalculateBitemporalWidth();
     CalculateLowerThirdProporation();
     CalculateMedialCanthalAngle();
+    showNotification("Saved", "Front profile landmarks have been saved.", "info");
   };
 
   return (
     <>
-      <Dialog>
+      <Dialog modalType="alert">
         <DialogTrigger disableButtonEnhancement>
           <CompoundButton
             icon={<Connected20Filled />}
@@ -589,10 +591,11 @@ export function SideProfileMappingModal() {
     CalculateRecessionRelative2FrankfortPlane();
     CalculateBrowridgeInclinationAngle();
     CalculateNasalTipAngle();
+    showNotification("Saved", "Side profile landmarks have been saved.", "info");
   };
   return (
     <>
-      <Dialog>
+      <Dialog modalType="alert">
         <DialogTrigger disableButtonEnhancement>
           <CompoundButton
             icon={<Connected20Filled />}

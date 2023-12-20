@@ -149,7 +149,7 @@ export function FrontSupportImage({ selectedPoint }) {
 
   return (
     <div style={{ position: "relative" }}>
-      <Image src="./images/front.jpg" width={800} height={800} shape="rounded"></Image>
+      <Image src="./images/front_.jpg" width={800} height={800} shape="rounded"></Image>
       <canvas
         ref={canvasRef}
         width={800}
@@ -338,7 +338,7 @@ export function SideSupportImage({ selectedPoint }) {
 
   return (
     <div style={{ position: "relative" }}>
-      <Image src="./images/side.jpg" width={800} height={800}></Image>
+      <Image src="./images/side_.jpg" width={800} height={800}></Image>
       <canvas
         ref={canvasRef}
         width={800}

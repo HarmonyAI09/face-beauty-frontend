@@ -402,8 +402,8 @@ export function SideProfileMappingModal() {
   };
   const CalculateMandibularPlaneAngle = () => {
     const a = {
-      x: markPoints[47][0].x - markPoints[49][0].x,
-      y: markPoints[47][0].y - markPoints[49][0].y,
+      x: -1,
+      y: 0,
     };
     const b = {
       x: markPoints[52][0].x - markPoints[49][0].x,

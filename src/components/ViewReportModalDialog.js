@@ -313,7 +313,7 @@ export const ViewReportDialog = () => {
       console.log(formData);
 
       const response = await fetch(
-        "https://rxturftcn25yfu-8000.proxy.runpod.net/generate",
+        "http://localhost:8000/generate",
         {
           method: "POST",
           body: formData,
@@ -327,8 +327,8 @@ export const ViewReportDialog = () => {
 
       const zip = new JSZip();
       const result = await zip.loadAsync(zipData);
-      const imageUrls = [];
-
+      let imageUrls = [];
+      console.log(imageUrls.length);
       result.forEach(async (relativePath, file) => {
         const imageData = await file.async("uint8array");
         const blob = new Blob([imageData], { type: "image/jpeg" });
@@ -336,7 +336,9 @@ export const ViewReportDialog = () => {
 
         imageUrls.push(imageUrl);
         setMeasurementImages(imageUrls);
+        console.log(imageUrls.length, "****");
       });
+      // setMeasurementImages(imageUrls);
       setIsLoading(false);
       showNotification("Success", "Successfully generate images.", "success");
     } catch (error) {
@@ -345,7 +347,7 @@ export const ViewReportDialog = () => {
       console.error(error);
     }
   };
-  useEffect(() => {}, [measurementImages]);
+  useEffect(() => { }, [measurementImages]);
 
   const ReportTableRow = (props) => {
     return (
@@ -374,27 +376,27 @@ export const ViewReportDialog = () => {
             {typeof props.value === "number" && Number.isInteger(props.value)
               ? props.value
               : typeof props.value === "number"
-              ? props.value.toFixed(2)
-              : typeof props.value === "string"
-              ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
-              : Array.isArray(props.value)
-              ? props.value
-                  .map((item) =>
-                    typeof item === "number" ? item.toFixed(1) : item
-                  )
-                  .join(" : ")
-              : ""}
+                ? props.value.toFixed(2)
+                : typeof props.value === "string"
+                  ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
+                  : Array.isArray(props.value)
+                    ? props.value
+                      .map((item) =>
+                        typeof item === "number" ? item.toFixed(1) : item
+                      )
+                      .join(" : ")
+                    : ""}
           </div>
           <div style={{ width: "5%" }}>{props.score}</div>
           <div style={{ width: "10%" }}>
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
-                  <React.Fragment key={index}>
-                    {/* {item.toFixed(2)} */}
-                    {item}
-                    {index !== props.range.length - 1 && "-"}
-                  </React.Fragment>
-                ))
+                <React.Fragment key={index}>
+                  {/* {item.toFixed(2)} */}
+                  {item}
+                  {index !== props.range.length - 1 && "-"}
+                </React.Fragment>
+              ))
               : props.range}
           </div>
           <div
@@ -558,6 +560,7 @@ export const ViewReportDialog = () => {
                 journey to looking your best!
               </div>
             </div>
+
             <Divider style={{ padding: "20px" }}></Divider>
             <ReportTableHeader />
             <Divider></Divider>

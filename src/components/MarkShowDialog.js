@@ -125,7 +125,7 @@ export const ScoreAlert = (props) => {
       medialCanthalAngle: medialCanthalAngle,
     };
 
-    fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/getfrontscore", {
+    fetch("http://localhost:8000/getfrontscore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,7 +198,7 @@ export const ScoreAlert = (props) => {
       nasalTipAngle: nasalTipAngle,
     };
 
-    fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/getsidescore", {
+    fetch("http://localhost:8000/getsidescore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

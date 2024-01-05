@@ -244,7 +244,7 @@ export const FrontTargetMapping = ({
       formData.append("image", selectedFrontImage);
 
       const response = await fetch(
-        "https://rxturftcn25yfu-8000.proxy.runpod.net/frontmagic",
+        "http://localhost:8000/frontmagic",
         {
           method: "POST",
           body: formData,
@@ -589,7 +589,7 @@ export const SideTargetMapping = ({
       formData.append("image", selectedSideImage);
 
       const response = await fetch(
-        "https://rxturftcn25yfu-8000.proxy.runpod.net/sidemagic",
+        "http://localhost:8000/sidemagic",
         {
           method: "POST",
           body: formData,
@@ -611,7 +611,8 @@ export const SideTargetMapping = ({
 
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i + 30][0] = {
-          x: data.points[i][0] + (800 - (800 * width) / height) / 2,
+          // x: data.points[i][0] + (800 - (800 * width) / height) / 2,
+          x: data.points[i][0],
           y: data.points[i][1],
         };
       }

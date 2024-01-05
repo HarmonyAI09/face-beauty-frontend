@@ -31,7 +31,7 @@ const Login = ({}) => {
         mail: email,
         pswd: password,
       };
-      fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/api/signin", {
+      fetch("http://localhost:8000/api/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -124,7 +124,7 @@ const Login = ({}) => {
         pswd: password,
       };
       // Make a POST request to the sign-up endpoint in your backend API
-      fetch("https://rxturftcn25yfu-8000.proxy.runpod.net/api/signup", {
+      fetch("http://localhost:8000/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

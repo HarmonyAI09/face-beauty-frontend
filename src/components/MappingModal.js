@@ -26,6 +26,33 @@ function calculateDistance(point1, point2) {
   return distance;
 }
 
+function distanceAndSideOfPointToLine(point1, point2, point3) {
+  const [x1, y1] = [point1.x, point1.y];
+  const [x2, y2] = [point2.x, point2.y];
+  const [x3, y3] = [point3.x, point3.y];
+  const v1 = x3 - x2;
+  const v2 = y3 - y2;
+  const w1 = x1 - x2;
+  const w2 = y1 - y2;
+  const dotProduct = v1 * w1 + v2 * w2;
+  const vMagnitudeSquared = v1**2 + v2**2;
+  const t = dotProduct / vMagnitudeSquared;
+  const projectionX = x2 + t * v1;
+  const projectionY = y2 + t * v2;
+  const distance = Math.sqrt((projectionX - x1)**2 + (projectionY - y1)**2);
+  const determinant = (x1 - x2) * (y3 - y2) - (y1 - y2) * (x3 - x2);
+  let side;
+  if (determinant > 0) {
+      side = 1;
+  } else if (determinant < 0) {
+      side = -1;
+  } else {
+      side = 0;
+  }
+
+  return { distance, side };
+}
+
 function calculateSharpAngle(line1, line2) {
   const dotProduct = line1.x * line2.x + line1.y * line2.y;
   const magnitude1 = Math.sqrt(line1.x ** 2 + line1.y ** 2);
@@ -42,6 +69,13 @@ function calculateDistanceFromPointToLine(point1, point2, point3) {
     Math.abs(slope * point1.x - point1.y + yIntercept) /
     Math.sqrt(Math.pow(slope, 2) + 1);
   return distance;
+}
+
+function findIntersectionPoint(point1, point2, point3, point4) {
+  const slope1 = (point2.y - point1.y) / (point2.x - point1.x);
+  const x = point3.x;
+  const y = slope1 * (x - point1.x) + point1.y;
+  return {x:point3.x, y:y}
 }
 
 export function FrontProfileMappingModal() {
@@ -218,6 +252,8 @@ export function FrontProfileMappingModal() {
     setIpsilateralAlarAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateDeviationOfJFA2IAA = () => {
+    CalculateJawFrontalAngle();
+    CalculateIpsilateralAlarAngle();
     setDeviationOfJFA2IAA(parseFloat(Math.abs(jawFrontalAngle - ipsilateralAlarAngle)).toFixed(2));
   };
   const CalculateEyebrowTilt = () => {
@@ -291,11 +327,11 @@ export function FrontProfileMappingModal() {
     CalculateEyeAspectRatio();
     CalculateLowerLip2UpperLipRatio();
     CalculateIpsilateralAlarAngle();
-    CalculateDeviationOfJFA2IAA();
     CalculateEyebrowTilt();
     CalculateBitemporalWidth();
     CalculateLowerThirdProporation();
     CalculateMedialCanthalAngle();
+    CalculateDeviationOfJFA2IAA();
     showNotification("Saved", "Front profile landmarks have been saved.", "info");
   };
 
@@ -412,8 +448,10 @@ export function SideProfileMappingModal() {
     setMandibularPlaneAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateRamus2MandibleRatio = () => {
+    const interactionPoint = findIntersectionPoint(markPoints[38][0],markPoints[52][0],markPoints[50][0],(markPoints[50][0].x,markPoints[50][0].y-20 ))
     const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
-    const b = calculateDistance(markPoints[54][0], markPoints[49][0]);
+    const b = calculateDistance(interactionPoint, markPoints[49][0]);
+    console.log(interactionPoint, markPoints[54][0], markPoints[50][0]);
     setRamus2MandibleRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateFacialConvexityGlabella = () => {
@@ -472,10 +510,13 @@ export function SideProfileMappingModal() {
     setFacialConvexityNasion(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateOrbitalVector = () => {
-    if (markPoints[57][0].x > markPoints[33][0].x) {
-      setOrbitalVector("positive");
-    } else if (markPoints[57][0].x == markPoints[33][0].x) {
+    const distance = (markPoints[57][0].x - markPoints[33][0].x);
+    if(Math.abs(distance)<=4){
       setOrbitalVector("neutral");
+      return;
+    }
+    if(distance>0){
+      setOrbitalVector("positive");
     } else {
       setOrbitalVector("negative");
     }
@@ -492,32 +533,90 @@ export function SideProfileMappingModal() {
     setMentolabialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasalProjection = () => {
-    // const a = markPoints[42][0].x - markPoints[40][0].x;
-    // const b = calculateDistance(markPoints[35][0], markPoints[40][0]);
-    // setNasalProjection(0.6);
-    const a = { x: 1, y: 0 };
-    const b = {
-      x: markPoints[36][0].x - markPoints[40][0].x,
-      y: markPoints[36][0].y - markPoints[40][0].y,
-    };
-    setNasalProjection(parseFloat(Math.cos((calculateSharpAngle(a, b) / 180) * Math.PI)).toFixed(2));
+    const a = markPoints[36][0].x - markPoints[40][0].x;
+    const b = markPoints[40][0].y - markPoints[36][0].y;
+    const c = Math.sqrt(a*a+b*b);
+    setNasalProjection(parseFloat(a / c).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {
     const a = markPoints[42][0].x - markPoints[40][0].x;
-    const b = markPoints[40][0].y - markPoints[56][0].y;
+    const b = markPoints[40][0].y - markPoints[33][0].y;
     setNasalW2HRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateRickettsELine = () => {
-    setRickettsELine("ideal");
+    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[40][0], markPoints[50][0])
+    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[40][0], markPoints[50][0])
+    console.log(a);
+    console.log(b);
+    if(a["side"]!==1 || b["side"]!==1){
+      setRickettsELine('unideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
+      setRickettsELine('ideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
+      setRickettsELine('near ideal');
+      return;
+    }
+    setRickettsELine('unideal');
+
   };
   const CalculateHoldawayHLine = () => {
-    setHoldawayHLine("ideal");
+    const a = distanceAndSideOfPointToLine(markPoints[58][0], markPoints[45][0], markPoints[50][0])
+    console.log(a);
+    if(a["side"]===-1){
+      setHoldawayHLine('unideal');
+      return;
+    }
+    if(Math.abs(a["distance"])<=2){
+      setHoldawayHLine('ideal');
+      return;
+    }
+    if(Math.abs(a["distance"])<=10){
+      setHoldawayHLine('near ideal');
+      return;
+    }
+    setHoldawayHLine('unideal');
   };
   const CalculateSteinerSLine = () => {
-    setSteiinerSLine("ideal");
+    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[59][0], markPoints[50][0])
+    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[59][0], markPoints[50][0])
+    console.log(a);
+    console.log(b);
+    if(a["side"]!==1 || b["side"]!==1){
+      setSteiinerSLine('unideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
+      setSteiinerSLine('ideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
+      setSteiinerSLine('near ideal');
+      return;
+    }
+    setSteiinerSLine('unideal');
   };
   const CalculateBurstoneLine = () => {
-    setBurstoneLine("ideal");
+    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[43][0], markPoints[50][0])
+    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[43][0], markPoints[50][0])
+    console.log(a);
+    console.log(b);
+    if(a["side"]!==1 || b["side"]!==1){
+      setBurstoneLine('unideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
+      setBurstoneLine('ideal');
+      return;
+    }
+    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
+      setBurstoneLine('near ideal');
+      return;
+    }
+    setBurstoneLine('unideal');
   };
   const CalculateNasofacialAngle = () => {
     const a = {
@@ -545,7 +644,20 @@ export function SideProfileMappingModal() {
     setGonion2MouthRelationship("below");
   };
   const CalculateRecessionRelative2FrankfortPlane = () => {
-    setRecessionRelative2FrankfortPlane("none");
+    const distance = markPoints[50][0].x - markPoints[35][0].x;
+    if(Math.abs(distance)<=0){
+      setRecessionRelative2FrankfortPlane("none");
+      return;
+    }
+    if(Math.abs(distance)<=4){
+      setRecessionRelative2FrankfortPlane("slightly");
+      return;
+    }
+    if(Math.abs(distance)<=8){
+      setRecessionRelative2FrankfortPlane("moderate");
+      return;
+    }
+    setRecessionRelative2FrankfortPlane("extreme");
   };
   const CalculateBrowridgeInclinationAngle = () => {
     const a = { x: 0, y: 1 };

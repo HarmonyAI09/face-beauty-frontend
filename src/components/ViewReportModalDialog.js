@@ -301,6 +301,7 @@ export const ViewReportDialog = () => {
   const { selectedSideImage } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
   const [measurementImages, setMeasurementImages] = useState([]);
+  const [measureID, setMeasureID] = useState("");
 
   const getMeasurementImages = async () => {
     setIsLoading(true);
@@ -318,29 +319,13 @@ export const ViewReportDialog = () => {
           method: "POST",
           body: formData,
         }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-      const zipData = await response.arrayBuffer();
-
-      const zip = new JSZip();
-      const result = await zip.loadAsync(zipData);
-      let imageUrls = [];
-      console.log(imageUrls.length);
-      result.forEach(async (relativePath, file) => {
-        const imageData = await file.async("uint8array");
-        const blob = new Blob([imageData], { type: "image/jpeg" });
-        const imageUrl = URL.createObjectURL(blob);
-
-        imageUrls.push(imageUrl);
-        setMeasurementImages(imageUrls);
-        console.log(imageUrls.length, "****");
+      ).then((response) => response.json())
+      .then((data)=>{
+        console.log(data);
+        setMeasureID(data.id);
+        setIsLoading(false);
+        showNotification("Success", "Successfully generate images.", "success");
       });
-      // setMeasurementImages(imageUrls);
-      setIsLoading(false);
-      showNotification("Success", "Successfully generate images.", "success");
     } catch (error) {
       setIsLoading(false);
       showNotification("Failed", "Image generation has been failed.", "danger");
@@ -368,6 +353,8 @@ export const ViewReportDialog = () => {
                 source={measurementImages[props.source]}
                 title={props.measurement}
                 overview={props.overview}
+                id={measureID}
+                index={props.source+1}
               ></MeasurementOverview>
             </Tooltip>
           </div>
@@ -468,7 +455,7 @@ export const ViewReportDialog = () => {
           width: "90vw",
           maxWidth: "1920px",
           height: "90vh",
-          backgroundColor: "#fdd9e5",
+          backgroundColor: "#bbdefb",
         }}
       >
         <DialogBody>
@@ -492,7 +479,7 @@ export const ViewReportDialog = () => {
             >
               <div
                 style={{
-                  color: "#fe036a",
+                  color: "#0d47a1",
                   fontSize: "40px",
                   fontWeight: "700",
                 }}
@@ -505,14 +492,14 @@ export const ViewReportDialog = () => {
               </div>
             </div>
           </DialogTitle>
-          <DialogContent style={{ color: "#f4347f" }}>
+          <DialogContent style={{ color: "#0d47a1" }}>
             <div>
               <div>
                 <div
                   style={{
                     fontSize: "20px",
                     display: "flex",
-                    color: "#f4347f",
+                    color: "#0d47a1",
                     fontWeight: "600",
                     fontFamily: "monospace",
                   }}
@@ -529,7 +516,7 @@ export const ViewReportDialog = () => {
                     display: "flex",
                     alignItems: "end",
                     paddingLeft: "20px",
-                    color: "#fc72a6",
+                    color: "#1565c0",
                     fontFamily: "monospace",
                   }}
                 >
@@ -544,7 +531,7 @@ export const ViewReportDialog = () => {
                   width: "calc(100% - 32px)",
                   padding: "16px",
                   paddingBottom: "0px",
-                  color: "#f4347f",
+                  color: "#0d47a1",
                   fontWeight: "600",
                   fontSize: "16px",
                   fontFamily: "monospace",

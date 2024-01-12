@@ -14,8 +14,8 @@ const BeautyNavbar = () => {
       <div
         style={{
           height: "30px",
-          backgroundColor: "#f4347f",
-          color: "#fdc2d6",
+          backgroundColor: "#0d47a1",
+          color: "#e3f2fd",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -28,13 +28,19 @@ const BeautyNavbar = () => {
           onClick={() => handleRedirect("/community")}
           style={{ cursor: "pointer" }}
         >
-          Community
+          FAQs
         </div>
         <div
           onClick={() => handleRedirect("/home")}
           style={{ cursor: "pointer" }}
         >
           Harmony
+        </div>
+        <div
+          onClick={() => handleRedirect("/products")}
+          style={{ cursor: "pointer" }}
+        >
+          Other products & services
         </div>
         <div
           onClick={() => handleRedirect("/about")}
@@ -52,11 +58,14 @@ const BeautyNavbar = () => {
           width: "100%",
           height: "100px",
           overflow:"hidden",
-          backgroundColor: "#fc72a6",
+          backgroundColor: "#1565c0",
+          position:"relative"
         }}
       >
         <div style={{fontWeight:"500", fontSize:"100px", color:"white", fontFamily:"fantasy"}}>HARMONY</div>
-        <Image src="images/right.png" height={200}></Image>
+        {/* <Image src="images/right.png" height={200}></Image> */}
+        <Image src="images/apple.png" height={50} style={{position:"absolute", left:"25px"}}></Image>
+        <Image src="images/app.png" height={50} style={{position:"absolute", left:"200px", borderRadius:"5px"}}></Image>
       </div>
     </div>
   );

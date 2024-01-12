@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -13,37 +14,69 @@ import {
 import { FaSpinner } from "react-icons/fa";
 
 export const MeasurementOverview = (props) => {
+  const [imageSrc, setImageSrc] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImage = async (id, imageIndex) => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:8000/get_image/${id}/${imageIndex}`
+        );
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          setImageSrc(url);
+        } else {
+          console.error("Failed to fetch image");
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+      setIsLoading(false);
+    };
+    if (props.id && props.index) {
+      fetchImage(props.id, props.index);
+    }
+  }, []);
+
   return (
     <Dialog>
       <DialogTrigger disableButtonEnhancement>
-        {props.isLoading ? (
-          <FaSpinner size={50} className="spin-animation"/>
+        {isLoading ? (
+          <FaSpinner size={50} className="spin-animation" />
         ) : (
           <Image
             shape="circular"
-            src={props.source}
+            src={imageSrc}
             width={70}
-            style={{ border: "2px solid #f4347f", cursor: "pointer" }}
+            style={{ border: "2px solid #0d47a1", cursor: "pointer" }}
           ></Image>
         )}
       </DialogTrigger>
       <DialogSurface style={{ backgroundColor: "#fbe0e8" }}>
         <DialogBody>
-          <DialogTitle style={{ color: "#fe036a" }}>{props.title}</DialogTitle>
+          <DialogTitle style={{ color: "#0d47a1" }}>{props.title}</DialogTitle>
           <DialogContent>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                border: "1px solid #fe036a",
-                backgroundColor: "#fdd9e5",
+                border: "1px solid #0d47a1",
+                backgroundColor: "#bbdefb",
               }}
             >
-              {props.isLoading?<FaSpinner size={50} className="spin-animation"/>:<Image shape="rect" src={props.source}></Image>}              
+              {isLoading ? (
+                <FaSpinner size={50} className="spin-animation" />
+              ) : (
+                <Image shape="rect" src={imageSrc}></Image>
+              )}
               <div
                 style={{
                   fontWeight: "100",
-                  color: "#fe036a",
+                  color: "#0d47a1",
                   height: "292px",
                   overflowY: "auto",
                   marginLeft: "20px",

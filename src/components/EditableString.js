@@ -38,7 +38,7 @@ const EditableString = () => {
             height: "20px",
             borderRadius: "15px",
             backgroundColor: "#fdc2d6",
-            color:"#fc72a6",
+            color:"#1565c0",
             paddingLeft:"15px",
           }}
         />

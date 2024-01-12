@@ -55,7 +55,7 @@ export const FrontTargetMapping = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const imageRef = useRef(null);
-  const [imageOffsetX, setImageOffsetX] = useState(0.0);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
   const { markPoints, setMarkPoints } = useContext(UserContext);
   const { selectedFrontImage } = useContext(UserContext);
   const [circles, setCircles] = React.useState([
@@ -116,7 +116,7 @@ export const FrontTargetMapping = ({
         height: `${height}px`,
         overflow: "hidden",
         position: "relative",
-        border: "3px solid #f4347f",
+        border: "3px solid #0d47a1",
         borderRadius: "99px",
       },
       image: {
@@ -134,7 +134,7 @@ export const FrontTargetMapping = ({
         left: "50%",
         height: "100%",
         width: "2px", // width of the line
-        backgroundColor: "#f4347f",
+        backgroundColor: "#0d47a1",
         transform: "translateX(-50%)",
       },
       horizontalLine: {
@@ -143,7 +143,7 @@ export const FrontTargetMapping = ({
         left: "0",
         width: "100%",
         height: "2px", // height of the line
-        backgroundColor: "#f4347f",
+        backgroundColor: "#0d47a1",
         transform: "translateY(-50%)",
       },
     };
@@ -172,8 +172,10 @@ export const FrontTargetMapping = ({
         console.log(this.width, this.height);
         if (this.height > this.width) {
           setScaleImageSize([(1600 * this.width) / this.height, 1600]);
+          setOffset({ x: (800 - (800 * this.width) / this.height) / 2, y: 0 });
         } else {
           setScaleImageSize([1600, (1600 * this.height) / this.width]);
+          setOffset({ x: 0, y: (800 - (800 * this.height) / this.width) / 2 });
         }
       };
       img.src = objectUrl;
@@ -243,13 +245,10 @@ export const FrontTargetMapping = ({
       const formData = new FormData();
       formData.append("image", selectedFrontImage);
 
-      const response = await fetch(
-        "http://localhost:8000/frontmagic",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:8000/frontmagic", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
@@ -262,16 +261,14 @@ export const FrontTargetMapping = ({
       const width = imageRef.current.naturalWidth;
       const height = imageRef.current.naturalHeight;
 
-      setImageOffsetX((800 - (800 * width) / height) / 2);
-
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i][0] = {
-          x: data.points[i][0][0] + (800 - (800 * width) / height) / 2,
-          y: data.points[i][0][1],
+          x: data.points[i][0][0] + offset.x,
+          y: data.points[i][0][1] + offset.y,
         };
         updatedMarkPoints[i][1] = {
-          x: data.points[i][1][0] + (800 - (800 * width) / height) / 2,
-          y: data.points[i][1][1],
+          x: data.points[i][1][0] + offset.x,
+          y: data.points[i][1][1] + offset.y,
         };
       }
       setIsLoading(false);
@@ -337,14 +334,14 @@ export const FrontTargetMapping = ({
           zIndex: 9,
           height: "50px",
           width: "50px",
-          border: "2px solid #f4347f",
+          border: "2px solid #0d47a1",
           backgroundColor: "#fdc2d6",
           borderRadius: "20px",
-          color: "#f4347f",
+          color: "#0d47a1",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          cursor:"pointer",
+          cursor: "pointer",
         }}
         onClick={handleMagicButtonClick}
       >
@@ -477,7 +474,7 @@ export const SideTargetMapping = ({
         height: `${height}px`,
         overflow: "hidden",
         position: "relative",
-        border: "3px solid #f4347f",
+        border: "3px solid #0d47a1",
         borderRadius: "99px",
       },
       image: {
@@ -495,7 +492,7 @@ export const SideTargetMapping = ({
         left: "50%",
         height: "100%",
         width: "2px", // width of the line
-        backgroundColor: "#f4347f",
+        backgroundColor: "#0d47a1",
         transform: "translateX(-50%)",
       },
       horizontalLine: {
@@ -504,7 +501,7 @@ export const SideTargetMapping = ({
         left: "0",
         width: "100%",
         height: "2px", // height of the line
-        backgroundColor: "#f4347f",
+        backgroundColor: "#0d47a1",
         transform: "translateY(-50%)",
       },
     };
@@ -588,13 +585,10 @@ export const SideTargetMapping = ({
       const formData = new FormData();
       formData.append("image", selectedSideImage);
 
-      const response = await fetch(
-        "http://localhost:8000/sidemagic",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:8000/sidemagic", {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
@@ -616,7 +610,7 @@ export const SideTargetMapping = ({
           y: data.points[i][1],
         };
       }
-      
+
       setIsLoading(false);
       setMarkPoints(updatedMarkPoints);
     } catch (error) {
@@ -679,14 +673,14 @@ export const SideTargetMapping = ({
           zIndex: 9,
           height: "50px",
           width: "50px",
-          border: "2px solid #f4347f",
+          border: "2px solid #0d47a1",
           backgroundColor: "#fdc2d6",
           borderRadius: "20px",
-          color: "#f4347f",
+          color: "#0d47a1",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          cursor:"pointer",
+          cursor: "pointer",
         }}
         onClick={handleMagicButtonClick}
       >
@@ -700,7 +694,7 @@ export const SideTargetMapping = ({
         style={{
           position: "absolute",
           bottom: "1%",
-          right: "1%"
+          right: "1%",
         }}
       >
         <SubRectImage

@@ -65,7 +65,7 @@ const Login = ({}) => {
       <>
         <div
           style={{
-            color: "#f4347f",
+            color: "#0d47a1",
             fontFamily: `"Google Sans","Noto Sans Myanmar UI",arial,sans-serif`,
             fontSize: "24px",
             fontWeight: "700",
@@ -148,7 +148,7 @@ const Login = ({}) => {
       <>
         <div
           style={{
-            color: "#f4347f",
+            color: "#0d47a1",
             fontFamily: `"Google Sans","Noto Sans Myanmar UI",arial,sans-serif`,
             fontSize: "24px",
             fontWeight: "700",
@@ -212,7 +212,7 @@ const Login = ({}) => {
           width: "448px",
           height: "500px",
           padding: "48px 40px 36px",
-          border: "2px solid #f4347f",
+          border: "2px solid #0d47a1",
           borderRadius: "20px",
           backgroundColor: "#fdc2d6",
         }}
@@ -233,7 +233,7 @@ const Login = ({}) => {
           >
             <div
               style={{
-                color: "#f4347f",
+                color: "#0d47a1",
                 display: "inline-block",
                 letterSpacing: "0.25px",
                 outline: "0",

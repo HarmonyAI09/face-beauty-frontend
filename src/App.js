@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css'
 import 'animate.css/animate.compat.css'; // If you're using animation}
+import Product from './components/Product';
 
 export const AppContext = createContext();
 
@@ -36,6 +37,7 @@ function App() {
             {!storedEmail && <Login setIsLoggedIn={setIsLoggedIn} />}
             <Routes>
               {storedEmail && <Route exact path="/home" element={<Home />} />}
+              {storedEmail && <Route exact path="/products" element={<Product />} />}
               {storedEmail && <Route exact path="/checkout-success" element={<PaySuccess />} />}
               {storedEmail && <Route exact path="/resources" element={<Resource />} />}
               {storedEmail && <Route exact path="/pricing" element={<Pricing />} />}

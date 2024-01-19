@@ -342,7 +342,7 @@ export function FrontProfileMappingModal() {
           <CompoundButton
             icon={<Connected20Filled />}
             style={{
-              color: "#f4347f",
+              color: "#0d47a1",
               backgroundColor: "rgba(0,0,0,0)",
               border: "0px",
             }}
@@ -352,7 +352,7 @@ export function FrontProfileMappingModal() {
           style={{
             maxWidth: "1700px",
             maxHeight: "1000px",
-            backgroundColor: "#fdd9e5",
+            backgroundColor: "#bbdefb",
           }}
         >
           <DialogBody>
@@ -712,7 +712,7 @@ export function SideProfileMappingModal() {
           <CompoundButton
             icon={<Connected20Filled />}
             style={{
-              color: "#f4347f",
+              color: "#0d47a1",
               backgroundColor: "rgba(0,0,0,0)",
               border: "0px",
             }}
@@ -722,7 +722,7 @@ export function SideProfileMappingModal() {
           style={{
             maxWidth: "1700px",
             maxHeight: "1000px",
-            backgroundColor: "#fdd9e5",
+            backgroundColor: "#bbdefb",
           }}
         >
           <DialogBody>

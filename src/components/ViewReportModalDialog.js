@@ -9,10 +9,10 @@ import {
   DialogBody,
   Button,
   Divider,
-  Input,
   Tooltip,
 } from "@fluentui/react-components";
 import { FaExclamationTriangle } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa";
 
 import { Dismiss24Regular } from "@fluentui/react-icons";
@@ -21,9 +21,10 @@ import { useContext, useState, useEffect } from "react";
 import { MeasurementOverview } from "./MeasurementOverview";
 
 import "react-circular-progressbar/dist/styles.css";
-import JSZip from "jszip";
+import "./ViewReportModalDialog.css";
 import EditableString from "./EditableString";
 import { showNotification } from "./NotificationCreator";
+import { data } from "autoprefixer";
 
 const ReportTableHeader = () => {
   return (
@@ -301,6 +302,10 @@ export const ViewReportDialog = () => {
   const { selectedSideImage } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
   const [measurementImages, setMeasurementImages] = useState([]);
+  const [measureID, setMeasureID] = useState("");
+  const [reportOwner, setReportOwner] = useState("unnamed");
+  const [isSaving, setIsSaving ] = useState(false);
+  const [reportList, setReportList] = useState([]);
 
   const getMeasurementImages = async () => {
     setIsLoading(true);
@@ -312,42 +317,77 @@ export const ViewReportDialog = () => {
 
       console.log(formData);
 
-      const response = await fetch(
-        "http://localhost:8000/generate",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-      const zipData = await response.arrayBuffer();
-
-      const zip = new JSZip();
-      const result = await zip.loadAsync(zipData);
-      let imageUrls = [];
-      console.log(imageUrls.length);
-      result.forEach(async (relativePath, file) => {
-        const imageData = await file.async("uint8array");
-        const blob = new Blob([imageData], { type: "image/jpeg" });
-        const imageUrl = URL.createObjectURL(blob);
-
-        imageUrls.push(imageUrl);
-        setMeasurementImages(imageUrls);
-        console.log(imageUrls.length, "****");
-      });
-      // setMeasurementImages(imageUrls);
-      setIsLoading(false);
-      showNotification("Success", "Successfully generate images.", "success");
+      const response = await fetch("http://localhost:8000/generate", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setMeasureID(data.id);
+          setIsLoading(false);
+          showNotification(
+            "Success",
+            "Successfully generate images.",
+            "success"
+          );
+        });
     } catch (error) {
       setIsLoading(false);
       showNotification("Failed", "Image generation has been failed.", "danger");
       console.error(error);
     }
   };
-  useEffect(() => { }, [measurementImages]);
+
+  const handleReportSave = async () => {
+    setIsSaving(true);
+    console.log(measureID);
+    console.log(reportOwner);
+    const requestBody = {
+      mail: localStorage.getItem("userEmail"),
+      reportID: measureID,
+      gender: gender? "Male" : "Female",
+      race: selectedOption,
+      reportOwner: reportOwner,
+      keyPoints: markPoints,
+    };
+    console.log(requestBody);
+    const response = await fetch("http://localhost:8000/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          showNotification("Success", data.status, "success");
+        }
+        setIsSaving(false);
+        getReportList();
+      });
+  };
+
+  const getReportList = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/reports/${localStorage.getItem("userEmail")}`
+      )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setReportList(data);
+      });
+    } catch (error) {
+      console.error("Error getting report list:", error);
+    }
+  };
+
+  useEffect(() => {
+    getReportList();
+  }, []);
 
   const ReportTableRow = (props) => {
     return (
@@ -368,6 +408,8 @@ export const ViewReportDialog = () => {
                 source={measurementImages[props.source]}
                 title={props.measurement}
                 overview={props.overview}
+                id={measureID}
+                index={props.source + 1}
               ></MeasurementOverview>
             </Tooltip>
           </div>
@@ -376,27 +418,27 @@ export const ViewReportDialog = () => {
             {typeof props.value === "number" && Number.isInteger(props.value)
               ? props.value
               : typeof props.value === "number"
-                ? props.value.toFixed(2)
-                : typeof props.value === "string"
-                  ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
-                  : Array.isArray(props.value)
-                    ? props.value
-                      .map((item) =>
-                        typeof item === "number" ? item.toFixed(1) : item
-                      )
-                      .join(" : ")
-                    : ""}
+              ? props.value.toFixed(2)
+              : typeof props.value === "string"
+              ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
+              : Array.isArray(props.value)
+              ? props.value
+                  .map((item) =>
+                    typeof item === "number" ? item.toFixed(1) : item
+                  )
+                  .join(" : ")
+              : ""}
           </div>
           <div style={{ width: "5%" }}>{props.score}</div>
           <div style={{ width: "10%" }}>
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
-                <React.Fragment key={index}>
-                  {/* {item.toFixed(2)} */}
-                  {item}
-                  {index !== props.range.length - 1 && "-"}
-                </React.Fragment>
-              ))
+                  <React.Fragment key={index}>
+                    {/* {item.toFixed(2)} */}
+                    {item}
+                    {index !== props.range.length - 1 && "-"}
+                  </React.Fragment>
+                ))
               : props.range}
           </div>
           <div
@@ -468,7 +510,7 @@ export const ViewReportDialog = () => {
           width: "90vw",
           maxWidth: "1920px",
           height: "90vh",
-          backgroundColor: "#fdd9e5",
+          backgroundColor: "#bbdefb",
         }}
       >
         <DialogBody>
@@ -492,7 +534,7 @@ export const ViewReportDialog = () => {
             >
               <div
                 style={{
-                  color: "#fe036a",
+                  color: "#0d47a1",
                   fontSize: "40px",
                   fontWeight: "700",
                 }}
@@ -505,14 +547,14 @@ export const ViewReportDialog = () => {
               </div>
             </div>
           </DialogTitle>
-          <DialogContent style={{ color: "#f4347f" }}>
+          <DialogContent style={{ color: "#0d47a1" }}>
             <div>
               <div>
                 <div
                   style={{
                     fontSize: "20px",
                     display: "flex",
-                    color: "#f4347f",
+                    color: "#0d47a1",
                     fontWeight: "600",
                     fontFamily: "monospace",
                   }}
@@ -529,14 +571,21 @@ export const ViewReportDialog = () => {
                     display: "flex",
                     alignItems: "end",
                     paddingLeft: "20px",
-                    color: "#fc72a6",
+                    color: "#1565c0",
                     fontFamily: "monospace",
                   }}
                 >
                   <FaUserCheck />
                   &nbsp;
                   {gender ? " Male, " : " Female, "} {selectedOption}, &nbsp;
-                  <EditableString />
+                  <EditableString
+                    value={reportOwner}
+                    onValueChange={setReportOwner}
+                  />
+                  &nbsp;
+                  <div className="report_status">
+                    <FaSave onClick={handleReportSave} />
+                  </div>
                 </div>
               </div>
               <div
@@ -544,7 +593,7 @@ export const ViewReportDialog = () => {
                   width: "calc(100% - 32px)",
                   padding: "16px",
                   paddingBottom: "0px",
-                  color: "#f4347f",
+                  color: "#0d47a1",
                   fontWeight: "600",
                   fontSize: "16px",
                   fontFamily: "monospace",

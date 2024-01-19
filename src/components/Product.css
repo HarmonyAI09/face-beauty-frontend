@@ -1,0 +1,37 @@
+.product{
+    width: 250px;
+    height: 350px;
+    border: 2px solid  #0d47a1;
+    background-color: #90caf9;
+}
+
+.product-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-image {
+    width: calc(100% - 4px);
+    border: 2px solid #0d47a1;
+}
+
+.product-name {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #0d47a1;
+    text-align: center;
+}
+
+.product-price {
+    padding-top: 10px;
+    width: 100%;
+    height: 30px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #0d47a1;
+    text-align: center;
+}

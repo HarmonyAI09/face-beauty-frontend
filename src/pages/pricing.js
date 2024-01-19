@@ -35,16 +35,6 @@ const PricingOption = ({ plan, price, features, buttonText }) => {
 const PricingComponent = () => {
     const pricingData = [
         {
-            plan: "Basic",
-            price: "Free",
-            features: [
-                "Full harmony score",
-                "Access to our community",
-                "Best and worst feature breakdown",
-                "Celebrity score match",
-            ]
-        },
-        {
             plan: "Premium",
             price: "$17.99/month",
             features: [
@@ -53,28 +43,9 @@ const PricingComponent = () => {
                 "   45+ facial assessments",
                 "   Scoring breakdown",
                 "   Advice where applicable",
-                "Access to our community",
                 "Up to 5 saved reports at a time",
-                "Cross-platform access to subscription",
             ]
         },
-        {
-            plan: "Enterprise",
-            price: "$22.99/month",
-            features: [
-                "Full harmony score",
-                "Full page auto-generated report on your face",
-                "   45+ facial assessments",
-                "   Scoring breakdown",
-                "   Advice where applicable",
-                "Access to our community",
-                "Unlimited reports saved at one time",
-                "Cross-platform access to subscription",
-                "Idealize : AI-gen beauty simulation",
-                "Professional profile badge",
-                "Early access to newly developed features",
-            ]
-        }
     ];
 
     return (

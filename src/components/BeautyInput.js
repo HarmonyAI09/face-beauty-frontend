@@ -49,9 +49,9 @@ const RoundedInput = ({ type, placeholder, alert, value, onChange }) => {
           borderRadius: '99px',
           padding: '10px',
           width: 'calc(100% - 24px)',
-          backgroundColor: '#fdd9e5',
-          color: '#fa9dbc',
-          borderColor: '#fa9dbc',
+          backgroundColor: '#bbdefb',
+          color: '#e3f2fd',
+          borderColor: '#e3f2fd',
         }}
       />
       <div style={{ position:"absolute", left:"16px", top:"36px", visibility: error ? 'visible' : 'hidden', color: 'red' }}>{error}</div>

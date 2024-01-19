@@ -60,11 +60,11 @@ function Profile() {
             <div style={{ width:"100%", backgroundColor: "#ebd9e9", justifyContent: "space-between", display: "flex", flexDirection: "column", minWidth: "1270px" }}>
                 <div style={{ display: "flex", width: "100%" }}>
                     <div style={{ display: "flex", width: "50%", justifyContent: "space-between" }}>
-                        <div style={{ border: "solid 1px purple", width: "300px" }}>
+                        <div style={{ border: "solid 1px #1565c0", width: "300px" }}>
                             <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                 Front Profile
                             </div>
-                            <div className="custom-scroll" style={{ padding: "7px", color: "purple" }}>
+                            <div className="custom-scroll" style={{ padding: "7px", color: "#1565c0" }}>
                                 <div className="measurement-div">
                                     <i className="fa-solid fa-percent"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Eye Separation Ratio :&nbsp;</div>
@@ -225,16 +225,16 @@ function Profile() {
                             </div>
                         </div>
                         <div style={{ display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center" }}>
-                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px purple" }}>
+                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px #1565c0" }}>
                                 <Image width={300} height={300} style={{ margin: "5px" }} src="./images/front.jpg"></Image>
                             </div>
-                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px purple" }}>
+                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px #1565c0" }}>
                                 <input type="file" ref={frontfileInput} accept="image/*" onChange={handleFrontImageSelect} style={{ display: 'none' }} />
                                 <CompoundButton icon={<ArrowUploadFilled />} style={{
                                     position: "absolute",
                                     top: "1%",
                                     right: "1%",
-                                    color: "purple",
+                                    color: "#1565c0",
                                 }} onClick={handleFrontUploadButtonClick}>
                                 </CompoundButton>
                                 {selectedFrontImage && (<Image width={300} height={300} style={{ margin: "5px" }} src={URL.createObjectURL(selectedFrontImage)}></Image>)}
@@ -244,10 +244,10 @@ function Profile() {
                     </div>
                     <div style={{ position: "relative", display: "flex", width: "50%", justifyContent: "space-between" }} onMouseOver={unavailableAreaInHandle} onMouseOut={unavailableAreaOutHandle}>
                         <div style={{ display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center" }}>
-                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px purple" }}>
+                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px #1565c0" }}>
                                 <Image width={300} height={300} style={{ margin: "5px" }} src="./images/side.jpg"></Image>
                             </div>
-                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px purple" }}>
+                            <div style={{ position: "relative", width: "310px", height: "310px", margin: "5px", border: "solid 1px #1565c0" }}>
                                 <input type="file" ref={sidefileInput} accept="image/*" onChange={handleSideImageSelect} style={{ display: 'none' }} />
                                 {selectedSideImage && (<Image width={300} height={300} style={{ margin: "5px" }} src={URL.createObjectURL(selectedSideImage)}></Image>)}
                                 {!selectedSideImage && (<Image width={300} height={300} style={{ margin: "5px" }} src={"./images/side_blank.jpg"}></Image>)}
@@ -255,14 +255,14 @@ function Profile() {
                                     position: "absolute",
                                     top: "1%",
                                     right: "1%",
-                                    color: "purple",
+                                    color: "#1565c0",
                                 }} onClick={handleSideUploadButtonClick}>
                                 </CompoundButton>
                             </div>
                         </div>
-                        <div style={{ border: "solid 1px purple", width: "300px" }}>
+                        <div style={{ border: "solid 1px #1565c0", width: "300px" }}>
                             <div style={{ height: "30px", backgroundColor: "#7e3777", color: "#d8b5d5", fontSize: "16px", display: "flex", alignItems: "center", justifyContent: "center" }}>Side Profile</div>
-                            <div className="custom-scroll" style={{ padding: "7px", color: "purple" }}>
+                            <div className="custom-scroll" style={{ padding: "7px", color: "#1565c0" }}>
                                 <div className="measurement-div">
                                     <i className="fa-solid fa-rotate-right"></i>
                                     <div className="measurement-name">&nbsp;&nbsp;Gonial angle :&nbsp;</div>
@@ -483,14 +483,14 @@ function Profile() {
                                 </div>
                             </div>
                         </div>
-                        {/* {lock && (<div className="lock-div" style={{ position: "absolute", top: "0%", right: "0%", color: "purple", height: "100%" }}>
-                                <div style={{ margin: "10px", border: "dashed 2px purple", height: "630px", borderRadius: "0px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {/* {lock && (<div className="lock-div" style={{ position: "absolute", top: "0%", right: "0%", color: "#1565c0", height: "100%" }}>
+                                <div style={{ margin: "10px", border: "dashed 2px #1565c0", height: "630px", borderRadius: "0px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                     <Image src="./images/lock.png"></Image>
                                 </div>
                             </div>
                             )} */}
-                        <div className={`lock-div ${lock ? 'show' : ''}`} style={{ position: "absolute", top: "0%", right: "0%", color: "purple", height: "100%" }}>
-                            <div style={{ margin: "10px", border: "dashed 2px purple", height: "630px", borderRadius: "0px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div className={`lock-div ${lock ? 'show' : ''}`} style={{ position: "absolute", top: "0%", right: "0%", color: "#1565c0", height: "100%" }}>
+                            <div style={{ margin: "10px", border: "dashed 2px #1565c0", height: "630px", borderRadius: "0px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                 <Image src="./images/lock.png"></Image>
                             </div>
                         </div>

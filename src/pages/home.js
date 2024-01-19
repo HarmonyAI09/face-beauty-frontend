@@ -8,7 +8,6 @@ import {
   Tooltip,
   CompoundButton,
 } from "@fluentui/react-components";
-import { ArrowUploadFilled } from "@fluentui/react-icons";
 import { useState, useRef, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -21,19 +20,11 @@ import {
 import { ScoreAlert } from "../components/MarkShowDialog";
 import { ViewReportDialog } from "../components/ViewReportModalDialog";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import ReportList from "../components/ReportList";
 
 export const UserContext = createContext();
 
 // eslint-disable-next-line no-unused-vars
-const wrapperStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  backgroundColor: "#6e2a65",
-  color: "white",
-};
 
 function Home() {
   const navigate = useNavigate();
@@ -66,8 +57,7 @@ function Home() {
   const [bigonialWidth, setBigonialWidth] = useState(0.0);
   const [chin2PhiltrumRatio, setChin2PhiltrumRatio] = useState(0.0);
   const [neckWidth, setNeckWidth] = useState(0.0);
-  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] =
-    useState(0.0);
+  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] = useState(0.0);
   const [midFaceRatio, setMidFaceRatio] = useState(0.0);
   const [eyebrowPositionRatio, setEyebrowPositionRatio] = useState(0.0);
   const [eyeSpacingRatio, setEyeSpacingRatio] = useState(0.0);
@@ -100,8 +90,7 @@ function Home() {
   const [steinerSLine, setSteiinerSLine] = useState("ideal");
   const [burstoneLine, setBurstoneLine] = useState("ideal");
   const [nasomentalAngle, setNasomentalAngle] = useState(0.0);
-  const [gonion2MouthRelationship, setGonion2MouthRelationship] =
-    useState("below");
+  const [gonion2MouthRelationship, setGonion2MouthRelationship] = useState("below");
   const [
     recessionRelative2FrankfortPlane,
     setRecessionRelative2FrankfortPlane,
@@ -132,24 +121,24 @@ function Home() {
       { x: 464, y: 282 },
     ], //4
     [
-      { x: 368, y: 284 },
-      { x: 368, y: 284 },
+      { x: 364, y: 287 },
+      { x: 364, y: 287 },
     ], //5
     [
-      { x: 368, y: 304 },
-      { x: 368, y: 304 },
+      { x: 364, y: 300 },
+      { x: 364, y: 300 },
     ], //6
     [
-      { x: 335, y: 294 },
-      { x: 398, y: 294 },
+      { x: 333, y: 298 },
+      { x: 395, y: 300 },
     ], //7
     [
-      { x: 335, y: 309 },
-      { x: 398, y: 309 },
+      { x: 332, y: 305 },
+      { x: 396, y: 308 },
     ], //8
     [
       { x: 270, y: 324 },
-      { x: 471, y: 325 },
+      { x: 475, y: 331 },
     ], //9
     [
       { x: 293, y: 316 },
@@ -164,7 +153,7 @@ function Home() {
       { x: 436, y: 327 },
     ], //12
     [
-      { x: 325, y: 326 },
+      { x: 320, y: 328 },
       { x: 415, y: 327 },
     ], //13
     [
@@ -173,7 +162,7 @@ function Home() {
     ], //14
     [
       { x: 313, y: 339 },
-      { x: 426, y: 340 },
+      { x: 416, y: 340 },
     ], //15
     [
       { x: 333, y: 339 },
@@ -184,23 +173,23 @@ function Home() {
       { x: 530, y: 351 },
     ], //17
     [
-      { x: 333, y: 419 },
+      { x: 334, y: 423 },
       { x: 406, y: 422 },
     ], //18
     [
-      { x: 370, y: 450 },
-      { x: 370, y: 450 },
+      { x: 365, y: 447 },
+      { x: 365, y: 447 },
     ], //19
     [
-      { x: 380, y: 440 },
-      { x: 380, y: 440 },
+      { x: 381, y: 444 },
+      { x: 381, y: 444 },
     ], //20
     [
       { x: 380, y: 470 },
       { x: 380, y: 470 },
     ], //21
     [
-      { x: 252, y: 472 },
+      { x: 255, y: 477 },
       { x: 505, y: 475 },
     ], //22
     [
@@ -212,8 +201,8 @@ function Home() {
       { x: 371, y: 484 },
     ], //24
     [
-      { x: 371, y: 504 },
-      { x: 371, y: 504 },
+      { x: 369, y: 507 },
+      { x: 369, y: 507 },
     ], //25
     [
       { x: 270, y: 494 },
@@ -228,8 +217,8 @@ function Home() {
       { x: 420, y: 557 },
     ], //28
     [
-      { x: 370, y: 565 },
-      { x: 370, y: 565 },
+      { x: 367, y: 568 },
+      { x: 367, y: 568 },
     ], //29
     [{ x: 244, y: 190 }], //30
     [{ x: 225, y: 226 }], //31
@@ -437,13 +426,17 @@ function Home() {
         markPoints,
         setMarkPoints,
         selectedFrontImage,
+        setSelectedFrontImage,
         selectedSideImage,
+        setSelectedSideImage,
         frontProfileMark,
         setFrontProfileMark,
         sideProfileMark,
         setSideProfileMark,
         gender,
+        setGender,
         selectedOption,
+        setSelectedOption,
         reportNotes,
         setReportNotes,
         reportScores,
@@ -461,20 +454,21 @@ function Home() {
       }}
     >
       <div className="main_parent">
+        <ReportList />
         <div
           className="main_child m_setting"
           style={{
             width: "15%",
-            color: "#f4347f",
-            backgroundColor: "#fdd9e5",
+            color: "#0d47a1",
+            backgroundColor: "#bbdefb",
             zIndex: "100",
           }}
         >
           <div
             style={{
               height: "30px",
-              backgroundColor: "#f4347f",
-              color: "#fdd9e5",
+              backgroundColor: "#0d47a1",
+              color: "#bbdefb",
               fontSize: "16px",
               display: "flex",
               alignItems: "center",
@@ -485,9 +479,9 @@ function Home() {
           </div>
           <div
             className="custom-scroll"
-            style={{ padding: "7px", color: "#f4347f" }}
+            style={{ padding: "7px", color: "#0d47a1" }}
           >
-            <Divider style={{ padding: "8px", color: "#f4347f" }}>
+            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
               Gender
             </Divider>
             <div
@@ -511,7 +505,7 @@ function Home() {
                 />
               </RadioGroup>
             </div>
-            <Divider style={{ padding: "8px", color: "#f4347f" }}>
+            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
               Ethnicity / Race
             </Divider>
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -560,7 +554,7 @@ function Home() {
                 />
               </RadioGroup>
             </div>
-            <Divider style={{ padding: "8px", color: "#f4347f" }}>
+            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
               Calculate
             </Divider>
             <div
@@ -574,7 +568,7 @@ function Home() {
               <ScoreAlert title="Front"></ScoreAlert>
               <ScoreAlert title="Side"></ScoreAlert>
             </div>
-            <Divider style={{ padding: "8px", color: "#f4347f" }}>
+            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
               Report
             </Divider>
             <div
@@ -637,7 +631,7 @@ function Home() {
                           justifyContent: "center",
                         }}
                       >
-                        <FrontProfileMappingModal/>
+                        <FrontProfileMappingModal />
                       </div>
                     </div>
                   )}
@@ -718,8 +712,8 @@ function Home() {
           <div
             style={{
               height: "30px",
-              backgroundColor: "#f4347f",
-              color: "#fdd9e5",
+              backgroundColor: "#0d47a1",
+              color: "#bbdefb",
               fontSize: "16px",
               display: "flex",
               alignItems: "center",
@@ -732,40 +726,40 @@ function Home() {
           </div>
           <div
             className="custom-scroll"
-            style={{ padding: "7px", color: "purple" }}
+            style={{ padding: "7px", color: "#1565c0" }}
           >
             <Tooltip
               relationship="label"
               content="Follow the photo instructions carefully as it will impact the accuracy of your score."
             >
-              <Divider style={{ padding: "8px", color: "purple" }}>
+              <Divider style={{ padding: "8px", color: "#1565c0" }}>
                 Photo Requirements
               </Divider>
             </Tooltip>
             <div style={{ paddingLeft: "10px" }}>
-              <Label size="small" style={{ color: "purple" }}>
+              <Label size="small" style={{ color: "#1565c0" }}>
                 Follow the photo instructions carefully.
               </Label>
               <div style={{ paddingLeft: "-5px", paddingRight: "10px" }}>
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Generally no selfies to ensure maximal accuracy.{" "}
                   </Label>
                 </div>
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Lens distortion will warp your facial features if the camera
                     lens is too close.
                   </Label>
@@ -773,11 +767,24 @@ function Home() {
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
+                    Harmony will try to automatically orient your photo to be
+                    straight. However, you may also rotate your photo before
+                    uploading to make sure your head is positioned straight.
+                  </Label>
+                </div>
+                <div>
+                  <i
+                    className="fa-solid fa-check"
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
+                  >
+                    {" "}
+                  </i>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Hair should not be covering the forehead or sides of the
                     face.
                   </Label>
@@ -785,11 +792,11 @@ function Home() {
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Photo should be well lit and good quality for AI to detect
                     landmarks accurately.
                   </Label>
@@ -797,11 +804,11 @@ function Home() {
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Face should be turned completely to the front and side for
                     each respective photo.
                   </Label>
@@ -809,47 +816,46 @@ function Home() {
                 <div>
                   <i
                     className="fa-solid fa-check"
-                    style={{ color: "purple", paddingRight: "10px" }}
+                    style={{ color: "#1565c0", paddingRight: "10px" }}
                   >
                     {" "}
                   </i>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Face should have a neutral expression (no smiling or
                     excessive grinning).
                   </Label>
                 </div>
               </div>
             </div>
-            <Divider style={{ padding: "8px", color: "purple" }}>
+            <Divider style={{ padding: "8px", color: "#1565c0" }}>
               <i
                 className="fa-solid fa-circle-exclamation fa-lg"
-                style={{ color: "purple" }}
+                style={{ color: "#1565c0" }}
               />
             </Divider>
             <div style={{ paddingLeft: "10px" }}>
-              <Label size="medium" style={{ color: "purple" }}>
+              <Label size="medium" style={{ color: "#1565c0" }}>
                 <i
                   class="fa-regular fa-clipboard"
-                  style={{ color: "purple", paddingRight: "10px" }}
+                  style={{ color: "#1565c0", paddingRight: "10px" }}
                 />
                 Note:
               </Label>
               <div style={{ paddingRight: "10px" }}>
                 <div>
-                  <Label size="small" style={{ color: "purple" }}>
+                  <Label size="small" style={{ color: "#1565c0" }}>
                     Harmony only assesses your facial proportions, angles, and
-                    the relative positioning of features. &nbsp;&nbsp;It does
+                    the relative positioning of features. &nbsp;&nbsp; It does
                     not factor in features like hair color, skin color, eye
-                    color, skin health, and eye contrast, which can all play a
+                    color, skin health, and eye contrast, all of which play a
                     role in facial attractiveness. <br />
-                    <br /> You can adjust your score accordingly based on those
-                    other factors. &nbsp;&nbsp;For example, if you have severe
-                    acne, your overall beauty score may be lower than your
-                    harmony score. &nbsp;&nbsp;Though, for the most part your
-                    harmony score should represent the majority of criteria that
-                    factor into beauty. &nbsp;&nbsp;Think of facial harmony as
-                    the foundation of beauty and the rest of your features sit
-                    on that foundation.
+                    These features may be added in a later version of
+                    Harmony.&nbsp;&nbsp;For example, if you have severe acne,
+                    your overall beauty score may be lower than your harmony
+                    score. However, your harmony score should represent the
+                    majority of criteria that factor into beauty. Think of
+                    facial harmony as the foundation of beauty, on top of which
+                    the rest of your features sit.
                   </Label>
                 </div>
               </div>

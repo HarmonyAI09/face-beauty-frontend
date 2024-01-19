@@ -20,19 +20,11 @@ import {
 import { ScoreAlert } from "../components/MarkShowDialog";
 import { ViewReportDialog } from "../components/ViewReportModalDialog";
 import { FaCloudUploadAlt } from "react-icons/fa";
+import ReportList from "../components/ReportList";
 
 export const UserContext = createContext();
 
 // eslint-disable-next-line no-unused-vars
-const wrapperStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  backgroundColor: "#6e2a65",
-  color: "white",
-};
 
 function Home() {
   const navigate = useNavigate();
@@ -65,8 +57,7 @@ function Home() {
   const [bigonialWidth, setBigonialWidth] = useState(0.0);
   const [chin2PhiltrumRatio, setChin2PhiltrumRatio] = useState(0.0);
   const [neckWidth, setNeckWidth] = useState(0.0);
-  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] =
-    useState(0.0);
+  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] = useState(0.0);
   const [midFaceRatio, setMidFaceRatio] = useState(0.0);
   const [eyebrowPositionRatio, setEyebrowPositionRatio] = useState(0.0);
   const [eyeSpacingRatio, setEyeSpacingRatio] = useState(0.0);
@@ -99,8 +90,7 @@ function Home() {
   const [steinerSLine, setSteiinerSLine] = useState("ideal");
   const [burstoneLine, setBurstoneLine] = useState("ideal");
   const [nasomentalAngle, setNasomentalAngle] = useState(0.0);
-  const [gonion2MouthRelationship, setGonion2MouthRelationship] =
-    useState("below");
+  const [gonion2MouthRelationship, setGonion2MouthRelationship] = useState("below");
   const [
     recessionRelative2FrankfortPlane,
     setRecessionRelative2FrankfortPlane,
@@ -436,13 +426,17 @@ function Home() {
         markPoints,
         setMarkPoints,
         selectedFrontImage,
+        setSelectedFrontImage,
         selectedSideImage,
+        setSelectedSideImage,
         frontProfileMark,
         setFrontProfileMark,
         sideProfileMark,
         setSideProfileMark,
         gender,
+        setGender,
         selectedOption,
+        setSelectedOption,
         reportNotes,
         setReportNotes,
         reportScores,
@@ -460,6 +454,7 @@ function Home() {
       }}
     >
       <div className="main_parent">
+        <ReportList />
         <div
           className="main_child m_setting"
           style={{

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const EditableString = () => {
+const EditableString = ({ value: initialValue, onValueChange }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState("unnamed");
+  const [value, setValue] = useState(initialValue);
 
   const handleClick = () => {
     setIsEditing(true);
@@ -10,17 +10,23 @@ const EditableString = () => {
 
   const handleBlur = () => {
     setIsEditing(false);
+    onValueChange(value);
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && value.trim() !== "") {
       setIsEditing(false);
+      onValueChange(value);
     }
   };
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   return (
     <div>
@@ -37,7 +43,7 @@ const EditableString = () => {
             border: "none",
             height: "20px",
             borderRadius: "15px",
-            backgroundColor: "#fdc2d6",
+            backgroundColor: "#e3f2fd",
             color:"#1565c0",
             paddingLeft:"15px",
           }}

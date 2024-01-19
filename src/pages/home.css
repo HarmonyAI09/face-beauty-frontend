@@ -2,23 +2,23 @@
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
-    background-color: #ebd9e9;
+    background-color: #e3f2fd;
 }
 
 /* Set the background color of the scroll bar track */
 ::-webkit-scrollbar-track {
-    background-color: #ebd9e9;
+    background-color: #bbdefb;
 }
 
 /* Set the color and rounded corners of the scroll bar thumb */
 ::-webkit-scrollbar-thumb {
-    background-color: #ab98a9;
+    background-color: #bbdefb;
     border-radius: 0px;
 }
 
 /* Set the color of the scroll bar thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #911186;
+    background-color: #64b5f6;
 }
 
 .custom-scroll {
@@ -95,7 +95,7 @@
     border-radius: 10px;
     height: calc(100% - 20px);
     border: 1px solid #0d47a1;
-    background-color: "#bbdefb";
+    background-color: #bbdefb;
     color: "#0d47a1";
     z-index: "100";
 }
@@ -193,7 +193,6 @@
     height: 50px;
     width: 50px;
     border: solid 2px #0d47a1;
-    background-color: #fdc2d600;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -224,8 +223,6 @@
     border: solid 2px #0d47a1;
     border-radius: 20px;
     z-index: 99;
-    background-color: #fdc2d6;
-    /* Set a high z-index value to ensure it appears on top */
     opacity: 0;
     transition: opacity 0.5s ease;
     position: absolute;

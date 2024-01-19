@@ -1,8 +1,5 @@
-import { Image } from "@fluentui/react-components";
 import React, { useState, useContext } from "react";
 import { AppContext } from "../App";
-import { makeStyles } from "@fluentui/react-components";
-import { Input, Button } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
 import { showNotification } from "../components/NotificationCreator";
 import BeautyInput from "../components/BeautyInput";
@@ -47,7 +44,7 @@ const Login = ({}) => {
             setUserLevel(data.level);
             setExpireDate(data.expire);
             localStorage.setItem("userName", data.name);
-            localStorage.setItem("userEmail", data.email);
+            localStorage.setItem("userEmail", data.mail);
             localStorage.setItem("userLevel", data.level);
             localStorage.setItem("expireDate", data.expire);
             navigate("/home");
@@ -214,7 +211,7 @@ const Login = ({}) => {
           padding: "48px 40px 36px",
           border: "2px solid #0d47a1",
           borderRadius: "20px",
-          backgroundColor: "#fdc2d6",
+          backgroundColor: "#90caf9",
         }}
       >
         <div
@@ -251,7 +248,6 @@ const Login = ({}) => {
           </div>
         </div>
       </div>
-      {/* <SignUp></SignUp> */}
     </div>
   );
 };

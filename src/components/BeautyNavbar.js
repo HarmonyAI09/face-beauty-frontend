@@ -1,6 +1,7 @@
 import React from "react";
 import { Image } from "@fluentui/react-components";
 import { useNavigate } from "react-router-dom";
+import UserProfile from "./UserProfile";
 
 const BeautyNavbar = () => {
   const navigate = useNavigate();
@@ -63,9 +64,9 @@ const BeautyNavbar = () => {
         }}
       >
         <div style={{fontWeight:"500", fontSize:"100px", color:"white", fontFamily:"fantasy"}}>HARMONY</div>
-        {/* <Image src="images/right.png" height={200}></Image> */}
         <Image src="images/apple.png" height={50} style={{position:"absolute", left:"25px"}}></Image>
         <Image src="images/app.png" height={50} style={{position:"absolute", left:"200px", borderRadius:"5px"}}></Image>
+        <UserProfile/>
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ export const MeasurementOverview = (props) => {
           ></Image>
         )}
       </DialogTrigger>
-      <DialogSurface style={{ backgroundColor: "#fbe0e8" }}>
+      <DialogSurface style={{ backgroundColor: "#bbdefb" }}>
         <DialogBody>
           <DialogTitle style={{ color: "#0d47a1" }}>{props.title}</DialogTitle>
           <DialogContent>

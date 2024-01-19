@@ -1,0 +1,54 @@
+.report_dropbox{
+    background-color: #1565c0;
+    width: 400px;
+    border: 2px solid #0d47a1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bolder;
+    position: absolute;
+    top:-3px;
+    left: calc(50% - 200px);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    cursor: pointer;
+    z-index: 9999;
+    flex-direction: column;
+}
+
+.report_list_container{
+    width: 100%;
+}
+
+.report_list_head{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #0d47a1;
+    text-align: center;
+}
+
+.report_list_body{
+    background-color: #1e88e5;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.report_list_item{
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.report_list_item:hover{
+    background-color: #0d47a1;
+}
+
+.dropbox_handler{
+    width: 100%;
+    border-top: 1px solid #0d47a1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

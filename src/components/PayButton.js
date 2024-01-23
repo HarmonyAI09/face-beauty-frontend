@@ -8,7 +8,7 @@ const PayButton = ({ btnTxt, userEmail}) => {
     
     const handleCheckout = (type) => {
         if (type === "Buy Premium") {
-            fetch('http://localhost:8000/create-checkout-session', {
+            fetch('http://localhost:8000/cash/create-checkout-session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

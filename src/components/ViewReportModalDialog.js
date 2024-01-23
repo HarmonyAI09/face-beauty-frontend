@@ -304,7 +304,7 @@ export const ViewReportDialog = () => {
   const [measurementImages, setMeasurementImages] = useState([]);
   const [measureID, setMeasureID] = useState("");
   const [reportOwner, setReportOwner] = useState("unnamed");
-  const [isSaving, setIsSaving ] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [reportList, setReportList] = useState([]);
 
   const getMeasurementImages = async () => {
@@ -315,7 +315,7 @@ export const ViewReportDialog = () => {
       formData.append("side", selectedSideImage);
       formData.append("points", JSON.stringify({ ...markPoints }));
 
-      console.log(formData);
+      console.log(formData, selectedFrontImage, selectedSideImage);
 
       const response = await fetch("http://localhost:8000/generate", {
         method: "POST",
@@ -341,23 +341,32 @@ export const ViewReportDialog = () => {
 
   const handleReportSave = async () => {
     setIsSaving(true);
-    console.log(measureID);
-    console.log(reportOwner);
-    const requestBody = {
-      mail: localStorage.getItem("userEmail"),
-      reportID: measureID,
-      gender: gender? "Male" : "Female",
-      race: selectedOption,
-      reportOwner: reportOwner,
-      keyPoints: markPoints,
-    };
-    console.log(requestBody);
+    const formData = new FormData();
+    formData.append("mail", localStorage.getItem("userEmail"))
+    formData.append("reportID", measureID)
+    formData.append("gender", gender ? "Male" : "Female")
+    formData.append("race", selectedOption)
+    formData.append("reportOwner", reportOwner)
+    formData.append("keyPoints", JSON.stringify(markPoints))
+    formData.append("frontImage", selectedFrontImage)
+    formData.append("sideImage", selectedSideImage)
+
+    // const requestBody = {
+    //   mail: localStorage.getItem("userEmail"),
+    //   reportID: measureID,
+    //   gender: gender ? "Male" : "Female",
+    //   race: selectedOption,
+    //   reportOwner: reportOwner,
+    //   keyPoints: markPoints,
+    // };
+    // console.log(requestBody);
+
     const response = await fetch("http://localhost:8000/save", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -375,11 +384,11 @@ export const ViewReportDialog = () => {
       const response = await fetch(
         `http://localhost:8000/reports/${localStorage.getItem("userEmail")}`
       )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setReportList(data);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setReportList(data);
+        });
     } catch (error) {
       console.error("Error getting report list:", error);
     }
@@ -418,27 +427,27 @@ export const ViewReportDialog = () => {
             {typeof props.value === "number" && Number.isInteger(props.value)
               ? props.value
               : typeof props.value === "number"
-              ? props.value.toFixed(2)
-              : typeof props.value === "string"
-              ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
-              : Array.isArray(props.value)
-              ? props.value
-                  .map((item) =>
-                    typeof item === "number" ? item.toFixed(1) : item
-                  )
-                  .join(" : ")
-              : ""}
+                ? props.value.toFixed(2)
+                : typeof props.value === "string"
+                  ? props.value.charAt(0).toUpperCase() + props.value.slice(1)
+                  : Array.isArray(props.value)
+                    ? props.value
+                      .map((item) =>
+                        typeof item === "number" ? item.toFixed(1) : item
+                      )
+                      .join(" : ")
+                    : ""}
           </div>
           <div style={{ width: "5%" }}>{props.score}</div>
           <div style={{ width: "10%" }}>
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
-                  <React.Fragment key={index}>
-                    {/* {item.toFixed(2)} */}
-                    {item}
-                    {index !== props.range.length - 1 && "-"}
-                  </React.Fragment>
-                ))
+                <React.Fragment key={index}>
+                  {/* {item.toFixed(2)} */}
+                  {item}
+                  {index !== props.range.length - 1 && "-"}
+                </React.Fragment>
+              ))
               : props.range}
           </div>
           <div

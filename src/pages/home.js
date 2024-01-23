@@ -21,6 +21,7 @@ import { ScoreAlert } from "../components/MarkShowDialog";
 import { ViewReportDialog } from "../components/ViewReportModalDialog";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import ReportList from "../components/ReportList";
+import { BACKEND_URL } from "../config";
 
 export const UserContext = createContext();
 
@@ -31,6 +32,9 @@ function Home() {
 
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
+
+  const [frontImage, setFrontImage] = useState();
+  const [sideImage, setSideImage] = useState();
 
   const [gender, setGender] = useState(1);
   const [selectedOption, setSelectedOption] = useState("Caucasian");
@@ -451,6 +455,10 @@ function Home() {
         setReportMeasurementNames,
         reportAdvices,
         setReportAdvices,
+        frontImage,
+        setFrontImage,
+        sideImage,
+        setSideImage
       }}
     >
       <div className="main_parent">
@@ -496,12 +504,14 @@ function Home() {
                   label="Male"
                   checked={gender}
                   onChange={() => handleGenderChange("true")}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="false"
                   label="Female"
                   checked={!gender}
                   onChange={() => handleGenderChange("false")}
+                  disabled={!!frontImage}
                 />
               </RadioGroup>
             </div>
@@ -515,42 +525,49 @@ function Home() {
                   label="Caucasian"
                   checked={selectedOption === "Caucasian"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="African"
                   label="African"
                   checked={selectedOption === "African"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="East Asian"
                   label="East Asian"
                   checked={selectedOption === "East Asian"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="South Asian"
                   label="South Asian"
                   checked={selectedOption === "South Asian"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="Hispanic"
                   label="Hispanic"
                   checked={selectedOption === "Hispanic"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="Middle eastern"
                   label="Middle eastern"
                   checked={selectedOption === "Middle eastern"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
                 <Radio
                   value="Other"
                   label="Other"
                   checked={selectedOption === "Other"}
                   onChange={handleRadioChange}
+                  disabled={!!frontImage}
                 />
               </RadioGroup>
             </div>
@@ -578,7 +595,7 @@ function Home() {
                 alignItems: "center",
               }}
             >
-              <ViewReportDialog></ViewReportDialog>
+              <ViewReportDialog />
               <Button
                 size="large"
                 shape="circular"
@@ -605,7 +622,7 @@ function Home() {
                 <img
                   className="image_drawer"
                   src="./images/front__.jpg"
-                  alt="Image description"
+                  alt="Front Image"
                 ></img>
                 <div className="photo_div upload">
                   <input
@@ -615,13 +632,15 @@ function Home() {
                     onChange={handleFrontImageSelect}
                     style={{ display: "none" }}
                   />
-                  <div
-                    className="m_upload_button"
-                    onClick={handleFrontUploadButtonClick}
-                  >
-                    <FaCloudUploadAlt size={30} />
-                  </div>
-                  {selectedFrontImage && (
+                  {
+                    !frontImage && <div
+                      className="m_upload_button"
+                      onClick={handleFrontUploadButtonClick}
+                    >
+                      <FaCloudUploadAlt size={30} />
+                    </div>
+                  }
+                  {(frontImage || selectedFrontImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -646,7 +665,7 @@ function Home() {
                   {!selectedFrontImage && (
                     <img
                       className="image_drawer"
-                      src="./images/front_blank.jpg"
+                      src={frontImage ? `${BACKEND_URL}/uploads/${frontImage}` : "./images/front_blank.jpg"}
                       alt="Image description"
                     ></img>
                   )}
@@ -657,8 +676,8 @@ function Home() {
               <div className="side_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/side__.jpg"
-                  alt="Image description"
+                  src="./images/front__.jpg"
+                  alt="Side Image"
                 ></img>
                 <div className="photo_div upload">
                   <input
@@ -668,13 +687,15 @@ function Home() {
                     onChange={handleSideImageSelect}
                     style={{ display: "none" }}
                   />
-                  <div
-                    className="m_upload_button"
-                    onClick={handleSideUploadButtonClick}
-                  >
-                    <FaCloudUploadAlt size={30} />
-                  </div>
-                  {selectedSideImage && (
+                  {
+                    !sideImage && <div
+                      className="m_upload_button"
+                      onClick={handleSideUploadButtonClick}
+                    >
+                      <FaCloudUploadAlt size={30} />
+                    </div>
+                  }
+                  {(sideImage || selectedSideImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -699,7 +720,7 @@ function Home() {
                   {!selectedSideImage && (
                     <img
                       className="image_drawer"
-                      src={"./images/side_blank.jpg"}
+                      src={sideImage ? `${BACKEND_URL}/uploads/${sideImage}` : "./images/side_blank.jpg"}
                       alt="Image description"
                     ></img>
                   )}

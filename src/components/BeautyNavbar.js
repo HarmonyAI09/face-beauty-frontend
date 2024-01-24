@@ -54,7 +54,7 @@ const BeautyNavbar = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-evenly",
+          justifyContent: "center",
           alignItems:"center",
           width: "100%",
           height: "100px",
@@ -64,6 +64,7 @@ const BeautyNavbar = () => {
         }}
       >
         <div style={{fontWeight:"500", fontSize:"100px", color:"white", fontFamily:"fantasy"}}>HARMONY</div>
+        <div style={{fontWeight:"500", fontSize:"40px", color:"white", fontFamily:"fantasy"}}>Beta</div>
         <Image src="images/apple.png" height={50} style={{position:"absolute", left:"25px"}}></Image>
         <Image src="images/app.png" height={50} style={{position:"absolute", left:"200px", borderRadius:"5px"}}></Image>
         <UserProfile/>

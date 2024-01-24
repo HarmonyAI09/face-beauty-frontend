@@ -333,6 +333,11 @@ function Home() {
     navigate(path);
   };
 
+  const handleCreateNewProfile = () => {
+    console.log('Creating new profile...')
+    window.location.reload();
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -676,7 +681,7 @@ function Home() {
               <div className="side_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/front__.jpg"
+                  src="./images/side__.jpg"
                   alt="Side Image"
                 ></img>
                 <div className="photo_div upload">
@@ -883,6 +888,13 @@ function Home() {
             </div>
           </div>
         </div>
+        {
+          frontImage && <div className="plus_button" title="Create new profile" onClick={handleCreateNewProfile}>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24" fill="white">
+              <path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+            </svg>
+          </div>
+        }
       </div>
     </UserContext.Provider>
   );

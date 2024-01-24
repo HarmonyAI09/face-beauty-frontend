@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 
 import { UserContext } from "../pages/home";
 import { FaRobot, FaSpinner } from "react-icons/fa";
+import { BACKEND_URL } from "../config";
 
 const tipSentence = "MOVE POINTS AROUND AS NEEDED TO COPY THE LEFT IMAGE";
 const DraggableCircle = ({ id, color, position, onDrag, isSide }) => {
@@ -57,7 +58,7 @@ export const FrontTargetMapping = ({
   const imageRef = useRef(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const { markPoints, setMarkPoints } = useContext(UserContext);
-  const { selectedFrontImage } = useContext(UserContext);
+  const { selectedFrontImage, frontImage } = useContext(UserContext);
   const [circles, setCircles] = React.useState([
     { id: 1, color: "red", issymmetry: false, position: { x: 0, y: 0 } },
     { id: 2, color: "blue", issymmetry: true, position: { x: 0, y: 10 } },
@@ -321,7 +322,7 @@ export const FrontTargetMapping = ({
         )}
         {!selectedFrontImage && (
           <img
-            src={"./images/front_blank.jpg"}
+            src={frontImage ? `${BACKEND_URL}/uploads/${frontImage}` : "./images/front_blank.jpg"}
             style={{ width: "800px", height: "800px" }}
           ></img>
         )}
@@ -414,7 +415,7 @@ export const SideTargetMapping = ({
   const imageRef = useRef(null);
   const [imageOffsetX, setImageOffsetX] = useState(0.0);
   const { markPoints, setMarkPoints } = useContext(UserContext);
-  const { selectedSideImage } = useContext(UserContext);
+  const { selectedSideImage, sideImage } = useContext(UserContext);
   const [circles, setCircles] = React.useState([
     { id: 30, color: "red", issymmetry: false, position: { x: 0, y: 0 } },
     { id: 31, color: "blue", issymmetry: false, position: { x: 0, y: 10 } },
@@ -660,7 +661,7 @@ export const SideTargetMapping = ({
         )}
         {!selectedSideImage && (
           <img
-            src={"./images/side_blank.jpg"}
+            src={sideImage ? `${BACKEND_URL}/uploads/${sideImage}` : "./images/side_blank.jpg"}
             style={{ width: "800px", height: "800px" }}
           ></img>
         )}

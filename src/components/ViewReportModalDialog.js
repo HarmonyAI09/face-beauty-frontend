@@ -341,23 +341,19 @@ export const ViewReportDialog = () => {
 
   const handleReportSave = async () => {
     setIsSaving(true);
-    console.log(measureID);
-    console.log(reportOwner);
-    const requestBody = {
-      mail: localStorage.getItem("userEmail"),
-      reportID: measureID,
-      gender: gender? "Male" : "Female",
-      race: selectedOption,
-      reportOwner: reportOwner,
-      keyPoints: markPoints,
-    };
-    console.log(requestBody);
+    const formData = new FormData();
+    formData.append("mail", localStorage.getItem("userEmail"));
+    formData.append("reportID", measureID);
+    formData.append("gender", gender ? "Male" : "Female");
+    formData.append("race", selectedOption);
+    formData.append("reportOwner", reportOwner);
+    formData.append("keyPoints", JSON.stringify(markPoints));
+    formData.append("frontImage", selectedFrontImage);
+    formData.append("sideImage", selectedSideImage);
+
     const response = await fetch("http://localhost:8000/save", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {

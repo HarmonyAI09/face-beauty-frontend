@@ -1,15 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import * as React from "react";
-import { Radio, RadioGroup, Label } from "@fluentui/react-components";
-import { Button } from "@fluentui/react-components";
-import {
-  // Image,
-  Divider,
-  Tooltip,
-  CompoundButton,
-} from "@fluentui/react-components";
 import { useState, useRef, createContext } from "react";
-import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./home.css";
 
@@ -17,18 +8,17 @@ import {
   FrontProfileMappingModal,
   SideProfileMappingModal,
 } from "../components/MappingModal";
-import { ScoreAlert } from "../components/MarkShowDialog";
-import { ViewReportDialog } from "../components/ViewReportModalDialog";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import ReportList from "../components/ReportList";
 import { BACKEND_URL } from "../config";
+import Reference from "../components/Reference";
+import Setting from "../components/Setting";
 
 export const UserContext = createContext();
 
 // eslint-disable-next-line no-unused-vars
 
 function Home() {
-  const navigate = useNavigate();
 
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
@@ -38,14 +28,6 @@ function Home() {
 
   const [gender, setGender] = useState(1);
   const [selectedOption, setSelectedOption] = useState("Caucasian");
-
-  const handleRadioChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleGenderChange = (value) => {
-    setGender(value === "true");
-  };
 
   const [frontProfileMark, setFrontProfileMark] = useState(0.0);
   const [sideProfileMark, setSideProfileMark] = useState(0.0);
@@ -329,10 +311,6 @@ function Home() {
     sidefileInput.current.click();
   };
 
-  const handleRedirect = (path) => {
-    navigate(path);
-  };
-
   return (
     <UserContext.Provider
       value={{
@@ -463,151 +441,7 @@ function Home() {
     >
       <div className="main_parent">
         <ReportList />
-        <div
-          className="main_child m_setting"
-          style={{
-            width: "15%",
-            color: "#0d47a1",
-            backgroundColor: "#bbdefb",
-            zIndex: "100",
-          }}
-        >
-          <div
-            style={{
-              height: "30px",
-              backgroundColor: "#0d47a1",
-              color: "#bbdefb",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "10px",
-            }}
-          >
-            Setting
-          </div>
-          <div
-            className="custom-scroll"
-            style={{ padding: "7px", color: "#0d47a1" }}
-          >
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Gender
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <RadioGroup style={{ display: "contents" }}>
-                <Radio
-                  value="true"
-                  label="Male"
-                  checked={gender}
-                  onChange={() => handleGenderChange("true")}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="false"
-                  label="Female"
-                  checked={!gender}
-                  onChange={() => handleGenderChange("false")}
-                  disabled={!!frontImage}
-                />
-              </RadioGroup>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Ethnicity / Race
-            </Divider>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <RadioGroup style={{ display: "contents" }}>
-                <Radio
-                  value="Caucasian"
-                  label="Caucasian"
-                  checked={selectedOption === "Caucasian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="African"
-                  label="African"
-                  checked={selectedOption === "African"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="East Asian"
-                  label="East Asian"
-                  checked={selectedOption === "East Asian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="South Asian"
-                  label="South Asian"
-                  checked={selectedOption === "South Asian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Hispanic"
-                  label="Hispanic"
-                  checked={selectedOption === "Hispanic"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Middle eastern"
-                  label="Middle eastern"
-                  checked={selectedOption === "Middle eastern"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Other"
-                  label="Other"
-                  checked={selectedOption === "Other"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-              </RadioGroup>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Calculate
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <ScoreAlert title="Total"></ScoreAlert>
-              <ScoreAlert title="Front"></ScoreAlert>
-              <ScoreAlert title="Side"></ScoreAlert>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Report
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <ViewReportDialog />
-              <Button
-                size="large"
-                shape="circular"
-                appearance="primary"
-                style={{ marginTop: "50px" }}
-                onClick={() => handleRedirect("/pricing")}
-              >
-                Buy Premium
-              </Button>
-            </div>
-          </div>
-        </div>
+        <Setting/>
         <div className="main_child m_profile">
           <div
             style={{
@@ -729,160 +563,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="main_child m_reference">
-          <div
-            style={{
-              height: "30px",
-              backgroundColor: "#0d47a1",
-              color: "#bbdefb",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "10px",
-              justifyContent: "space-between",
-              paddingRight: "10px",
-            }}
-          >
-            Reference
-          </div>
-          <div
-            className="custom-scroll"
-            style={{ padding: "7px", color: "#1565c0" }}
-          >
-            <Tooltip
-              relationship="label"
-              content="Follow the photo instructions carefully as it will impact the accuracy of your score."
-            >
-              <Divider style={{ padding: "8px", color: "#1565c0" }}>
-                Photo Requirements
-              </Divider>
-            </Tooltip>
-            <div style={{ paddingLeft: "10px" }}>
-              <Label size="small" style={{ color: "#1565c0" }}>
-                Follow the photo instructions carefully.
-              </Label>
-              <div style={{ paddingLeft: "-5px", paddingRight: "10px" }}>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Generally no selfies to ensure maximal accuracy.{" "}
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Lens distortion will warp your facial features if the camera
-                    lens is too close.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Harmony will try to automatically orient your photo to be
-                    straight. However, you may also rotate your photo before
-                    uploading to make sure your head is positioned straight.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Hair should not be covering the forehead or sides of the
-                    face.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Photo should be well lit and good quality for AI to detect
-                    landmarks accurately.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Face should be turned completely to the front and side for
-                    each respective photo.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Face should have a neutral expression (no smiling or
-                    excessive grinning).
-                  </Label>
-                </div>
-              </div>
-            </div>
-            <Divider style={{ padding: "8px", color: "#1565c0" }}>
-              <i
-                className="fa-solid fa-circle-exclamation fa-lg"
-                style={{ color: "#1565c0" }}
-              />
-            </Divider>
-            <div style={{ paddingLeft: "10px" }}>
-              <Label size="medium" style={{ color: "#1565c0" }}>
-                <i
-                  class="fa-regular fa-clipboard"
-                  style={{ color: "#1565c0", paddingRight: "10px" }}
-                />
-                Note:
-              </Label>
-              <div style={{ paddingRight: "10px" }}>
-                <div>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Harmony only assesses your facial proportions, angles, and
-                    the relative positioning of features. &nbsp;&nbsp; It does
-                    not factor in features like hair color, skin color, eye
-                    color, skin health, and eye contrast, all of which play a
-                    role in facial attractiveness. <br />
-                    These features may be added in a later version of
-                    Harmony.&nbsp;&nbsp;For example, if you have severe acne,
-                    your overall beauty score may be lower than your harmony
-                    score. However, your harmony score should represent the
-                    majority of criteria that factor into beauty. Think of
-                    facial harmony as the foundation of beauty, on top of which
-                    the rest of your features sit.
-                  </Label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Reference/>
       </div>
     </UserContext.Provider>
   );

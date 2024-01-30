@@ -6,9 +6,7 @@ import {
   DialogSurface,
   DialogTitle,
   DialogBody,
-  DialogActions,
   DialogContent,
-  Button,
   Image,
 } from "@fluentui/react-components";
 import { FaSpinner } from "react-icons/fa";

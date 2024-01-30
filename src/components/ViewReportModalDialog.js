@@ -9,7 +9,6 @@ import {
   DialogBody,
   Button,
   Divider,
-  Tooltip,
 } from "@fluentui/react-components";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { FaSave } from "react-icons/fa";
@@ -22,9 +21,11 @@ import { MeasurementOverview } from "./MeasurementOverview";
 
 import "react-circular-progressbar/dist/styles.css";
 import "./ViewReportModalDialog.css";
-import EditableString from "./EditableString";
+import NameEdit from "./NameEdit";
 import { showNotification } from "./NotificationCreator";
-import { data } from "autoprefixer";
+import FileDownload from "./FileDownload";
+import Submark, { FrontProfileCalculator, SideProfileCalculator } from "./Report/Submark";
+import Introduction from "./Report/Introduction";
 
 const ReportTableHeader = () => {
   return (
@@ -286,25 +287,22 @@ export const ViewReportDialog = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { gender } = useContext(UserContext);
   const { selectedOption } = useContext(UserContext);
-  const { reportNotes, setReportNotes } = useContext(UserContext);
-  const { reportScores, setReportScores } = useContext(UserContext);
-  const { reportMaxScores, setReportMaxScores } = useContext(UserContext);
-  const { reportRanges, setReportRanges } = useContext(UserContext);
-  const { reportCurrentValues, setReportCurrentValues } =
-    useContext(UserContext);
-  const { reportMeasurementNames, setReportMeasurementNames } =
-    useContext(UserContext);
-  const { reportAdvices, setReportAdvices } = useContext(UserContext);
+  const { reportNotes } = useContext(UserContext);
+  const { reportScores } = useContext(UserContext);
+  const { reportRanges } = useContext(UserContext);
+  const { reportCurrentValues } = useContext(UserContext);
+  const { reportMeasurementNames } = useContext(UserContext);
+  const { reportAdvices } = useContext(UserContext);
 
-  const { frontProfileMark, setFrontProfileMark } = useContext(UserContext);
-  const { sideProfileMark, setSideProfileMark } = useContext(UserContext);
+  const { frontProfileMark } = useContext(UserContext);
+  const { sideProfileMark } = useContext(UserContext);
   const { selectedFrontImage } = useContext(UserContext);
   const { selectedSideImage } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
   const [measurementImages, setMeasurementImages] = useState([]);
   const [measureID, setMeasureID] = useState("");
   const [reportOwner, setReportOwner] = useState("unnamed");
-  const [isSaving, setIsSaving ] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [reportList, setReportList] = useState([]);
 
   const getMeasurementImages = async () => {
@@ -316,22 +314,6 @@ export const ViewReportDialog = () => {
       formData.append("points", JSON.stringify({ ...markPoints }));
 
       console.log(formData);
-
-      const response = await fetch("http://localhost:8000/generate", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setMeasureID(data.id);
-          setIsLoading(false);
-          showNotification(
-            "Success",
-            "Successfully generate images.",
-            "success"
-          );
-        });
     } catch (error) {
       setIsLoading(false);
       showNotification("Failed", "Image generation has been failed.", "danger");
@@ -350,55 +332,37 @@ export const ViewReportDialog = () => {
     formData.append("keyPoints", JSON.stringify(markPoints));
     formData.append("frontImage", selectedFrontImage);
     formData.append("sideImage", selectedSideImage);
-
-    const response = await fetch("http://localhost:8000/save", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.success) {
-          showNotification("Success", data.status, "success");
-        }
-        setIsSaving(false);
-        getReportList();
-      });
   };
 
   const getReportList = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/reports/${localStorage.getItem("userEmail")}`
-      )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setReportList(data);
-      });
     } catch (error) {
       console.error("Error getting report list:", error);
     }
   };
 
+
   useEffect(() => {
+    setReportList([]);
     getReportList();
   }, []);
 
   const ReportTableRow = (props) => {
+    const blurStyle = {
+      filter: props.isblur ? "blur(5px)" : "none",
+      userSelect: "none",
+      pointerEvents: props.isblur ? "none" : "auto",
+      display: "flex",
+      width: "100%",
+      alignItems: "center",
+      marginTop: "5px",
+      textAlign: "center",
+    };
+
     return (
       <div>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            alignItems: "center",
-            marginTop: "5px",
-            textAlign: "center",
-          }}
-        >
+        <div style={blurStyle}>
           <div style={{ width: "10%" }}>
-            <Tooltip relationship="label" content={props.overview}>
               <MeasurementOverview
                 isLoading={isLoading}
                 source={measurementImages[props.source]}
@@ -406,8 +370,8 @@ export const ViewReportDialog = () => {
                 overview={props.overview}
                 id={measureID}
                 index={props.source + 1}
+                clickable={!props.isblur}
               ></MeasurementOverview>
-            </Tooltip>
           </div>
           <div style={{ width: "10%" }}>{props.measurement}</div>
           <div style={{ width: "5%" }}>
@@ -430,7 +394,6 @@ export const ViewReportDialog = () => {
             {Array.isArray(props.range)
               ? props.range.map((item, index) => (
                   <React.Fragment key={index}>
-                    {/* {item.toFixed(2)} */}
                     {item}
                     {index !== props.range.length - 1 && "-"}
                   </React.Fragment>
@@ -457,9 +420,6 @@ export const ViewReportDialog = () => {
               overflowY: "auto",
             }}
           >
-            {/* {paragraphs.map((paragraph, index) => (
-                          <p key={index}>{paragraph.trim()}</p>
-                      ))} */}
             {props.advice}
           </div>
         </div>
@@ -486,6 +446,7 @@ export const ViewReportDialog = () => {
           advice={reportAdvices[actualIndex]}
           overview={measurement_overviews[actualIndex]}
           source={actualIndex}
+          isblur={localStorage.getItem("userLevel") === 0 || actualIndex >= 7}
         />
       );
     });
@@ -521,67 +482,39 @@ export const ViewReportDialog = () => {
               </DialogTrigger>
             }
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                position: "relative",
-              }}
-            >
-              <div
-                style={{
-                  color: "#0d47a1",
-                  fontSize: "40px",
-                  fontWeight: "700",
-                }}
-              >
+            <div className="score_group_container">
+              <div className="total_score_view">
                 {Math.max(
                   ((sideProfileMark + frontProfileMark) / 5).toFixed(1),
                   0
                 )}
                 % FACIAL HARMONY
               </div>
+              <div className="subscore_view">
+                <FrontProfileCalculator/>
+                <SideProfileCalculator/>
+              </div>
             </div>
           </DialogTitle>
           <DialogContent style={{ color: "#0d47a1" }}>
+            <Introduction/>
             <div>
               <div>
-                <div
-                  style={{
-                    fontSize: "20px",
-                    display: "flex",
-                    color: "#0d47a1",
-                    fontWeight: "600",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  <FaExclamationTriangle />
-                  &nbsp;
-                  {"HARMONY REPORT"}
-                </div>
-                <div
-                  style={{
-                    fontWeight: "500",
-                    fontSize: "18px",
-                    marginTop: "8px",
-                    display: "flex",
-                    alignItems: "end",
-                    paddingLeft: "20px",
-                    color: "#1565c0",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  <FaUserCheck />
-                  &nbsp;
-                  {gender ? " Male, " : " Female, "} {selectedOption}, &nbsp;
-                  <EditableString
-                    value={reportOwner}
-                    onValueChange={setReportOwner}
-                  />
-                  &nbsp;
-                  <div className="report_status">
-                    <FaSave onClick={handleReportSave} />
+                <div className="report_detail">
+                  <div className="owner_info">
+                    <FaUserCheck />
+                    &nbsp;
+                    {gender ? " Male, " : " Female, "} {selectedOption}, &nbsp;
+                    <NameEdit
+                      value={reportOwner}
+                      onValueChange={setReportOwner}
+                    />
+                    &nbsp;
+                    <div className="report_status">
+                      <FaSave onClick={handleReportSave} />
+                    </div>
                   </div>
+                  <FileDownload></FileDownload>
                 </div>
               </div>
               <div

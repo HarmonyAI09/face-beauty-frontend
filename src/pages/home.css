@@ -87,6 +87,8 @@
     width: 100vw;
     height: calc(100vh - 160px);
     background-color: #bbdefb;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .m_reference {
@@ -96,7 +98,7 @@
     height: calc(100% - 20px);
     border: 1px solid #0d47a1;
     background-color: #bbdefb;
-    color: "#0d47a1";
+    color: #0d47a1;
     z-index: "100";
 }
 

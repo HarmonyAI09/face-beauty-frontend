@@ -1,0 +1,15 @@
+.main_button{
+    cursor: pointer;
+}
+
+.pdf-container{
+    display: flex;
+    flex-direction: column;
+    color: #1565c0;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+}

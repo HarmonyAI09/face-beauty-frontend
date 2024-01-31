@@ -70,7 +70,7 @@ export const ScoreAlert = (props) => {
   const { reportScores, setReportScores } = useContext(UserContext);
   const { reportMaxScores, setReportMaxScores } = useContext(UserContext);
   const { reportRanges, setReportRanges } = useContext(UserContext);
-  const { reportCurrentValues, setReportCurrentValues } =
+  const { reportValues, setreportValues } =
     useContext(UserContext);
   const { reportMeasurementNames, setReportMeasurementNames } =
     useContext(UserContext);
@@ -133,7 +133,7 @@ export const ScoreAlert = (props) => {
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
         const templateRanges = [...reportRanges];
-        const templateValues = [...reportCurrentValues];
+        const templateValues = [...reportValues];
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
         for (let i = 0; i < 22; i++) {
@@ -149,7 +149,7 @@ export const ScoreAlert = (props) => {
         setReportScores(templateScores);
         setReportMaxScores(templateMaxScores);
         setReportRanges(templateRanges);
-        setReportCurrentValues(templateValues);
+        setreportValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
         setIsLoading(false);
@@ -211,7 +211,7 @@ export const ScoreAlert = (props) => {
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
         const templateRanges = [...reportRanges];
-        const templateValues = [...reportCurrentValues];
+        const templateValues = [...reportValues];
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
         for (let i = 0; i < 45; i++) {
@@ -227,7 +227,7 @@ export const ScoreAlert = (props) => {
         setReportScores(templateScores);
         setReportMaxScores(templateMaxScores);
         setReportRanges(templateRanges);
-        setReportCurrentValues(templateValues);
+        setreportValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
         setIsLoading(false);

@@ -1,10 +1,11 @@
 import { Radio, RadioGroup } from "@fluentui/react-components";
 import Segment from "../Segment";
+import Storage from "../../utils/storage";
 
 const Gender = () => {
   let genderList = ["Female", "Male"];
   const handleGenderChange = (index) => {
-    sessionStorage.setItem("gender", genderList[index]);
+    Storage.setItem("gender", genderList[index])
   };
   return (
     <Segment title="Gender">

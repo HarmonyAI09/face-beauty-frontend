@@ -8,7 +8,8 @@ const Analyze = () => {
             <div className="report_container">
                 <ViewReportDialog/>
                 <div className="note">
-                    Note: "Gender" and "Ethnicity" must be selected.
+                    Note1: "Gender" and "Ethnicity" must be selected.
+                    Note2: At least one of profiles must be uploaded.
                 </div>
             </div>
         </Segment>

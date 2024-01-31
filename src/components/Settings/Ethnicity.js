@@ -1,5 +1,6 @@
 import { Radio, RadioGroup } from "@fluentui/react-components";
 import Segment from "../Segment";
+import Storage from "../../utils/storage";
 
 const Ethnicity = () => {
   let ethnicityList = [
@@ -12,7 +13,7 @@ const Ethnicity = () => {
     "Other",
   ];
   const handleEthnicityChange = (index) => {
-    sessionStorage.setItem("ethnicity", ethnicityList[index]);
+    Storage.setItem("ethnicity", ethnicityList[index]);
   };
   return (
     <Segment title="Ethnicity/Race">

@@ -13,6 +13,7 @@ import ReportList from "../components/ReportList";
 import { BACKEND_URL } from "../config";
 import Reference from "../components/Reference";
 import Setting from "../components/Setting";
+import Storage from "../utils/storage";
 
 export const UserContext = createContext();
 
@@ -242,7 +243,7 @@ function Home() {
   const [reportScores, setReportScores] = useState(Array(45).fill([]));
   const [reportMaxScores, setReportMaxScores] = useState(Array(45).fill([]));
   const [reportRanges, setReportRanges] = useState(Array(45).fill([]));
-  const [reportCurrentValues, setReportCurrentValues] = useState(
+  const [reportValues, setReportValues] = useState(
     Array(45).fill([])
   );
   const [reportMeasurementNames, setReportMeasurementNames] = useState(
@@ -271,7 +272,11 @@ function Home() {
         setUploadImageWidth(this.width);
         _URL.revokeObjectURL(objectUrl);
       };
-      img.src = objectUrl;
+      img.src = objectUrl;      
+      Storage.setItem("frontProfile", objectUrl);
+    }
+    else{
+      sessionStorage.removeItem("frontProfile");
     }
   };
 
@@ -295,6 +300,10 @@ function Home() {
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
+      Storage.setItem("sideProfile", objectUrl);
+    }
+    else{
+      sessionStorage.removeItem("sideProfile");
     }
   };
 
@@ -427,8 +436,8 @@ function Home() {
         setReportMaxScores,
         reportRanges,
         setReportRanges,
-        reportCurrentValues,
-        setReportCurrentValues,
+        reportValues,
+        setReportValues,
         reportMeasurementNames,
         setReportMeasurementNames,
         reportAdvices,
@@ -510,7 +519,7 @@ function Home() {
               <div className="side_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/front__.jpg"
+                  src="./images/side__.jpg"
                   alt="Side Image"
                 ></img>
                 <div className="photo_div upload">

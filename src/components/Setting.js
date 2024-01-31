@@ -9,7 +9,7 @@ function Setting() {
         <GroupContainer title={"Setting"}>
             <Gender/>
             <Ethnicity/>
-            <Calculator/>
+            {/* <Calculator/> */}
             <Analyze/>
         </GroupContainer>
     );

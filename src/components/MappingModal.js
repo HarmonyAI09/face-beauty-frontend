@@ -104,6 +104,7 @@ export function FrontProfileMappingModal() {
   const { setBitemporalWidth } = useContext(UserContext);
   const { setLowerThirdProporation } = useContext(UserContext);
   const { setMedialCanthalAngle } = useContext(UserContext);
+  const { profileMatched, setProfileMatched } = useContext(UserContext);
 
   const CalculateEyeSeparationRatio = () => {
     const point_12_distance = calculateDistance(
@@ -336,6 +337,9 @@ export function FrontProfileMappingModal() {
     CalculateLowerThirdProporation();
     CalculateMedialCanthalAngle();
     CalculateDeviationOfJFA2IAA();
+    let tempProfile = profileMatched;
+    tempProfile[0] = true;
+    setProfileMatched(tempProfile);
     showNotification(
       "Saved",
       "Front profile landmarks have been saved.",
@@ -410,6 +414,7 @@ export function SideProfileMappingModal() {
   const { setRecessionRelative2FrankfortPlane } = useContext(UserContext);
   const { setBrowridgeInclinationAngle } = useContext(UserContext);
   const { setNasalTipAngle } = useContext(UserContext);
+  const { profileMatched, setProfileMatched } = useContext(UserContext);
 
   const CalculateGonialAngle = () => {
     const a = {
@@ -745,11 +750,14 @@ export function SideProfileMappingModal() {
     CalculateRecessionRelative2FrankfortPlane();
     CalculateBrowridgeInclinationAngle();
     CalculateNasalTipAngle();
+    let tempProfile = profileMatched;
+    tempProfile[1] = true;
+    setProfileMatched(tempProfile);
     showNotification(
       "Saved",
       "Side profile landmarks have been saved.",
       "info"
-    );
+    );    
   };
   return (
     <>

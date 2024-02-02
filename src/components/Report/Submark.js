@@ -3,7 +3,14 @@ import "./Submark.css";
 import { MdVerified, MdOutlineVerified } from "react-icons/md";
 import { UserContext } from "../../pages/home";
 import { FaSpinner } from "react-icons/fa";
-import { MeasureValues, MeasureScores, MeasureRanges, MeasureNotes, MeasureAdvices } from "../../utils/text";
+import { GoUnverified } from "react-icons/go";
+import {
+  MeasureValues,
+  MeasureScores,
+  MeasureRanges,
+  MeasureNotes,
+  MeasureAdvices,
+} from "../../utils/text";
 
 const Submark = (props) => {
   let className = "submark_container";
@@ -12,15 +19,17 @@ const Submark = (props) => {
   }
 
   let stateClass = "submark_state";
-  if (props.state === 1) {
+  if (props.state === 2) {
     stateClass += " spin-animation";
   }
   const stateIcon = () => {
     if (props.state === 0) {
-      return <MdOutlineVerified />;
+      return <GoUnverified />;
     } else if (props.state === 1) {
-      return <FaSpinner />;
+      return <MdOutlineVerified />;
     } else if (props.state === 2) {
+      return <FaSpinner />;
+    } else if (props.state === 3) {
       return <MdVerified />;
     }
   };
@@ -36,11 +45,12 @@ const Submark = (props) => {
 
 export const FrontProfileCalculator = () => {
   let senses = [
+    "Not Landmarked Yet",
     "Get Front Profile Score",
-    "Calculating",
     "% Front Profile Score",
   ];
-  const [state, setState] = useState(0);
+  const { profileMatched } = useContext(UserContext);
+  const [state, setState] = useState(profileMatched[0] ? 1 : 0);
   const [sense, setSense] = useState(senses[state]);
   const [disable, setDisable] = useState(
     !!!sessionStorage.getItem("frontProfile")
@@ -83,7 +93,8 @@ export const FrontProfileCalculator = () => {
 
   const handleFrontProfileCalc = async () => {
     if (disable) return;
-    setState(1);
+    if (!state) return;
+    setState(2);
     const requestBody = {
       gender: sessionStorage.getItem("gender") === "male",
       racial: sessionStorage.getItem("ethnicity"),
@@ -119,16 +130,16 @@ export const FrontProfileCalculator = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setState(2);
+        setState(3);
         setSense((data.score / 3.055).toFixed(2).toString() + senses[2]);
         sessionStorage.setItem("frontProfileScore", data.score);
         setFrontProfileMark(data.score);
-        for(let i = 0; i<22; i++){
-            MeasureValues[i] = data.values[i];
-            MeasureScores[i] = data.scores[i];
-            MeasureRanges[i] = data.ranges[i];
-            MeasureNotes[i] = data.notes[i];
-            MeasureAdvices[i] = data.advices[i];
+        for (let i = 0; i < 22; i++) {
+          MeasureValues[i] = data.values[i];
+          MeasureScores[i] = data.scores[i];
+          MeasureRanges[i] = data.ranges[i];
+          MeasureNotes[i] = data.notes[i];
+          MeasureAdvices[i] = data.advices[i];
         }
       });
   };
@@ -141,11 +152,12 @@ export const FrontProfileCalculator = () => {
 
 export const SideProfileCalculator = () => {
   let senses = [
+    "Not Landmarked Yet",
     "Get Side Profile Score",
-    "Calculating",
     "% Side Profile Score",
   ];
-  const [state, setState] = useState(0);
+  const { profileMatched } = useContext(UserContext);
+  const [state, setState] = useState(profileMatched[1] ? 1 : 0);
   const [sense, setSense] = useState(senses[state]);
   const [disable, setDisable] = useState(
     !!!sessionStorage.getItem("sideProfile")
@@ -230,12 +242,12 @@ export const SideProfileCalculator = () => {
         setSense((data.score / 1.955).toFixed(2).toString() + senses[2]);
         sessionStorage.setItem("sideProfileScore", data.score);
         setSideProfileMark(data.score);
-        for(let i = 22; i<45; i++){
-            MeasureValues[i] = data.values[i-22];
-            MeasureScores[i] = data.scores[i-22];
-            MeasureRanges[i] = data.ranges[i-22];
-            MeasureNotes[i] = data.notes[i-22];
-            MeasureAdvices[i] = data.advices[i-22];
+        for (let i = 22; i < 45; i++) {
+          MeasureValues[i] = data.values[i - 22];
+          MeasureScores[i] = data.scores[i - 22];
+          MeasureRanges[i] = data.ranges[i - 22];
+          MeasureNotes[i] = data.notes[i - 22];
+          MeasureAdvices[i] = data.advices[i - 22];
         }
         console.log(MeasureNotes);
       });

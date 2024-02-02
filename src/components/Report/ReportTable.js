@@ -61,7 +61,6 @@ const ValueText = (props) => {
 };
 
 const RangeText = (props) => {
-    console.log(typeof(props.range));
   return (
     <div>
       {Array.isArray(props.range) && props.range.length >= 2
@@ -73,7 +72,7 @@ const RangeText = (props) => {
 
 const MeasureRow = (props) => {
   return (
-    <div className="measure_row">
+    <div className={`measure_row ${props.hide ? 'blur':''}`}>
       <Item width={widthList[0]}>
         <MeasurementOverview
           id={"43bdf7ec77a18ce6c879449265eeaee9"}
@@ -111,7 +110,9 @@ const ReportTable = () => {
   const MeasureRows = [];
   const numberOfItems = 45;
   for (let index = 1; index <= numberOfItems; index++) {
-    MeasureRows.push(<MeasureRow key={index} index={index} />);
+    if(MeasureAdvices[index-1].length!==0){
+        MeasureRows.push(<MeasureRow key={index} index={index} hide={index>=7 && localStorage.getItem("userLevel")==="0"} />);
+    }
   }
   return (
     <div className="report_table">

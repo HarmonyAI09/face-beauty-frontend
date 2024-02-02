@@ -255,6 +255,8 @@ function Home() {
   const [sideImageheight, setSideImageHeight] = useState(0);
   const [sideImagewidth, setSideImageWidth] = useState(0);
 
+  const [profileMatched, setProfileMatched] = useState([false, false]);
+
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
 
@@ -445,7 +447,9 @@ function Home() {
         frontImage,
         setFrontImage,
         sideImage,
-        setSideImage
+        setSideImage,
+        profileMatched,
+        setProfileMatched
       }}
     >
       <div className="main_parent">

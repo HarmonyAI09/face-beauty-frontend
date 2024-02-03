@@ -12,6 +12,8 @@ import {
   MeasureAdvices,
 } from "../../utils/text";
 import { MeasurementItem } from "../../class/Profile";
+import { swapObjectKeyValue } from "../../utils/js_support";
+import { attributeStringToShort } from "../../utils/profile";
 
 const Submark = (props) => {
   let className = "submark_container";
@@ -83,8 +85,8 @@ export const FrontProfileCalculator = () => {
     if (!state) return;
     setState(2);
     const requestBody = {
-      gender: oneProfile.gender === "Male",
-      racial: oneProfile.race,
+      // gender: oneProfile.gender === "Male",
+      // racial: oneProfile.race,
       eyeSeparationRatio: eyeSeparationRatio,
       facialThirds: facialThirds,
       lateralCanthalTilt: lateralCanthalTilt,
@@ -130,7 +132,11 @@ export const FrontProfileCalculator = () => {
     //       MeasureAdvices[i] = data.advices[i];
     //     }
     //   });
-      oneProfile.frontProfile.mainProcess("Male", "Caucasian", "getfrontscore");
+    const shortStringToAttributeString = swapObjectKeyValue(attributeStringToShort);
+    for (let key in requestBody)
+      oneProfile.frontProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key])
+
+    oneProfile.frontProfile.mainProcess("Male", "Caucasian", "getfrontscore");
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>

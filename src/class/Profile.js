@@ -1,4 +1,4 @@
-import { frontProfileJSON, sideProfileJSON } from "../utils/profile";
+import { frontProfileJSON, sideProfileJSON, attributeStringToShort } from "../utils/profile";
 const md5 = require("md5");
 
 export class MeasurementItem {
@@ -47,10 +47,10 @@ export class Profile {
   async mainProcess(gender, race, endpoint) {
     let requestBody = {
       gender: gender === "Male",
-      race: race,
+      racial: race,
     };
-    this.measurements.forEach((measurementItem) => {
-      requestBody[measurementItem.name] = measurementItem.value;
+    this.measurements.map((measurementItem) => {
+      requestBody[attributeStringToShort[measurementItem.name]] = measurementItem.value;
     });
     console.log(requestBody);
     fetch(`http://localhost:8000/${endpoint}`, {
@@ -87,5 +87,5 @@ export class OneProfile {
     return uniqueID;
   }
 
-  save() {}
+  save() { }
 }

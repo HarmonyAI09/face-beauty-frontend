@@ -2,18 +2,34 @@ import { useContext, useState } from "react";
 import "./ReportList.css";
 import { UserContext } from "../pages/home";
 import { BACKEND_URL } from "../config";
+import { FaDownload } from "react-icons/fa6";
+
+const SavedReport = (props) => {
+  const handleReportDownload = () => {
+    console.log("Report Download Button Clicked");
+  }
+
+  return (
+    <>
+      <div style={{ width: "20%" }}>{props.report.date}</div>
+      <div style={{ width: "20%" }}>{props.report.owner}</div>
+      <div style={{ width: "20%" }}>{props.report.gender}</div>
+      <div style={{ width: "20%" }}>{props.report.race}</div>
+      <div style={{ width: "10%" }} onClick={handleReportDownload}><FaDownload /></div>
+    </>
+  );
+};
 const ReportList = () => {
   const [reportList, setReportList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const { setSelectedFrontImage, setSelectedSideImage } = useContext(UserContext);
+  const { setSelectedFrontImage, setSelectedSideImage } =
+    useContext(UserContext);
   const {
-    gender,
     setGender,
-    selectedOption,
-    setSelectedOption,
+    setEthnicity,
     setFrontImage,
     setSideImage,
-    setMarkPoints
+    setMarkPoints,
   } = useContext(UserContext);
 
   const handleShowButtonClick = async () => {
@@ -40,7 +56,7 @@ const ReportList = () => {
     console.log(reportList[index]);
     const item = reportList[index];
     setGender(item.gender === "true");
-    setSelectedOption(item.race);
+    setEthnicity(item.race);
     setFrontImage(item.front_image);
     setSideImage(item.side_image);
     setSelectedFrontImage(null);
@@ -49,16 +65,16 @@ const ReportList = () => {
     loadKeyPoints(item.id);
   };
 
-  const loadKeyPoints = item_id => {
+  const loadKeyPoints = (item_id) => {
     fetch(`${BACKEND_URL}/details/${item_id}`)
-      .then(res => res.json())
-      .then(data => {
-        const keypoints = JSON.parse(data.keyPoints)
-        console.log('markPoints', keypoints)
-        setMarkPoints(keypoints)
+      .then((res) => res.json())
+      .then((data) => {
+        const keypoints = JSON.parse(data.keyPoints);
+        console.log("markPoints", keypoints);
+        setMarkPoints(keypoints);
       })
-      .catch(error => console.error(error))
-  }
+      .catch((error) => console.error(error));
+  };
   return (
     <div className="report_dropbox" onClick={() => handleReportDropboxClick()}>
       {isOpen && (
@@ -68,14 +84,16 @@ const ReportList = () => {
             <div style={{ width: "20%" }}>Name</div>
             <div style={{ width: "20%" }}>Gender</div>
             <div style={{ width: "20%" }}>Ethnicity</div>
+            <div style={{ width: "10%" }}></div>
           </div>
           <div className="report_list_body">
             {reportList.map((report, index) => (
-              <div key={index} className="report_list_item" onClick={() => handleReportItemClick(index)}>
-                <div style={{ width: "20%" }}>{report.date}</div>
-                <div style={{ width: "20%" }}>{report.owner}</div>
-                <div style={{ width: "20%" }}>{report.gender}</div>
-                <div style={{ width: "20%" }}>{report.race}</div>
+              <div
+                key={index}
+                className="report_list_item"
+                onClick={() => handleReportItemClick(index)}
+              >
+                <SavedReport report={report} />
               </div>
             ))}
           </div>

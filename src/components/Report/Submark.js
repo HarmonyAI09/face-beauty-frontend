@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./Submark.css";
 import { MdVerified, MdOutlineVerified } from "react-icons/md";
 import { UserContext } from "../../pages/home";
@@ -11,7 +11,6 @@ import {
   MeasureNotes,
   MeasureAdvices,
 } from "../../utils/text";
-import { MeasurementItem } from "../../class/Profile";
 
 const Submark = (props) => {
   let className = "submark_container";

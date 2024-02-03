@@ -1,17 +1,26 @@
 import { Radio, RadioGroup } from "@fluentui/react-components";
 import Segment from "../Segment";
-import Storage from "../../utils/storage";
+import { useContext } from "react";
+import { UserContext } from "../../pages/home";
 
 const Gender = () => {
   let genderList = ["Female", "Male"];
+  const { setGender } = useContext(UserContext);
+  const { oneProfile, setOneProfile } = useContext(UserContext);
   const handleGenderChange = (index) => {
-    Storage.setItem("gender", genderList[index])
+    setGender(genderList[index]);
+    oneProfile.gender = genderList[index];
+    setOneProfile(oneProfile);
   };
   return (
     <Segment title="Gender">
       <RadioGroup>
         {genderList.map((gender, index) => (
-          <Radio key={index} label={gender} onChange={() => handleGenderChange(index)} />
+          <Radio
+            key={index}
+            label={gender}
+            onChange={() => handleGenderChange(index)}
+          />
         ))}
       </RadioGroup>
     </Segment>

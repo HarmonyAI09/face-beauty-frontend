@@ -14,6 +14,8 @@ import { BACKEND_URL } from "../config";
 import Reference from "../components/Reference";
 import Setting from "../components/Setting";
 import Storage from "../utils/storage";
+import { useEffect } from "react";
+import { OneProfile } from "../class/Profile";
 
 export const UserContext = createContext();
 
@@ -23,15 +25,14 @@ function Home() {
 
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
-
   const [frontImage, setFrontImage] = useState();
   const [sideImage, setSideImage] = useState();
-
-  const [gender, setGender] = useState(1);
-  const [selectedOption, setSelectedOption] = useState("Caucasian");
-
+  const [gender, setGender] = useState(null);
+  const [ethnicity, setEthnicity] = useState(null);
   const [frontProfileMark, setFrontProfileMark] = useState(0.0);
   const [sideProfileMark, setSideProfileMark] = useState(0.0);
+
+  const [oneProfile, setOneProfile] = useState(new OneProfile());
 
   /**************************FRONT PROFILE***************************************/
   const [eyeSeparationRatio, setEyeSeparationRatio] = useState(0.0);
@@ -259,6 +260,32 @@ function Home() {
 
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
+  const [storageChange, setStorageChange] = useState(null);
+  const [frontImgURL, setFrontImgURL] = useState(null);
+  const [sideImgURL, setSideImgURL] = useState(null);
+
+  // eslint-disable-next-line no-undef
+  useEffect(() => {
+    // Function to call when storage changes
+    const handleStorageChange = (event) => {
+        setStorageChange({
+            key: event.key,
+            oldValue: event.oldValue,
+            newValue: event.newValue,
+            url: event.url,
+            storageArea: event.storageArea
+        });
+        console.log(event);
+    };
+
+    // Add event listener for storage changes
+    window.addEventListener('storage', handleStorageChange);
+
+    // Clean up
+    return () => {
+        window.removeEventListener('storage', handleStorageChange);
+    };
+}, []);
 
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
@@ -275,11 +302,14 @@ function Home() {
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;      
-      Storage.setItem("frontProfile", objectUrl);
+      setFrontImgURL(objectUrl);
+      oneProfile.frontProfile.imgSrc = objectUrl;
     }
     else{
-      sessionStorage.removeItem("frontProfile");
+      setFrontImgURL(null);
+      oneProfile.frontProfile.imgSrc = null;
     }
+    setOneProfile(oneProfile);
   };
 
   const uploadImageStyle = {
@@ -303,10 +333,14 @@ function Home() {
       };
       img.src = objectUrl;
       Storage.setItem("sideProfile", objectUrl);
+      setSideImgURL(objectUrl);
+      oneProfile.sideProfile.imgSrc = objectUrl;
     }
     else{
-      sessionStorage.removeItem("sideProfile");
+      setSideImgURL(null);
+      oneProfile.sideProfile.imgSrc = null;
     }
+    setOneProfile(oneProfile);
   };
 
   const uploadSideImageStyle = {
@@ -428,8 +462,8 @@ function Home() {
         setSideProfileMark,
         gender,
         setGender,
-        selectedOption,
-        setSelectedOption,
+        ethnicity,
+        setEthnicity,
         reportNotes,
         setReportNotes,
         reportScores,
@@ -449,7 +483,11 @@ function Home() {
         sideImage,
         setSideImage,
         profileMatched,
-        setProfileMatched
+        setProfileMatched,
+        frontImgURL,
+        sideImgURL,
+        oneProfile,
+        setOneProfile
       }}
     >
       <div className="main_parent">

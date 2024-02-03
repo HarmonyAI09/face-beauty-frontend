@@ -11,6 +11,7 @@ import {
   MeasureNotes,
   MeasureAdvices,
 } from "../../utils/text";
+import { MeasurementItem } from "../../class/Profile";
 
 const Submark = (props) => {
   let className = "submark_container";
@@ -52,9 +53,6 @@ export const FrontProfileCalculator = () => {
   const { profileMatched } = useContext(UserContext);
   const [state, setState] = useState(profileMatched[0] ? 1 : 0);
   const [sense, setSense] = useState(senses[state]);
-  const [disable, setDisable] = useState(
-    !!!sessionStorage.getItem("frontProfile")
-  );
   const { eyeSeparationRatio } = useContext(UserContext);
   const { facialThirds } = useContext(UserContext);
   const { lateralCanthalTilt } = useContext(UserContext);
@@ -78,26 +76,15 @@ export const FrontProfileCalculator = () => {
   const { lowerThirdProporation } = useContext(UserContext);
   const { medialCanthalAngle } = useContext(UserContext);
   const { setFrontProfileMark } = useContext(UserContext);
-
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      if (e.key === "frontProfile") {
-        setDisable(!!e.newValue);
-      }
-    };
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const { oneProfile } = useContext(UserContext);
 
   const handleFrontProfileCalc = async () => {
-    if (disable) return;
+    if (oneProfile.frontProfile.imgSrc === null) return;
     if (!state) return;
     setState(2);
     const requestBody = {
-      gender: sessionStorage.getItem("gender") === "male",
-      racial: sessionStorage.getItem("ethnicity"),
+      gender: oneProfile.gender === "Male",
+      racial: oneProfile.race,
       eyeSeparationRatio: eyeSeparationRatio,
       facialThirds: facialThirds,
       lateralCanthalTilt: lateralCanthalTilt,
@@ -121,31 +108,37 @@ export const FrontProfileCalculator = () => {
       lowerThirdProporation: lowerThirdProporation,
       medialCanthalAngle: medialCanthalAngle,
     };
-    fetch("http://localhost:8000/getfrontscore", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setState(3);
-        setSense((data.score / 3.055).toFixed(2).toString() + senses[2]);
-        sessionStorage.setItem("frontProfileScore", data.score);
-        setFrontProfileMark(data.score);
-        for (let i = 0; i < 22; i++) {
-          MeasureValues[i] = data.values[i];
-          MeasureScores[i] = data.scores[i];
-          MeasureRanges[i] = data.ranges[i];
-          MeasureNotes[i] = data.notes[i];
-          MeasureAdvices[i] = data.advices[i];
-        }
-      });
+    console.log("aaa", requestBody);
+    // fetch("http://localhost:8000/getfrontscore", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(requestBody),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setState(3);
+    //     setSense((data.score / 3.055).toFixed(2).toString() + senses[2]);
+    //     sessionStorage.setItem("frontProfileScore", data.score);
+    //     setFrontProfileMark(data.score);
+    //     for (let i = 0; i < 22; i++) {
+    //       MeasureValues[i] = data.values[i];
+    //       MeasureScores[i] = data.scores[i];
+    //       MeasureRanges[i] = data.ranges[i];
+    //       MeasureNotes[i] = data.notes[i];
+    //       MeasureAdvices[i] = data.advices[i];
+    //     }
+    //   });
+      oneProfile.frontProfile.mainProcess("Male", "Caucasian", "getfrontscore");
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>
-      <Submark text={sense} disable={disable} state={state} />
+      <Submark
+        text={sense}
+        disable={oneProfile.frontProfile.imgSRC === null}
+        state={state}
+      />
     </div>
   );
 };
@@ -159,9 +152,6 @@ export const SideProfileCalculator = () => {
   const { profileMatched } = useContext(UserContext);
   const [state, setState] = useState(profileMatched[1] ? 1 : 0);
   const [sense, setSense] = useState(senses[state]);
-  const [disable, setDisable] = useState(
-    !!!sessionStorage.getItem("sideProfile")
-  );
   const { gonialAngle } = useContext(UserContext);
   const { nasofrontalAngle } = useContext(UserContext);
   const { mandibularPlaneAngle } = useContext(UserContext);
@@ -186,25 +176,14 @@ export const SideProfileCalculator = () => {
   const { browridgeInclinationAngle } = useContext(UserContext);
   const { nasalTipAngle } = useContext(UserContext);
   const { setSideProfileMark } = useContext(UserContext);
-
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      if (e.key === "sideProfile") {
-        setDisable(!!e.newValue);
-      }
-    };
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
+  const { oneProfile } = useContext(UserContext);
 
   const handleSideProfileCalc = async () => {
-    if (disable) return;
+    if (oneProfile.sideProfile.imgSrc === null) return;
     setState(1);
     const requestBody = {
-      gender: sessionStorage.getItem("gender") === "male",
-      racial: sessionStorage.getItem("ethnicity"),
+      gender: oneProfile.gender === "Male",
+      racial: oneProfile.race,
       gonialAngle: gonialAngle,
       nasofrontalAngle: nasofrontalAngle,
       mandibularPlaneAngle: mandibularPlaneAngle,
@@ -254,7 +233,7 @@ export const SideProfileCalculator = () => {
   };
   return (
     <div className="sideCalcContainer" onClick={handleSideProfileCalc}>
-      <Submark text={sense} disable={disable} state={state} />
+      <Submark text={sense} disable={true} state={state} />
     </div>
   );
 };

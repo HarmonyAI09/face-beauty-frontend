@@ -33,10 +33,10 @@ export const ViewReportDialog = () => {
   const { ethnicity } = useContext(UserContext);
 
   const { selectedFrontImage, selectedSideImage } = useContext(UserContext);
-  const { frontImgURL, sideImgURL } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
   const [reportOwner, setReportOwner] = useState("unnamed");
   const [isClickable, setIsClickable] = useState(false);
+  const { oneProfile } = useContext(UserContext);
 
   const getMeasurementImages = async () => {
     try {
@@ -52,31 +52,11 @@ export const ViewReportDialog = () => {
     }
   };
 
-  const handleReportSave = async () => {
-    const formData = new FormData();
-    formData.append("mail", localStorage.getItem("userEmail"));
-    formData.append("reportID", "wueriowueir___tempMeasureID"); //measureID);
-    formData.append("gender", gender ? "Male" : "Female");
-    formData.append("race", ethnicity);
-    formData.append("reportOwner", reportOwner);
-    formData.append("keyPoints", JSON.stringify(markPoints));
-    formData.append("frontImage", selectedFrontImage);
-    formData.append("sideImage", selectedSideImage);
-  };
-
-  const getReportList = async () => {
-    try {
-    } catch (error) {
-      console.error("Error getting report list:", error);
-    }
-  };
-
   useEffect(() => {
-    getReportList();
-    const settingAvability = gender !== null && ethnicity !== null;
-    const profileAvability = frontImgURL !== null || sideImgURL !== null;
+    const settingAvability = oneProfile.gender !== null && oneProfile.race !== null;
+    const profileAvability = oneProfile.frontProfile.imgSrc !== null || oneProfile.frontProfile.imgSrc !== null;
     setIsClickable(settingAvability && profileAvability);
-  }, [gender, ethnicity, frontImgURL, sideImgURL]);
+  }, [oneProfile]);
 
   return (
     <Dialog modalType="alert">
@@ -132,7 +112,7 @@ export const ViewReportDialog = () => {
                     />
                     &nbsp;
                     <div className="report_status">
-                      <FaSave onClick={handleReportSave} />
+                      <FaSave onClick={oneProfile.save} />
                     </div>
                   </div>
                   <FileDownload></FileDownload>

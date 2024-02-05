@@ -1,14 +1,8 @@
 /* eslint-disable react/jsx-no-undef */
-import {
-  Measurements,
-  MeasureValues,
-  MeasureScores,
-  MeasureRanges,
-  MeasureNotes,
-  MeasureAdvices,
-} from "../../utils/text";
+import { useContext, useEffect, useState } from "react";
 import { MeasurementOverview } from "../MeasurementOverview";
 import "./ReportTable.css";
+import { UserContext } from "../../pages/home";
 
 const widthList = ["80px", "10%", "7%", "5%", "8%", "30%", "40% - 80px"];
 const Item = (props) => {
@@ -71,27 +65,28 @@ const RangeText = (props) => {
 };
 
 const MeasureRow = (props) => {
+  const item = props.item;
+  console.log(item);
   return (
-    <div className={`measure_row ${props.hide ? 'blur':''}`}>
+    <div className={`measure_row ${props.hide ? "blur" : ""}`}>
       <Item width={widthList[0]}>
-        <MeasurementOverview
-          id={"43bdf7ec77a18ce6c879449265eeaee9"}
-          index={props.index}
-        />
+        <MeasurementOverview id={props.id} index={props.index} />
       </Item>
       <Item width={widthList[1]}>
-        <InlineText text={Measurements[props.index - 1]} />
+        <InlineText text={item.name} />
       </Item>
       <Item width={widthList[2]}>
-        <ValueText value={MeasureValues[props.index - 1]} />
+        <ValueText value={item.value} />
       </Item>
-      <Item width={widthList[3]}>{MeasureScores[props.index - 1]}</Item>
-      <Item width={widthList[4]}><RangeText range={MeasureRanges[props.index - 1]}/></Item>
+      <Item width={widthList[3]}>{item.score}</Item>
+      <Item width={widthList[4]}>
+        <RangeText range={item.ideal} />
+      </Item>
       <Item width={widthList[5]} type="text">
-        {MeasureNotes[props.index - 1]}
+        {item.mean}
       </Item>
       <Item width={widthList[6]} type="text">
-        {MeasureAdvices[props.index - 1]}
+        {item.advice}
       </Item>
     </div>
   );
@@ -107,23 +102,48 @@ const ReportTable = () => {
     "Meaning",
     "Advice",
   ];
-  const MeasureRows = [];
-  const numberOfItems = 45;
-  for (let index = 1; index <= numberOfItems; index++) {
-    if(MeasureAdvices[index-1].length!==0){
-        MeasureRows.push(<MeasureRow key={index} index={index} hide={index>=7 && localStorage.getItem("userLevel")==="0"} />);
+  const { oneProfile } = useContext(UserContext);
+  const [measureRows, setMeasureRows] = useState([]);
+  useEffect(() => {
+    const MeasureRows = [];
+    for (let index in oneProfile.frontProfile.measurements) {
+      const item = oneProfile.frontProfile.measurements[index];
+      if (item.isSet()) {
+        MeasureRows.push(
+          <MeasureRow
+            id={oneProfile.id}
+            item={item}
+            index={index}
+            hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
+          />
+        );
+      }
     }
-  }
+    for (let index in oneProfile.sideProfile.measurements) {
+      const item = oneProfile.sideProfile.measurements[index];
+      if (item.isSet()) {
+        MeasureRows.push(
+          <MeasureRow
+            id={oneProfile.id}
+            item={item}
+            index={index + 22}
+            hide={localStorage.getItem("userLevel") === "0"}
+          />
+        );
+      }
+    }
+    setMeasureRows(MeasureRows);
+  }, [oneProfile]);
   return (
     <div className="report_table">
       <div className="table_header">
         {headerList.map((headerTitle, index) => (
-          <Item width={widthList[index]} type="header">
+          <Item width={widthList[index]} type="header" key={index}>
             {headerTitle}
           </Item>
         ))}
       </div>
-      <div className="table_content">{MeasureRows}</div>
+      <div className="table_content">{measureRows}</div>
     </div>
   );
 };

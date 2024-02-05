@@ -4,14 +4,6 @@ import { MdVerified, MdOutlineVerified } from "react-icons/md";
 import { UserContext } from "../../pages/home";
 import { FaSpinner } from "react-icons/fa";
 import { GoUnverified } from "react-icons/go";
-import {
-  MeasureValues,
-  MeasureScores,
-  MeasureRanges,
-  MeasureNotes,
-  MeasureAdvices,
-} from "../../utils/text";
-import { MeasurementItem } from "../../class/Profile";
 import { swapObjectKeyValue } from "../../utils/js_support";
 import { attributeStringToShort } from "../../utils/profile";
 
@@ -25,6 +17,7 @@ const Submark = (props) => {
   if (props.state === 2) {
     stateClass += " spin-animation";
   }
+
   const stateIcon = () => {
     if (props.state === 0) {
       return <GoUnverified />;
@@ -77,16 +70,13 @@ export const FrontProfileCalculator = () => {
   const { bitemporalWidth } = useContext(UserContext);
   const { lowerThirdProporation } = useContext(UserContext);
   const { medialCanthalAngle } = useContext(UserContext);
-  const { setFrontProfileMark } = useContext(UserContext);
-  const { oneProfile } = useContext(UserContext);
+  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleFrontProfileCalc = async () => {
     if (oneProfile.frontProfile.imgSrc === null) return;
     if (!state) return;
     setState(2);
     const requestBody = {
-      // gender: oneProfile.gender === "Male",
-      // racial: oneProfile.race,
       eyeSeparationRatio: eyeSeparationRatio,
       facialThirds: facialThirds,
       lateralCanthalTilt: lateralCanthalTilt,
@@ -110,39 +100,20 @@ export const FrontProfileCalculator = () => {
       lowerThirdProporation: lowerThirdProporation,
       medialCanthalAngle: medialCanthalAngle,
     };
-    console.log("aaa", requestBody);
-    // fetch("http://localhost:8000/getfrontscore", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(requestBody),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setState(3);
-    //     setSense((data.score / 3.055).toFixed(2).toString() + senses[2]);
-    //     sessionStorage.setItem("frontProfileScore", data.score);
-    //     setFrontProfileMark(data.score);
-    //     for (let i = 0; i < 22; i++) {
-    //       MeasureValues[i] = data.values[i];
-    //       MeasureScores[i] = data.scores[i];
-    //       MeasureRanges[i] = data.ranges[i];
-    //       MeasureNotes[i] = data.notes[i];
-    //       MeasureAdvices[i] = data.advices[i];
-    //     }
-    //   });
     const shortStringToAttributeString = swapObjectKeyValue(attributeStringToShort);
+    const tempProfile = oneProfile;
     for (let key in requestBody)
-      oneProfile.frontProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key])
-
-    oneProfile.frontProfile.mainProcess("Male", "Caucasian", "getfrontscore");
+      tempProfile.frontProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key]);
+    await tempProfile.getHarmony("Front");
+    setOneProfile(tempProfile);
+    setState(3);
+    setSense((oneProfile.frontProfile.score / 3.055).toFixed(2).toString() + senses[2]);
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>
       <Submark
         text={sense}
-        disable={oneProfile.frontProfile.imgSRC === null}
+        disable={oneProfile.frontProfile.imgSrc === null}
         state={state}
       />
     </div>
@@ -181,15 +152,13 @@ export const SideProfileCalculator = () => {
   const { recessionRelative2FrankfortPlane } = useContext(UserContext);
   const { browridgeInclinationAngle } = useContext(UserContext);
   const { nasalTipAngle } = useContext(UserContext);
-  const { setSideProfileMark } = useContext(UserContext);
-  const { oneProfile } = useContext(UserContext);
+  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleSideProfileCalc = async () => {
     if (oneProfile.sideProfile.imgSrc === null) return;
-    setState(1);
+    if (!state) return;
+    setState(2);
     const requestBody = {
-      gender: oneProfile.gender === "Male",
-      racial: oneProfile.race,
       gonialAngle: gonialAngle,
       nasofrontalAngle: nasofrontalAngle,
       mandibularPlaneAngle: mandibularPlaneAngle,
@@ -213,33 +182,19 @@ export const SideProfileCalculator = () => {
       recessionRelative2FrankfortPlane: recessionRelative2FrankfortPlane,
       browridgeInclinationAngle: browridgeInclinationAngle,
       nasalTipAngle: nasalTipAngle,
-    };
-    fetch("http://localhost:8000/getsidescore", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setState(2);
-        setSense((data.score / 1.955).toFixed(2).toString() + senses[2]);
-        sessionStorage.setItem("sideProfileScore", data.score);
-        setSideProfileMark(data.score);
-        for (let i = 22; i < 45; i++) {
-          MeasureValues[i] = data.values[i - 22];
-          MeasureScores[i] = data.scores[i - 22];
-          MeasureRanges[i] = data.ranges[i - 22];
-          MeasureNotes[i] = data.notes[i - 22];
-          MeasureAdvices[i] = data.advices[i - 22];
-        }
-        console.log(MeasureNotes);
-      });
+    };    
+    const shortStringToAttributeString = swapObjectKeyValue(attributeStringToShort);
+    const tempProfile = oneProfile;
+    for (let key in requestBody)
+      tempProfile.sideProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key]);
+    await tempProfile.getHarmony("Side");
+    setOneProfile(tempProfile);
+    setState(3);
+    setSense((oneProfile.sideProfile.score / 3.055).toFixed(2).toString() + senses[2]);
   };
   return (
     <div className="sideCalcContainer" onClick={handleSideProfileCalc}>
-      <Submark text={sense} disable={true} state={state} />
+      <Submark text={sense} disable={oneProfile.sideProfile.imgSrc === null} state={state} />
     </div>
   );
 };

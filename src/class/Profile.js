@@ -1,15 +1,31 @@
-import { frontProfileJSON, sideProfileJSON, attributeStringToShort } from "../utils/profile";
+import {
+  frontProfileJSON,
+  sideProfileJSON,
+  attributeStringToShort,
+} from "../utils/profile";
 const md5 = require("md5");
 
 export class MeasurementItem {
-  constructor(name, value) {
+  constructor(name, value, score=null, index=null, ideal=null, mean=null, advice=null) {
     this.name = name;
     this.value = value;
-    this.score = null;
-    this.index = null;
-    this.ideal = null;
-    this.mean = null;
-    this.advice = null;
+    this.score = score;
+    this.index = index;
+    this.ideal = ideal;
+    this.mean = mean;
+    this.advice = advice;
+  }
+  upgrade(newMeasurement){
+    this.name = newMeasurement.name;
+    this.value = newMeasurement.value;
+    this.score = newMeasurement.score;
+    this.index = newMeasurement.index;
+    this.ideal = newMeasurement.ideal;
+    this.mean = newMeasurement.mean;
+    this.advice = newMeasurement.advice;
+  }
+  isSet(){
+    return this.score!==null;
   }
 }
 
@@ -44,15 +60,22 @@ export class Profile {
     }
   }
 
+  upgradeMeasurement(name, newMeasurement){
+    const measurement = this.getMeasurement(name);
+    if (measurement) {
+      measurement.upgrade(newMeasurement);
+    }
+  }
+
   async mainProcess(gender, race, endpoint) {
     let requestBody = {
       gender: gender === "Male",
       racial: race,
     };
+    // eslint-disable-next-line array-callback-return
     this.measurements.map((measurementItem) => {
       requestBody[attributeStringToShort[measurementItem.name]] = measurementItem.value;
     });
-    console.log(requestBody);
     fetch(`http://localhost:8000/${endpoint}`, {
       method: "POST",
       headers: {
@@ -62,7 +85,10 @@ export class Profile {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        for(const i in data.advices){
+          const temp = new MeasurementItem(data.names[i], data.values[i], data.scores[i], i, data.ranges[i], data.notes[i], data.advices[i]);
+          this.getMeasurement(data.names[i]).upgrade(temp);
+        }
       });
   }
 }
@@ -87,5 +113,13 @@ export class OneProfile {
     return uniqueID;
   }
 
-  save() { }
+  getHarmony(str) {
+    if (str === "Front") {
+      this.frontProfile.mainProcess(this.gender, this.race, "getfrontscore");
+    } else if (str === "Side") {
+      this.sideProfile.mainProcess(this.gender, this.race, "getsidescore");
+    }
+  }
+
+  save() {}
 }

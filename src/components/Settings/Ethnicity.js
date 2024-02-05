@@ -14,11 +14,10 @@ const Ethnicity = () => {
     "Other",
   ];
   const { setEthnicity } = useContext(UserContext);
-  const { oneProfile, setOneProfile } =useContext(UserContext);
+  const { oneProfile, setOneProfile } = useContext(UserContext);
   const handleEthnicityChange = (index) => {
     setEthnicity(raceList[index]);
-    oneProfile.race = raceList[index];
-    setOneProfile(oneProfile);
+    setOneProfile({ ...oneProfile, race: raceList[index] });
   };
   return (
     <Segment title="Ethnicity/Race">

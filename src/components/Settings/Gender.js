@@ -9,8 +9,7 @@ const Gender = () => {
   const { oneProfile, setOneProfile } = useContext(UserContext);
   const handleGenderChange = (index) => {
     setGender(genderList[index]);
-    oneProfile.gender = genderList[index];
-    setOneProfile(oneProfile);
+    setOneProfile({...oneProfile, gender: genderList[index]});
   };
   return (
     <Segment title="Gender">

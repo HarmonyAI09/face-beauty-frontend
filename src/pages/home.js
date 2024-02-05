@@ -303,13 +303,25 @@ function Home() {
       };
       img.src = objectUrl;      
       setFrontImgURL(objectUrl);
-      oneProfile.frontProfile.imgSrc = objectUrl;
+      setOneProfile({
+        ...oneProfile,
+        frontProfile: {
+          ...oneProfile.frontProfile,
+          imgSrc: objectUrl
+        }
+      })
     }
     else{
       setFrontImgURL(null);
-      oneProfile.frontProfile.imgSrc = null;
+
+      setOneProfile({
+        ...oneProfile,
+        frontProfile: {
+          ...oneProfile.frontProfile,
+          imgSrc: null
+        }
+      })
     }
-    setOneProfile(oneProfile);
   };
 
   const uploadImageStyle = {
@@ -334,13 +346,24 @@ function Home() {
       img.src = objectUrl;
       Storage.setItem("sideProfile", objectUrl);
       setSideImgURL(objectUrl);
-      oneProfile.sideProfile.imgSrc = objectUrl;
+      setOneProfile({
+        ...oneProfile,
+        sideProfile: {
+          ...oneProfile.sideProfile,
+          imgSrc: objectUrl
+        }
+      })
     }
     else{
       setSideImgURL(null);
-      oneProfile.sideProfile.imgSrc = null;
+      setOneProfile({
+        ...oneProfile,
+        sideProfile: {
+          ...oneProfile.sideProfile,
+          imgSrc: null
+        }
+      })
     }
-    setOneProfile(oneProfile);
   };
 
   const uploadSideImageStyle = {

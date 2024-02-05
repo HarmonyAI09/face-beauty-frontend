@@ -6,7 +6,7 @@ import {
 const md5 = require("md5");
 
 export class MeasurementItem {
-  constructor(name, value, score=null, index=null, ideal=null, mean=null, advice=null) {
+  constructor(name, value, score=null, index=null, ideal=null, mean=null, advice=null, max=null) {
     this.name = name;
     this.value = value;
     this.score = score;
@@ -14,6 +14,7 @@ export class MeasurementItem {
     this.ideal = ideal;
     this.mean = mean;
     this.advice = advice;
+    this.max = max;
   }
   upgrade(newMeasurement){
     this.name = newMeasurement.name;
@@ -23,6 +24,7 @@ export class MeasurementItem {
     this.ideal = newMeasurement.ideal;
     this.mean = newMeasurement.mean;
     this.advice = newMeasurement.advice;
+    this.max = newMeasurement.max;
   }
   isSet(){
     return this.score!==null;
@@ -31,7 +33,7 @@ export class MeasurementItem {
 
 export class Profile {
   constructor(measurementsJson) {
-    this.score = 0;
+    this.score = null;
     this.imgSrc = null;
     this.measurements = [];
     this.featurePoints = [];
@@ -86,10 +88,23 @@ export class Profile {
       .then((response) => response.json())
       .then((data) => {
         for(const i in data.advices){
-          const temp = new MeasurementItem(data.names[i], data.values[i], data.scores[i], i, data.ranges[i], data.notes[i], data.advices[i]);
-          this.getMeasurement(data.names[i]).upgrade(temp);
+          const temp = new MeasurementItem(data.names[i], data.values[i], data.scores[i], i, data.ranges[i], data.notes[i], data.advices[i], data.maxs[i]);
+          const one = this.getMeasurement(data.names[i]);
+          one.upgrade(temp);
         }
+        this.score = data.score;
       });
+  }
+
+  getPercentage(){
+    return 100;
+  }
+
+  copy(src){
+    this.score = src.score;
+    this.imgSrc = src.imgSrc;
+    this.measurements = src.measurements;
+    this.featurePoints = src.featurePoints;
   }
 }
 
@@ -113,13 +128,24 @@ export class OneProfile {
     return uniqueID;
   }
 
-  getHarmony(str) {
+  async getHarmony(str) {
     if (str === "Front") {
-      this.frontProfile.mainProcess(this.gender, this.race, "getfrontscore");
+      await this.frontProfile.mainProcess(this.gender, this.race, "getfrontscore");
     } else if (str === "Side") {
-      this.sideProfile.mainProcess(this.gender, this.race, "getsidescore");
+      await this.sideProfile.mainProcess(this.gender, this.race, "getsidescore");
     }
   }
 
   save() {}
+  copy(src) {
+    this.id = src.id;
+    this.gender = src.gender;
+    this.race = src.race;
+    this.name = src.name;
+    this.score = src.score;
+    this.frontProfile = new Profile();
+    this.frontProfile.copy(src.frontProfile);
+    this.sideProfile = new Profile();
+    this.sideProfile.copy(src.sideProfile);
+  }
 }

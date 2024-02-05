@@ -66,7 +66,6 @@ const RangeText = (props) => {
 
 const MeasureRow = (props) => {
   const item = props.item;
-  console.log(item);
   return (
     <div className={`measure_row ${props.hide ? "blur" : ""}`}>
       <Item width={widthList[0]}>
@@ -103,37 +102,36 @@ const ReportTable = () => {
     "Advice",
   ];
   const { oneProfile } = useContext(UserContext);
-  const [measureRows, setMeasureRows] = useState([]);
-  useEffect(() => {
-    const MeasureRows = [];
-    for (let index in oneProfile.frontProfile.measurements) {
-      const item = oneProfile.frontProfile.measurements[index];
-      if (item.isSet()) {
-        MeasureRows.push(
-          <MeasureRow
-            id={oneProfile.id}
-            item={item}
-            index={index}
-            hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
-          />
-        );
-      }
+  const MeasureRows = [];
+  for (let index in oneProfile.frontProfile.measurements) {
+    const item = oneProfile.frontProfile.measurements[index];
+    if (item.isSet()) {
+      MeasureRows.push(
+        <MeasureRow
+          id={oneProfile.id}
+          item={item}
+          index={index}
+          hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
+        />
+      );
     }
-    for (let index in oneProfile.sideProfile.measurements) {
-      const item = oneProfile.sideProfile.measurements[index];
-      if (item.isSet()) {
-        MeasureRows.push(
-          <MeasureRow
-            id={oneProfile.id}
-            item={item}
-            index={index + 22}
-            hide={localStorage.getItem("userLevel") === "0"}
-          />
-        );
-      }
+  }
+  for (let index in oneProfile.sideProfile.measurements) {
+    const item = oneProfile.sideProfile.measurements[index];
+    if (item.isSet()) {
+      MeasureRows.push(
+        <MeasureRow
+          id={oneProfile.id}
+          item={item}
+          index={index + 22}
+          hide={localStorage.getItem("userLevel") === "0"}
+          // hide={true}
+        />
+      );
+    } else{
+      console.log(item);
     }
-    setMeasureRows(MeasureRows);
-  }, [oneProfile]);
+  }
   return (
     <div className="report_table">
       <div className="table_header">
@@ -143,7 +141,7 @@ const ReportTable = () => {
           </Item>
         ))}
       </div>
-      <div className="table_content">{measureRows}</div>
+      <div className="table_content">{MeasureRows}</div>
     </div>
   );
 };

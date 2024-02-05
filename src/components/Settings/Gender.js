@@ -2,6 +2,7 @@ import { Radio, RadioGroup } from "@fluentui/react-components";
 import Segment from "../Segment";
 import { useContext } from "react";
 import { UserContext } from "../../pages/home";
+import { OneProfile } from "../../class/Profile";
 
 const Gender = () => {
   let genderList = ["Female", "Male"];
@@ -9,7 +10,10 @@ const Gender = () => {
   const { oneProfile, setOneProfile } = useContext(UserContext);
   const handleGenderChange = (index) => {
     setGender(genderList[index]);
-    setOneProfile({...oneProfile, gender: genderList[index]});
+    const tempProfile = new OneProfile();
+    tempProfile.copy(oneProfile);
+    tempProfile.gender = genderList[index];
+    setOneProfile(tempProfile);
   };
   return (
     <Segment title="Gender">

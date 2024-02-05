@@ -53,12 +53,10 @@ export const ViewReportDialog = () => {
   };
 
   useEffect(() => {
-    console.log(oneProfile);
     const settingAvability = oneProfile.gender !== null && oneProfile.race !== null;
     const profileAvability = oneProfile.frontProfile.imgSrc !== null || oneProfile.frontProfile.imgSrc !== null;
     setIsClickable(settingAvability && profileAvability);
-    console.log(isClickable, settingAvability, profileAvability);
-  }, [oneProfile]);
+  }, [isClickable, oneProfile]);
 
   return (
     <Dialog modalType="alert">

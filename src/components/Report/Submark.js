@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Submark.css";
 import { MdVerified, MdOutlineVerified } from "react-icons/md";
 import { UserContext } from "../../pages/home";
@@ -6,6 +6,7 @@ import { FaSpinner } from "react-icons/fa";
 import { GoUnverified } from "react-icons/go";
 import { swapObjectKeyValue } from "../../utils/js_support";
 import { attributeStringToShort } from "../../utils/profile";
+import { OneProfile } from "../../class/Profile";
 
 const Submark = (props) => {
   let className = "submark_container";
@@ -40,14 +41,18 @@ const Submark = (props) => {
 };
 
 export const FrontProfileCalculator = () => {
+  const { oneProfile, setOneProfile } = useContext(UserContext);
   let senses = [
     "Not Landmarked Yet",
     "Get Front Profile Score",
-    "% Front Profile Score",
+    "Calculating",
+    (oneProfile.frontProfile.score / 3.055).toFixed(2).toString() +
+      "% Front Profile Score",
   ];
   const { profileMatched } = useContext(UserContext);
-  const [state, setState] = useState(profileMatched[0] ? 1 : 0);
-  const [sense, setSense] = useState(senses[state]);
+  const [state, setState] = useState(
+    oneProfile.frontProfile.score !== null ? 3 : profileMatched[0] ? 1 : 0
+  );
   const { eyeSeparationRatio } = useContext(UserContext);
   const { facialThirds } = useContext(UserContext);
   const { lateralCanthalTilt } = useContext(UserContext);
@@ -70,7 +75,6 @@ export const FrontProfileCalculator = () => {
   const { bitemporalWidth } = useContext(UserContext);
   const { lowerThirdProporation } = useContext(UserContext);
   const { medialCanthalAngle } = useContext(UserContext);
-  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleFrontProfileCalc = async () => {
     if (oneProfile.frontProfile.imgSrc === null) return;
@@ -100,19 +104,26 @@ export const FrontProfileCalculator = () => {
       lowerThirdProporation: lowerThirdProporation,
       medialCanthalAngle: medialCanthalAngle,
     };
-    const shortStringToAttributeString = swapObjectKeyValue(attributeStringToShort);
-    const tempProfile = oneProfile;
+    const shortStringToAttributeString = swapObjectKeyValue(
+      attributeStringToShort
+    );
+    const tempProfile = new OneProfile();
+    tempProfile.copy(oneProfile);
     for (let key in requestBody)
-      tempProfile.frontProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key]);
+      tempProfile.frontProfile.setMeasurement(
+        shortStringToAttributeString[key],
+        requestBody[key]
+      );
     await tempProfile.getHarmony("Front");
+    console.log(tempProfile, "sdfsdfsdfsd");
     setOneProfile(tempProfile);
     setState(3);
-    setSense((oneProfile.frontProfile.score / 3.055).toFixed(2).toString() + senses[2]);
+    console.log(tempProfile);
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>
       <Submark
-        text={sense}
+        text={senses[state]}
         disable={oneProfile.frontProfile.imgSrc === null}
         state={state}
       />
@@ -121,14 +132,18 @@ export const FrontProfileCalculator = () => {
 };
 
 export const SideProfileCalculator = () => {
+  const { oneProfile, setOneProfile } = useContext(UserContext);
   let senses = [
     "Not Landmarked Yet",
     "Get Side Profile Score",
-    "% Side Profile Score",
+    "Calculating",
+    (oneProfile.sideProfile.score / 1.945).toFixed(2).toString() +
+      "% Side Profile Score",
   ];
   const { profileMatched } = useContext(UserContext);
-  const [state, setState] = useState(profileMatched[1] ? 1 : 0);
-  const [sense, setSense] = useState(senses[state]);
+  const [state, setState] = useState(
+    oneProfile.sideProfile.score !== null ? 3 : profileMatched[1] ? 1 : 0
+  );
   const { gonialAngle } = useContext(UserContext);
   const { nasofrontalAngle } = useContext(UserContext);
   const { mandibularPlaneAngle } = useContext(UserContext);
@@ -152,7 +167,6 @@ export const SideProfileCalculator = () => {
   const { recessionRelative2FrankfortPlane } = useContext(UserContext);
   const { browridgeInclinationAngle } = useContext(UserContext);
   const { nasalTipAngle } = useContext(UserContext);
-  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleSideProfileCalc = async () => {
     if (oneProfile.sideProfile.imgSrc === null) return;
@@ -182,19 +196,29 @@ export const SideProfileCalculator = () => {
       recessionRelative2FrankfortPlane: recessionRelative2FrankfortPlane,
       browridgeInclinationAngle: browridgeInclinationAngle,
       nasalTipAngle: nasalTipAngle,
-    };    
-    const shortStringToAttributeString = swapObjectKeyValue(attributeStringToShort);
-    const tempProfile = oneProfile;
+    };
+    const shortStringToAttributeString = swapObjectKeyValue(
+      attributeStringToShort
+    );
+    const tempProfile = new OneProfile();
+    tempProfile.copy(oneProfile);
     for (let key in requestBody)
-      tempProfile.sideProfile.setMeasurement(shortStringToAttributeString[key], requestBody[key]);
-    await tempProfile.getHarmony("Side");
+      tempProfile.sideProfile.setMeasurement(
+        shortStringToAttributeString[key],
+        requestBody[key]
+      );
+    tempProfile.getHarmony("Side");
     setOneProfile(tempProfile);
     setState(3);
-    setSense((oneProfile.sideProfile.score / 3.055).toFixed(2).toString() + senses[2]);
+    console.log(tempProfile);
   };
   return (
     <div className="sideCalcContainer" onClick={handleSideProfileCalc}>
-      <Submark text={sense} disable={oneProfile.sideProfile.imgSrc === null} state={state} />
+      <Submark
+        text={senses[state]}
+        disable={oneProfile.sideProfile.imgSrc === null}
+        state={state}
+      />
     </div>
   );
 };

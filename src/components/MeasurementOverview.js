@@ -19,11 +19,11 @@ export const MeasurementOverview = (props) => {
       </DialogTrigger>
       <DialogSurface style={{ backgroundColor: "#bbdefb" }}>
         <DialogBody className="overview_container">
-          <DialogTitle>{Measurements[props.index-1]}</DialogTitle>
+          <DialogTitle>{Measurements[props.index]}</DialogTitle>
           <DialogContent className="overview_content">
               <img className="show_img" src={`http://localhost:8000/get_image/${props.id}/${props.index}`} />
               <div className="overview_description">
-                {MeasurementOverviews[props.index-1]}
+                {MeasurementOverviews[props.index]}
               </div>
           </DialogContent>
         </DialogBody>

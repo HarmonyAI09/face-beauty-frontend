@@ -168,9 +168,7 @@ export const FrontTargetMapping = ({
       img.onload = function () {
         setUploadImageHeight(this.height);
         setUploadImageWidth(this.width);
-        console.log(uploadImageheight, uploadImagewidth, "width, height");
         _URL.revokeObjectURL(objectUrl);
-        console.log(this.width, this.height);
         if (this.height > this.width) {
           setScaleImageSize([(1600 * this.width) / this.height, 1600]);
           setOffset({ x: (800 - (800 * this.width) / this.height) / 2, y: 0 });
@@ -199,9 +197,7 @@ export const FrontTargetMapping = ({
       x1 = data.x * 0.125;
       y1 = data.y * 0.125;
     }
-    console.log(x1, y1);
     setMaginifierMousePosition([x1, y1]);
-    console.log(data.x, data.y);
     const updatedCircles = circles.map((circle) => {
       if (circle.id * 2 === id) {
         const updatedMarkPoints = { ...markPoints };
@@ -526,9 +522,7 @@ export const SideTargetMapping = ({
       img.onload = function () {
         setUploadImageHeight(this.height);
         setUploadImageWidth(this.width);
-        console.log(uploadImageheight, uploadImagewidth, "width, height");
         _URL.revokeObjectURL(objectUrl);
-        console.log(this.width, this.height);
         if (this.height > this.width) {
           setScaleImageSize([(1600 * this.width) / this.height, 1600]);
         } else {
@@ -555,9 +549,7 @@ export const SideTargetMapping = ({
       x1 = data.x * 0.125;
       y1 = data.y * 0.125;
     }
-    console.log(x1, y1);
     setMaginifierMousePosition([x1, y1]);
-    console.log(data.x, data.y);
     const updatedCircles = circles.map((circle) => {
       if (circle.id === id) {
         const updatedMarkPoints = { ...markPoints };

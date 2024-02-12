@@ -111,6 +111,7 @@ const ReportTable = () => {
           id={oneProfile.id}
           item={item}
           index={index}
+          key={index}
           hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
         />
       );
@@ -123,13 +124,12 @@ const ReportTable = () => {
         <MeasureRow
           id={oneProfile.id}
           item={item}
-          index={index + 22}
+          index={parseInt(index, 10) + 22}
+          key={parseInt(index, 10) + 22}
           hide={localStorage.getItem("userLevel") === "0"}
-          // hide={true}
         />
       );
     } else{
-      console.log(item);
     }
   }
   return (

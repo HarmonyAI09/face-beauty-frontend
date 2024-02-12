@@ -275,7 +275,6 @@ function Home() {
             url: event.url,
             storageArea: event.storageArea
         });
-        console.log(event);
     };
 
     // Add event listener for storage changes
@@ -307,7 +306,8 @@ function Home() {
         ...oneProfile,
         frontProfile: {
           ...oneProfile.frontProfile,
-          imgSrc: objectUrl
+          imgUrl: objectUrl,
+          imgSrc: event.target.files[0]
         }
       })
     }
@@ -318,6 +318,7 @@ function Home() {
         ...oneProfile,
         frontProfile: {
           ...oneProfile.frontProfile,
+          imgUrl: null,
           imgSrc: null
         }
       })
@@ -350,7 +351,8 @@ function Home() {
         ...oneProfile,
         sideProfile: {
           ...oneProfile.sideProfile,
-          imgSrc: objectUrl
+          imgUrl: objectUrl,
+          imgSrc: event.target.files[0]
         }
       })
     }
@@ -360,6 +362,7 @@ function Home() {
         ...oneProfile,
         sideProfile: {
           ...oneProfile.sideProfile,
+          imgUrl: objectUrl,
           imgSrc: null
         }
       })

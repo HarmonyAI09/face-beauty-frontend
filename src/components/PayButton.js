@@ -1,11 +1,7 @@
 import './PayButton.css'
-import React, { useState, useContext } from 'react';
-import { AppContext } from "../App";
+import React from 'react';
 
-
-const PayButton = ({ btnTxt, userEmail}) => {
-    console.log(userEmail);
-    
+const PayButton = ({ btnTxt, userEmail}) => {    
     const handleCheckout = (type) => {
         if (type === "Buy Premium") {
             fetch('http://localhost:8000/cash/create-checkout-session', {

@@ -6,7 +6,6 @@ import { FaDownload } from "react-icons/fa6";
 
 const SavedReport = (props) => {
   const handleReportDownload = () => {
-    console.log("Report Download Button Clicked");
   }
 
   return (
@@ -39,7 +38,6 @@ const ReportList = () => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           setReportList(data);
         });
     } catch (error) {
@@ -53,7 +51,6 @@ const ReportList = () => {
     setIsOpen(!isOpen);
   };
   const setAsSavedWork = async (index) => {
-    console.log(reportList[index]);
     const item = reportList[index];
     setGender(item.gender === "true");
     setEthnicity(item.race);
@@ -70,7 +67,6 @@ const ReportList = () => {
       .then((res) => res.json())
       .then((data) => {
         const keypoints = JSON.parse(data.keyPoints);
-        console.log("markPoints", keypoints);
         setMarkPoints(keypoints);
       })
       .catch((error) => console.error(error));

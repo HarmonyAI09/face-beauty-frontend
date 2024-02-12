@@ -106,6 +106,8 @@ export function FrontProfileMappingModal() {
   const { setMedialCanthalAngle } = useContext(UserContext);
   const { profileMatched, setProfileMatched } = useContext(UserContext);
 
+  const { oneProfile, setOneProfile } = useContext(UserContext);
+
   const CalculateEyeSeparationRatio = () => {
     const point_12_distance = calculateDistance(
       markPoints[12][0],
@@ -340,6 +342,7 @@ export function FrontProfileMappingModal() {
     let tempProfile = profileMatched;
     tempProfile[0] = true;
     setProfileMatched(tempProfile);
+    oneProfile.mapPoints = markPoints;
     showNotification(
       "Saved",
       "Front profile landmarks have been saved.",
@@ -416,6 +419,8 @@ export function SideProfileMappingModal() {
   const { setNasalTipAngle } = useContext(UserContext);
   const { profileMatched, setProfileMatched } = useContext(UserContext);
 
+  const { oneProfile, setOneProfile } = useContext(UserContext);
+
   const CalculateGonialAngle = () => {
     const a = {
       x: markPoints[38][0].x - markPoints[49][0].x,
@@ -458,7 +463,6 @@ export function SideProfileMappingModal() {
     );
     const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
     const b = calculateDistance(interactionPoint, markPoints[49][0]);
-    console.log(interactionPoint, markPoints[54][0], markPoints[50][0]);
     setRamus2MandibleRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateFacialConvexityGlabella = () => {
@@ -563,8 +567,6 @@ export function SideProfileMappingModal() {
       markPoints[40][0],
       markPoints[50][0]
     );
-    console.log(a);
-    console.log(b);
     if (a["side"] !== 1 || b["side"] !== 1) {
       setRickettsELine("unideal");
       return;
@@ -588,7 +590,6 @@ export function SideProfileMappingModal() {
       markPoints[45][0],
       markPoints[50][0]
     );
-    console.log(a);
     if (a["side"] === -1) {
       setHoldawayHLine("unideal");
       return;
@@ -614,8 +615,6 @@ export function SideProfileMappingModal() {
       markPoints[59][0],
       markPoints[50][0]
     );
-    console.log(a);
-    console.log(b);
     if (a["side"] !== 1 || b["side"] !== 1) {
       setSteiinerSLine("unideal");
       return;
@@ -644,8 +643,6 @@ export function SideProfileMappingModal() {
       markPoints[43][0],
       markPoints[50][0]
     );
-    console.log(a);
-    console.log(b);
     if (a["side"] !== 1 || b["side"] !== 1) {
       setBurstoneLine("unideal");
       return;
@@ -753,11 +750,12 @@ export function SideProfileMappingModal() {
     let tempProfile = profileMatched;
     tempProfile[1] = true;
     setProfileMatched(tempProfile);
+    oneProfile.mapPoints = markPoints;
     showNotification(
       "Saved",
       "Side profile landmarks have been saved.",
       "info"
-    );    
+    );
   };
   return (
     <>

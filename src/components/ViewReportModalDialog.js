@@ -20,7 +20,6 @@ import "react-circular-progressbar/dist/styles.css";
 import "./ViewReportModalDialog.css";
 import NameEdit from "./NameEdit";
 import { showNotification } from "./NotificationCreator";
-import FileDownload from "./FileDownload";
 import {
   FrontProfileCalculator,
   SideProfileCalculator,
@@ -44,8 +43,6 @@ export const ViewReportDialog = () => {
       formData.append("front", selectedFrontImage);
       formData.append("side", selectedSideImage);
       formData.append("points", JSON.stringify({ ...markPoints }));
-
-      console.log(formData);
     } catch (error) {
       showNotification("Failed", "Image generation has been failed.", "danger");
       console.error(error);
@@ -115,7 +112,6 @@ export const ViewReportDialog = () => {
                       <FaSave onClick={oneProfile.save} />
                     </div>
                   </div>
-                  <FileDownload></FileDownload>
                 </div>
               </div>
               <div

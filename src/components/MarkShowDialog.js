@@ -206,7 +206,6 @@ export const ScoreAlert = (props) => {
         // Handle the response data
         setSideProfileMark(data.score);
         setShowingScore([data.score, data.score / 1.945]);
-        console.log("side**************", data);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];

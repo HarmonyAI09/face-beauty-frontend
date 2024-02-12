@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import "./Submark.css";
 import { MdVerified, MdOutlineVerified } from "react-icons/md";
 import { UserContext } from "../../pages/home";
@@ -115,10 +115,8 @@ export const FrontProfileCalculator = () => {
         requestBody[key]
       );
     await tempProfile.getHarmony("Front");
-    console.log(tempProfile, "sdfsdfsdfsd");
     setOneProfile(tempProfile);
     setState(3);
-    console.log(tempProfile);
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>
@@ -210,7 +208,6 @@ export const SideProfileCalculator = () => {
     tempProfile.getHarmony("Side");
     setOneProfile(tempProfile);
     setState(3);
-    console.log(tempProfile);
   };
   return (
     <div className="sideCalcContainer" onClick={handleSideProfileCalc}>

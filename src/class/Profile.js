@@ -6,7 +6,16 @@ import {
 const md5 = require("md5");
 
 export class MeasurementItem {
-  constructor(name, value, score=null, index=null, ideal=null, mean=null, advice=null, max=null) {
+  constructor(
+    name,
+    value,
+    score = null,
+    index = null,
+    ideal = null,
+    mean = null,
+    advice = null,
+    max = null
+  ) {
     this.name = name;
     this.value = value;
     this.score = score;
@@ -16,7 +25,7 @@ export class MeasurementItem {
     this.advice = advice;
     this.max = max;
   }
-  upgrade(newMeasurement){
+  upgrade(newMeasurement) {
     this.name = newMeasurement.name;
     this.value = newMeasurement.value;
     this.score = newMeasurement.score;
@@ -26,14 +35,15 @@ export class MeasurementItem {
     this.advice = newMeasurement.advice;
     this.max = newMeasurement.max;
   }
-  isSet(){
-    return this.score!==null;
+  isSet() {
+    return this.score !== null;
   }
 }
 
 export class Profile {
   constructor(measurementsJson) {
     this.score = null;
+    this.imgUrl = null;
     this.imgSrc = null;
     this.measurements = [];
     this.featurePoints = [];
@@ -62,7 +72,7 @@ export class Profile {
     }
   }
 
-  upgradeMeasurement(name, newMeasurement){
+  upgradeMeasurement(name, newMeasurement) {
     const measurement = this.getMeasurement(name);
     if (measurement) {
       measurement.upgrade(newMeasurement);
@@ -76,7 +86,8 @@ export class Profile {
     };
     // eslint-disable-next-line array-callback-return
     this.measurements.map((measurementItem) => {
-      requestBody[attributeStringToShort[measurementItem.name]] = measurementItem.value;
+      requestBody[attributeStringToShort[measurementItem.name]] =
+        measurementItem.value;
     });
     fetch(`http://localhost:8000/${endpoint}`, {
       method: "POST",
@@ -87,8 +98,17 @@ export class Profile {
     })
       .then((response) => response.json())
       .then((data) => {
-        for(const i in data.advices){
-          const temp = new MeasurementItem(data.names[i], data.values[i], data.scores[i], i, data.ranges[i], data.notes[i], data.advices[i], data.maxs[i]);
+        for (const i in data.advices) {
+          const temp = new MeasurementItem(
+            data.names[i],
+            data.values[i],
+            data.scores[i],
+            i,
+            data.ranges[i],
+            data.notes[i],
+            data.advices[i],
+            data.maxs[i]
+          );
           const one = this.getMeasurement(data.names[i]);
           one.upgrade(temp);
         }
@@ -96,15 +116,37 @@ export class Profile {
       });
   }
 
-  getPercentage(){
+  getPercentage() {
     return 100;
   }
 
-  copy(src){
+  copy(src) {
     this.score = src.score;
     this.imgSrc = src.imgSrc;
     this.measurements = src.measurements;
     this.featurePoints = src.featurePoints;
+  }
+
+  isEmpty() {
+    return this.imgSrc === null;
+  }
+
+  async imageRegister(id, flag) {
+    try {
+      const formData = new FormData();
+      formData.append("file", this.imgSrc); // You might want to provide a filename
+      formData.append("id", id);
+      formData.append("flag", flag);
+      const response = await fetch(`http://localhost:8000/image/register`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Failed to register image");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 }
 
@@ -117,6 +159,8 @@ export class OneProfile {
     this.score = 0;
     this.frontProfile = new Profile(frontProfileJSON);
     this.sideProfile = new Profile(sideProfileJSON);
+    this.mapPoints = null;
+    this.percentage = 0;
   }
 
   createID() {
@@ -130,13 +174,58 @@ export class OneProfile {
 
   async getHarmony(str) {
     if (str === "Front") {
-      await this.frontProfile.mainProcess(this.gender, this.race, "getfrontscore");
+      await this.frontProfile.mainProcess(
+        this.gender,
+        this.race,
+        "getfrontscore"
+      );
     } else if (str === "Side") {
-      await this.sideProfile.mainProcess(this.gender, this.race, "getsidescore");
+      await this.sideProfile.mainProcess(
+        this.gender,
+        this.race,
+        "getsidescore"
+      );
+    }
+    await this.register();
+    await this.generateImage();
+    this.getPercentage()
+  }
+
+  async register() {
+    if (!this.frontProfile.isEmpty()) {
+      await this.frontProfile.imageRegister(this.id, 0); // 0 is the flag to show it's front profile
+    }
+    if (!this.sideProfile.isEmpty()) {
+      await this.sideProfile.imageRegister(this.id, 1); // 1 is the flag to show it's side profile
     }
   }
 
-  save() {}
+  async generateImage() {
+    try {
+      const formData = new FormData();
+      formData.append("id", this.id);
+      formData.append("points", JSON.stringify({ ...this.mapPoints }));
+      const response = fetch("http://localhost:8000/generate", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Failed to register image");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  save() {
+    console.log("Save Test") ;
+    
+  }
+
+  load(id) {
+
+  }
+
   copy(src) {
     this.id = src.id;
     this.gender = src.gender;
@@ -147,5 +236,14 @@ export class OneProfile {
     this.frontProfile.copy(src.frontProfile);
     this.sideProfile = new Profile();
     this.sideProfile.copy(src.sideProfile);
+    this.mapPoints = src.mapPoints;
+    this.percentage = src.percentage;
+  }
+
+  getPercentage(){
+    const MAX_TOTAL = 500;
+    const frontScore = this.frontProfile.score;
+    const sideScore = this.sideProfile.score;
+    this.percentage = (frontScore + sideScore) / MAX_TOTAL * 100;
   }
 }

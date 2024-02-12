@@ -148,6 +148,34 @@ export class Profile {
       console.error(error.message);
     }
   }
+
+  async save(report_id, frontOrSide) {
+    if (!this.score) return;
+    console.log(`storing ${frontOrSide} profile ...`);
+
+    console.log(this, frontOrSide);
+
+    try {
+      const body = {
+        report_id,
+        profile_data: JSON.stringify({
+          score: this.score,
+          measurements: this.measurements
+        })
+      };
+
+      const response = await fetch(`http://localhost:8000/store/${frontOrSide}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+      }).then(res => res.json())
+    }
+    catch (e) {
+      console.warn(e);
+    }
+  }
 }
 
 export class OneProfile {
@@ -217,9 +245,32 @@ export class OneProfile {
     }
   }
 
-  save() {
-    console.log("Save Test") ;
-    
+  async save() {
+    console.log("Save Test", this);
+    try {
+      const body = {
+        report_id: this.id,
+        gender: this.gender,
+        name: this.name,
+        race: this.race,
+        percentage: this.percentage,
+        score: this.score
+      };
+
+      const response = await fetch("http://localhost:8000/store", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body)
+      }).then(res => res.json())
+
+      this.frontProfile.save(this.id, 'front')
+      this.sideProfile.save(this.id, 'side')
+    }
+    catch (e) {
+      console.warn(e);
+    }
   }
 
   load(id) {
@@ -240,7 +291,7 @@ export class OneProfile {
     this.percentage = src.percentage;
   }
 
-  getPercentage(){
+  getPercentage() {
     const MAX_TOTAL = 500;
     const frontScore = this.frontProfile.score;
     const sideScore = this.sideProfile.score;

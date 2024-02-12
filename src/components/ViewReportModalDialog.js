@@ -109,7 +109,7 @@ export const ViewReportDialog = () => {
                     />
                     &nbsp;
                     <div className="report_status">
-                      <FaSave onClick={oneProfile.save} />
+                      <FaSave onClick={oneProfile?.save?.bind(oneProfile)} />
                     </div>
                   </div>
                 </div>

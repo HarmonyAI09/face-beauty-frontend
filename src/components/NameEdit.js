@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../pages/home";
+import { OneProfile } from "../class/Profile";
 
-const NameEdit = () => {
+const NameEdit = ({ disabled }) => { // Accept disabled as a prop
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState("Unnamed");
+  const { oneProfile, setOneProfile } = useContext(UserContext);
+  const [value, setValue] = useState(oneProfile.name);
 
   const handleClick = () => {
-    setIsEditing(true);
+    if (!disabled) { // Check if not disabled before enabling editing
+      setIsEditing(true);
+    }
   };
 
   const handleBlur = () => {
@@ -15,11 +20,20 @@ const NameEdit = () => {
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && value.trim() !== "") {
       setIsEditing(false);
+      // Optionally, add the disabled check here too if needed
+      // to prevent changing the value when disabled
     }
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    if (!disabled) { // Prevent changes if disabled
+      setValue(e.target.value);
+      const tmpProfile = new OneProfile();
+      tmpProfile.copy(oneProfile);
+      tmpProfile.name = e.target.value;
+      setOneProfile(tmpProfile);
+      console.log(e.target.value);
+    }
   };
 
   return (
@@ -31,6 +45,7 @@ const NameEdit = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           onKeyPress={handleKeyPress}
+          disabled={disabled} // Apply the disabled prop to the input
           style={{
             borderBottom: "1px dotted",
             fontStyle: "italic",
@@ -48,7 +63,7 @@ const NameEdit = () => {
           style={{
             borderBottom: "1px dotted",
             fontStyle: "italic",
-            cursor: "pointer",
+            cursor: disabled ? "default" : "pointer", // Change cursor based on disabled state
           }}
         >
           {value}

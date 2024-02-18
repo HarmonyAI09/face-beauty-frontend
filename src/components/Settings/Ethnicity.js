@@ -30,7 +30,9 @@ const Ethnicity = () => {
           <Radio
             key={index}
             label={ethnicity}
+            checked={oneProfile.race === ethnicity}
             onChange={() => handleEthnicityChange(index)}
+            disabled={!oneProfile.isNew}
           />
         ))}
       </RadioGroup>

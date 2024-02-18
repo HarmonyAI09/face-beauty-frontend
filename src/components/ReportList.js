@@ -3,18 +3,59 @@ import "./ReportList.css";
 import { UserContext } from "../pages/home";
 import { BACKEND_URL } from "../config";
 import { FaDownload } from "react-icons/fa6";
+import { OneProfile } from "../class/Profile";
 
 const SavedReport = (props) => {
-  const handleReportDownload = () => {
-  }
+  const handleReportDownload = async (e) => {
+    e.stopPropagation();
+    const response = await fetch(
+      `http://localhost:8000/profile/download/${props.report.id}`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (response.ok) {
+      const blob = await response.blob();
+
+      // Extract filename from Content-Disposition header
+      const contentDisposition = response.headers.get("Content-Disposition");
+      let filename = props.report.name + '_'+ props.report.gender + '_' + props.report.racial + '.xlsx'; // Fallback filename
+      if (contentDisposition && contentDisposition.includes("filename=")) {
+        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+        const matches = filenameRegex.exec(contentDisposition);
+        if (matches != null && matches[1]) {
+          filename = matches[1].replace(/['"]/g, ""); // Remove any surrounding quotes
+        }
+      }
+
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create an anchor (<a>) element to facilitate download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename; // Use the filename from the Content-Disposition header
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error("Failed to fetch the file");
+    }
+  };
 
   return (
     <>
-      <div style={{ width: "20%" }}>{props.report.date}</div>
-      <div style={{ width: "20%" }}>{props.report.owner}</div>
+      <div style={{ width: "20%" }}>{props.report.dateAdded}</div>
+      <div style={{ width: "20%" }}>{props.report.name}</div>
       <div style={{ width: "20%" }}>{props.report.gender}</div>
-      <div style={{ width: "20%" }}>{props.report.race}</div>
-      <div style={{ width: "10%" }} onClick={handleReportDownload}><FaDownload /></div>
+      <div style={{ width: "20%" }}>{props.report.racial}</div>
+      <div style={{ width: "10%" }} onClick={handleReportDownload}>
+        <FaDownload />
+      </div>
     </>
   );
 };
@@ -30,22 +71,26 @@ const ReportList = () => {
     setSideImage,
     setMarkPoints,
   } = useContext(UserContext);
+  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleShowButtonClick = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/reports/${localStorage.getItem("userEmail")}`
+        `http://localhost:8000/profile/${localStorage.getItem("userEmail")}`
       )
         .then((response) => response.json())
         .then((data) => {
-          setReportList(data);
+          setReportList(data.profileIDs);
         });
     } catch (error) {
       console.error("Error getting report list:", error);
     }
   };
   const handleReportItemClick = async (index) => {
-    setAsSavedWork(index);
+    const tmpProfile = new OneProfile();
+    tmpProfile.copy(oneProfile);
+    await tmpProfile.load(reportList[index].id);
+    setOneProfile(tmpProfile);
   };
   const handleReportDropboxClick = () => {
     setIsOpen(!isOpen);
@@ -61,7 +106,6 @@ const ReportList = () => {
 
     loadKeyPoints(item.id);
   };
-
   const loadKeyPoints = (item_id) => {
     fetch(`${BACKEND_URL}/details/${item_id}`)
       .then((res) => res.json())
@@ -71,29 +115,36 @@ const ReportList = () => {
       })
       .catch((error) => console.error(error));
   };
+  const handleNewProfile = () => {
+    const newProfile = new OneProfile();
+    setOneProfile(newProfile);
+  };
   return (
     <div className="report_dropbox" onClick={() => handleReportDropboxClick()}>
       {isOpen && (
-        <div className="report_list_container">
-          <div className="report_list_head">
-            <div style={{ width: "20%" }}>Date</div>
-            <div style={{ width: "20%" }}>Name</div>
-            <div style={{ width: "20%" }}>Gender</div>
-            <div style={{ width: "20%" }}>Ethnicity</div>
-            <div style={{ width: "10%" }}></div>
+        <>
+          <div className="report_list_container">
+            <div className="report_list_head">
+              <div style={{ width: "20%" }}>Date</div>
+              <div style={{ width: "20%" }}>Name</div>
+              <div style={{ width: "20%" }}>Gender</div>
+              <div style={{ width: "20%" }}>Race</div>
+              <div style={{ width: "10%" }}></div>
+            </div>
+            <div className="report_list_body">
+              {reportList.map((report, index) => (
+                <div
+                  key={index}
+                  className="report_list_item"
+                  onClick={() => handleReportItemClick(index)}
+                >
+                  <SavedReport report={report} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="report_list_body">
-            {reportList.map((report, index) => (
-              <div
-                key={index}
-                className="report_list_item"
-                onClick={() => handleReportItemClick(index)}
-              >
-                <SavedReport report={report} />
-              </div>
-            ))}
-          </div>
-        </div>
+          <div onClick={handleNewProfile}>New Profile</div>
+        </>
       )}
       <div className="dropbox_handler" onClick={handleShowButtonClick}>
         Saved Profiles

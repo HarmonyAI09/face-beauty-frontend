@@ -22,7 +22,9 @@ const Gender = () => {
           <Radio
             key={index}
             label={gender}
+            checked={oneProfile.gender === gender}
             onChange={() => handleGenderChange(index)}
+            disabled={!oneProfile.isNew}
           />
         ))}
       </RadioGroup>

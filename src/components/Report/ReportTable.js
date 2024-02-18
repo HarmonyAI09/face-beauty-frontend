@@ -103,9 +103,10 @@ const ReportTable = () => {
   ];
   const { oneProfile } = useContext(UserContext);
   const MeasureRows = [];
-  for (let index in oneProfile.frontProfile.measurements) {
-    const item = oneProfile.frontProfile.measurements[index];
-    if (item.isSet()) {
+  for (let index in oneProfile.front.measurements) {
+    const item = oneProfile.front.measurements[index];
+    console.log(item);
+    if (item.score !== null) {
       MeasureRows.push(
         <MeasureRow
           id={oneProfile.id}
@@ -117,9 +118,9 @@ const ReportTable = () => {
       );
     }
   }
-  for (let index in oneProfile.sideProfile.measurements) {
-    const item = oneProfile.sideProfile.measurements[index];
-    if (item.isSet()) {
+  for (let index in oneProfile.side.measurements) {
+    const item = oneProfile.side.measurements[index];
+    if (item.score !== null) {
       MeasureRows.push(
         <MeasureRow
           id={oneProfile.id}

@@ -121,11 +121,29 @@ export class Profile {
   }
 
   copy(src) {
+    if(src === undefined){
+      return;
+    }
+    // Check if src is a string
+    if (typeof src === 'string') {
+      // Attempt to parse src as JSON
+      try {
+        src = JSON.parse(src);
+      } catch (error) {
+        console.error('Failed to parse src as JSON', error);
+        // Handle the error appropriately (e.g., return or throw an error)
+        return;
+      }
+    }
+  
+    // Proceed with copying properties
     this.score = src.score;
     this.imgSrc = src.imgSrc;
+    this.imgUrl = src.imgUrl;
     this.measurements = src.measurements;
     this.featurePoints = src.featurePoints;
   }
+  
 
   isEmpty() {
     return this.imgSrc === null;
@@ -151,28 +169,23 @@ export class Profile {
 
   async save(report_id, frontOrSide) {
     if (!this.score) return;
-    console.log(`storing ${frontOrSide} profile ...`);
-
-    console.log(this, frontOrSide);
-
     try {
       const body = {
         report_id,
         profile_data: JSON.stringify({
           score: this.score,
-          measurements: this.measurements
-        })
+          measurements: this.measurements,
+        }),
       };
 
-      const response = await fetch(`http://localhost:8000/store/${frontOrSide}`, {
+      await fetch(`http://localhost:8000/store/${frontOrSide}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body)
-      }).then(res => res.json())
-    }
-    catch (e) {
+        body: JSON.stringify(body),
+      }).then((res) => res.json());
+    } catch (e) {
       console.warn(e);
     }
   }
@@ -185,10 +198,13 @@ export class OneProfile {
     this.race = race;
     this.name = name;
     this.score = 0;
-    this.frontProfile = new Profile(frontProfileJSON);
-    this.sideProfile = new Profile(sideProfileJSON);
+    this.front = new Profile(frontProfileJSON);
+    this.front.imgUrl = "./images/front_blank.jpg";
+    this.side = new Profile(sideProfileJSON);
+    this.side.imgUrl = "./images/side_blank.jpg";
     this.mapPoints = null;
     this.percentage = 0;
+    this.isNew = true;
   }
 
   createID() {
@@ -202,13 +218,13 @@ export class OneProfile {
 
   async getHarmony(str) {
     if (str === "Front") {
-      await this.frontProfile.mainProcess(
+      await this.front.mainProcess(
         this.gender,
         this.race,
         "getfrontscore"
       );
     } else if (str === "Side") {
-      await this.sideProfile.mainProcess(
+      await this.side.mainProcess(
         this.gender,
         this.race,
         "getsidescore"
@@ -216,15 +232,15 @@ export class OneProfile {
     }
     await this.register();
     await this.generateImage();
-    this.getPercentage()
+    this.getPercentage();
   }
 
   async register() {
-    if (!this.frontProfile.isEmpty()) {
-      await this.frontProfile.imageRegister(this.id, 0); // 0 is the flag to show it's front profile
+    if (!this.front.isEmpty()) {
+      await this.front.imageRegister(this.id, 0); // 0 is the flag to show it's front profile
     }
-    if (!this.sideProfile.isEmpty()) {
-      await this.sideProfile.imageRegister(this.id, 1); // 1 is the flag to show it's side profile
+    if (!this.side.isEmpty()) {
+      await this.side.imageRegister(this.id, 1); // 1 is the flag to show it's side profile
     }
   }
 
@@ -245,8 +261,28 @@ export class OneProfile {
     }
   }
 
-  async save() {
-    console.log("Save Test", this);
+  async regId(mail){
+    const body = {
+      mail: mail,
+      profileID: this.id,
+      name: this.name,
+      gender: this.gender,
+      racial: this.race
+    };
+
+    console.log(body);
+    const response = await fetch("http://localhost:8000/profile/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    console.log(await response.json());
+  }
+
+  async save(mail) {
+    this.regId(mail);
     try {
       const body = {
         report_id: this.id,
@@ -254,47 +290,60 @@ export class OneProfile {
         name: this.name,
         race: this.race,
         percentage: this.percentage,
-        score: this.score
+        score: this.score,
       };
 
-      const response = await fetch("http://localhost:8000/store", {
+      await fetch("http://localhost:8000/store", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body)
-      }).then(res => res.json())
+        body: JSON.stringify(body),
+      }).then((res) => res.json());
 
-      this.frontProfile.save(this.id, 'front')
-      this.sideProfile.save(this.id, 'side')
-    }
-    catch (e) {
+      this.front.save(this.id, "front");
+      this.side.save(this.id, "side");
+    } catch (e) {
       console.warn(e);
     }
   }
 
-  load(id) {
-
+  async load(id) {
+    const response = await fetch(`http://localhost:8000/profile/report/${id}`,{
+      method: "GET",
+    });
+    const loadItem = await response.json();
+    this.copy(loadItem);
+    this.id = id;
+    this.front.imgUrl = `http://localhost:8000/get_image/${id}0`;
+    this.side.imgUrl = `http://localhost:8000/get_image/${id}1`;
+    this.isNew = false;
   }
 
   copy(src) {
     this.id = src.id;
+    this.isNew = src.isNew;
     this.gender = src.gender;
     this.race = src.race;
     this.name = src.name;
     this.score = src.score;
-    this.frontProfile = new Profile();
-    this.frontProfile.copy(src.frontProfile);
-    this.sideProfile = new Profile();
-    this.sideProfile.copy(src.sideProfile);
+    this.front = new Profile();
+    this.front.copy(src.front);
+    this.side = new Profile();
+    this.side.copy(src.side);
     this.mapPoints = src.mapPoints;
     this.percentage = src.percentage;
   }
 
   getPercentage() {
     const MAX_TOTAL = 500;
-    const frontScore = this.frontProfile.score;
-    const sideScore = this.sideProfile.score;
-    this.percentage = (frontScore + sideScore) / MAX_TOTAL * 100;
+    const frontScore = this.front.score;
+    const sideScore = this.side.score;
+    this.percentage = ((frontScore + sideScore) / MAX_TOTAL) * 100;
   }
+
+  changeName(newName){
+    this.name = newName;
+  }
+
 }

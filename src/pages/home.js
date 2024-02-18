@@ -22,7 +22,6 @@ export const UserContext = createContext();
 // eslint-disable-next-line no-unused-vars
 
 function Home() {
-
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
   const [frontImage, setFrontImage] = useState();
@@ -45,7 +44,8 @@ function Home() {
   const [bigonialWidth, setBigonialWidth] = useState(0.0);
   const [chin2PhiltrumRatio, setChin2PhiltrumRatio] = useState(0.0);
   const [neckWidth, setNeckWidth] = useState(0.0);
-  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] = useState(0.0);
+  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] =
+    useState(0.0);
   const [midFaceRatio, setMidFaceRatio] = useState(0.0);
   const [eyebrowPositionRatio, setEyebrowPositionRatio] = useState(0.0);
   const [eyeSpacingRatio, setEyeSpacingRatio] = useState(0.0);
@@ -78,7 +78,8 @@ function Home() {
   const [steinerSLine, setSteiinerSLine] = useState("ideal");
   const [burstoneLine, setBurstoneLine] = useState("ideal");
   const [nasomentalAngle, setNasomentalAngle] = useState(0.0);
-  const [gonion2MouthRelationship, setGonion2MouthRelationship] = useState("below");
+  const [gonion2MouthRelationship, setGonion2MouthRelationship] =
+    useState("below");
   const [
     recessionRelative2FrankfortPlane,
     setRecessionRelative2FrankfortPlane,
@@ -244,9 +245,7 @@ function Home() {
   const [reportScores, setReportScores] = useState(Array(45).fill([]));
   const [reportMaxScores, setReportMaxScores] = useState(Array(45).fill([]));
   const [reportRanges, setReportRanges] = useState(Array(45).fill([]));
-  const [reportValues, setReportValues] = useState(
-    Array(45).fill([])
-  );
+  const [reportValues, setReportValues] = useState(Array(45).fill([]));
   const [reportMeasurementNames, setReportMeasurementNames] = useState(
     Array(45).fill([])
   );
@@ -264,28 +263,6 @@ function Home() {
   const [frontImgURL, setFrontImgURL] = useState(null);
   const [sideImgURL, setSideImgURL] = useState(null);
 
-  // eslint-disable-next-line no-undef
-  useEffect(() => {
-    // Function to call when storage changes
-    const handleStorageChange = (event) => {
-        setStorageChange({
-            key: event.key,
-            oldValue: event.oldValue,
-            newValue: event.newValue,
-            url: event.url,
-            storageArea: event.storageArea
-        });
-    };
-
-    // Add event listener for storage changes
-    window.addEventListener('storage', handleStorageChange);
-
-    // Clean up
-    return () => {
-        window.removeEventListener('storage', handleStorageChange);
-    };
-}, []);
-
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
 
@@ -300,30 +277,33 @@ function Home() {
         setUploadImageWidth(this.width);
         _URL.revokeObjectURL(objectUrl);
       };
-      img.src = objectUrl;      
+      img.src = objectUrl;
       setFrontImgURL(objectUrl);
       setOneProfile({
         ...oneProfile,
-        frontProfile: {
-          ...oneProfile.frontProfile,
+        front: {
+          ...oneProfile.front,
           imgUrl: objectUrl,
-          imgSrc: event.target.files[0]
-        }
-      })
-    }
-    else{
+          imgSrc: event.target.files[0],
+        },
+      });
+    } else {
       setFrontImgURL(null);
 
       setOneProfile({
         ...oneProfile,
-        frontProfile: {
-          ...oneProfile.frontProfile,
+        front: {
+          ...oneProfile.front,
           imgUrl: null,
-          imgSrc: null
-        }
-      })
+          imgSrc: null,
+        },
+      });
     }
   };
+
+  useEffect(() => {
+    console.log("TEMP WORLD");
+  }, [oneProfile]);
 
   const uploadImageStyle = {
     width: uploadImageheight > uploadImagewidth ? "auto" : "35vh",
@@ -345,27 +325,25 @@ function Home() {
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
-      Storage.setItem("sideProfile", objectUrl);
       setSideImgURL(objectUrl);
       setOneProfile({
         ...oneProfile,
-        sideProfile: {
-          ...oneProfile.sideProfile,
+        side: {
+          ...oneProfile.side,
           imgUrl: objectUrl,
-          imgSrc: event.target.files[0]
-        }
-      })
-    }
-    else{
+          imgSrc: event.target.files[0],
+        },
+      });
+    } else {
       setSideImgURL(null);
       setOneProfile({
         ...oneProfile,
-        sideProfile: {
-          ...oneProfile.sideProfile,
+        side: {
+          ...oneProfile.side,
           imgUrl: objectUrl,
-          imgSrc: null
-        }
-      })
+          imgSrc: null,
+        },
+      });
     }
   };
 
@@ -513,12 +491,12 @@ function Home() {
         frontImgURL,
         sideImgURL,
         oneProfile,
-        setOneProfile
+        setOneProfile,
       }}
     >
       <div className="main_parent">
         <ReportList />
-        <Setting/>
+        <Setting />
         <div className="main_child m_profile">
           <div
             style={{
@@ -543,15 +521,15 @@ function Home() {
                     onChange={handleFrontImageSelect}
                     style={{ display: "none" }}
                   />
-                  {
-                    !frontImage && <div
+                  {oneProfile.isNew && !frontImage && (
+                    <div
                       className="m_upload_button"
                       onClick={handleFrontUploadButtonClick}
                     >
                       <FaCloudUploadAlt size={30} />
                     </div>
-                  }
-                  {(frontImage || selectedFrontImage) && (
+                  )}
+                  {oneProfile.isNew && (frontImage || selectedFrontImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -568,7 +546,7 @@ function Home() {
                   {selectedFrontImage && (
                     <img
                       className="image_drawer"
-                      src={URL.createObjectURL(selectedFrontImage)}
+                      src={oneProfile.front.imgUrl}
                       alt="Image description"
                       style={uploadImageStyle}
                     ></img>
@@ -576,7 +554,11 @@ function Home() {
                   {!selectedFrontImage && (
                     <img
                       className="image_drawer"
-                      src={frontImage ? `${BACKEND_URL}/uploads/${frontImage}` : "./images/front_blank.jpg"}
+                      src={
+                        oneProfile.front.imgUrl
+                          ? oneProfile.front.imgUrl
+                          : "./images/front_blank.jpg"
+                      }
                       alt="Image description"
                     ></img>
                   )}
@@ -598,15 +580,15 @@ function Home() {
                     onChange={handleSideImageSelect}
                     style={{ display: "none" }}
                   />
-                  {
-                    !sideImage && <div
+                  {oneProfile.isNew && !sideImage && (
+                    <div
                       className="m_upload_button"
                       onClick={handleSideUploadButtonClick}
                     >
                       <FaCloudUploadAlt size={30} />
                     </div>
-                  }
-                  {(sideImage || selectedSideImage) && (
+                  )}
+                  {oneProfile.isNew && (sideImage || selectedSideImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -623,7 +605,7 @@ function Home() {
                   {selectedSideImage && (
                     <img
                       className="image_drawer"
-                      src={URL.createObjectURL(selectedSideImage)}
+                      src={oneProfile.side.imgUrl}
                       alt="Image description"
                       style={uploadSideImageStyle}
                     ></img>
@@ -631,7 +613,11 @@ function Home() {
                   {!selectedSideImage && (
                     <img
                       className="image_drawer"
-                      src={sideImage ? `${BACKEND_URL}/uploads/${sideImage}` : "./images/side_blank.jpg"}
+                      src={
+                        oneProfile.side.imgUrl
+                          ? oneProfile.side.imgUrl
+                          : "./images/side_blank.jpg"
+                      }
                       alt="Image description"
                     ></img>
                   )}
@@ -640,7 +626,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <Reference/>
+        <Reference />
       </div>
     </UserContext.Provider>
   );

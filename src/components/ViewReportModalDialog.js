@@ -33,9 +33,9 @@ export const ViewReportDialog = () => {
 
   const { selectedFrontImage, selectedSideImage } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
-  const [reportOwner, setReportOwner] = useState("unnamed");
   const [isClickable, setIsClickable] = useState(false);
   const { oneProfile } = useContext(UserContext);
+  const [reportOwner, setReportOwner] = useState(oneProfile.name);
 
   const getMeasurementImages = async () => {
     try {
@@ -50,8 +50,10 @@ export const ViewReportDialog = () => {
   };
 
   useEffect(() => {
-    const settingAvability = oneProfile.gender !== null && oneProfile.race !== null;
-    const profileAvability = oneProfile.frontProfile.imgSrc !== null || oneProfile.frontProfile.imgSrc !== null;
+    const settingAvability =
+      oneProfile.gender !== null && oneProfile.race !== null;
+    const profileAvability =
+      oneProfile.front.imgSrc !== null || oneProfile.front.imgSrc !== null;
     setIsClickable(settingAvability && profileAvability);
   }, [isClickable, oneProfile]);
 
@@ -102,15 +104,22 @@ export const ViewReportDialog = () => {
                   <div className="owner_info">
                     <FaUserCheck />
                     &nbsp;
-                    {gender}, {ethnicity}, &nbsp;
+                    {oneProfile.gender}, {oneProfile.race}, &nbsp;
                     <NameEdit
-                      value={reportOwner}
+                      value={oneProfile.name}
                       onValueChange={setReportOwner}
+                      disabled={!oneProfile.isNew}
                     />
                     &nbsp;
-                    <div className="report_status">
-                      <FaSave onClick={oneProfile?.save?.bind(oneProfile)} />
-                    </div>
+                    {oneProfile.isNew && (
+                      <div className="report_status">
+                        <FaSave
+                          onClick={() => {
+                            oneProfile.save(localStorage.getItem("userEmail"));
+                          }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

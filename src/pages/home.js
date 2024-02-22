@@ -547,7 +547,6 @@ function Home() {
                       className="image_drawer"
                       src={oneProfile.front.imgUrl}
                       alt="Image description"
-                      style={uploadImageStyle}
                     ></img>
                   )}
                   {!selectedFrontImage && (
@@ -606,7 +605,6 @@ function Home() {
                       className="image_drawer"
                       src={oneProfile.side.imgUrl}
                       alt="Image description"
-                      style={uploadSideImageStyle}
                     ></img>
                   )}
                   {!selectedSideImage && (

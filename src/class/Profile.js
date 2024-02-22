@@ -121,21 +121,21 @@ export class Profile {
   }
 
   copy(src) {
-    if(src === undefined){
+    if (src === undefined) {
       return;
     }
     // Check if src is a string
-    if (typeof src === 'string') {
+    if (typeof src === "string") {
       // Attempt to parse src as JSON
       try {
         src = JSON.parse(src);
       } catch (error) {
-        console.error('Failed to parse src as JSON', error);
+        console.error("Failed to parse src as JSON", error);
         // Handle the error appropriately (e.g., return or throw an error)
         return;
       }
     }
-  
+
     // Proceed with copying properties
     this.score = src.score;
     this.imgSrc = src.imgSrc;
@@ -143,7 +143,6 @@ export class Profile {
     this.measurements = src.measurements;
     this.featurePoints = src.featurePoints;
   }
-  
 
   isEmpty() {
     return this.imgSrc === null;
@@ -218,17 +217,9 @@ export class OneProfile {
 
   async getHarmony(str) {
     if (str === "Front") {
-      await this.front.mainProcess(
-        this.gender,
-        this.race,
-        "getfrontscore"
-      );
+      await this.front.mainProcess(this.gender, this.race, "getfrontscore");
     } else if (str === "Side") {
-      await this.side.mainProcess(
-        this.gender,
-        this.race,
-        "getsidescore"
-      );
+      await this.side.mainProcess(this.gender, this.race, "getsidescore");
     }
     await this.register();
     await this.generateImage();
@@ -261,13 +252,13 @@ export class OneProfile {
     }
   }
 
-  async regId(mail){
+  async regId(mail) {
     const body = {
       mail: mail,
       profileID: this.id,
       name: this.name,
       gender: this.gender,
-      racial: this.race
+      racial: this.race,
     };
     const response = await fetch("http://localhost:8000/profile/register", {
       method: "POST",
@@ -306,14 +297,21 @@ export class OneProfile {
   }
 
   async load(id) {
-    const response = await fetch(`http://localhost:8000/profile/report/${id}`,{
+    const response = await fetch(`http://localhost:8000/profile/report/${id}`, {
       method: "GET",
     });
     const loadItem = await response.json();
     this.copy(loadItem);
+    console.log(loadItem);
     this.id = id;
-    this.front.imgUrl = `http://localhost:8000/get_image/${id}0`;
-    this.side.imgUrl = `http://localhost:8000/get_image/${id}1`;
+    this.front.imgUrl = "./images/front_blank.jpg";
+    this.side.imgUrl = "./images/side_blank.jpg";
+    if (loadItem.front) {
+      this.front.imgUrl = `http://localhost:8000/get_image/${id}0`;
+    }
+    if (loadItem.side) {
+      this.side.imgUrl = `http://localhost:8000/get_image/${id}1`;
+    }
     this.isNew = false;
   }
 
@@ -339,8 +337,7 @@ export class OneProfile {
     this.percentage = ((frontScore + sideScore) / MAX_TOTAL) * 100;
   }
 
-  changeName(newName){
+  changeName(newName) {
     this.name = newName;
   }
-
 }

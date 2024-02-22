@@ -578,7 +578,7 @@ function Home() {
                     onChange={handleSideImageSelect}
                     style={{ display: "none" }}
                   />
-                  {oneProfile.isNew && !sideImage && (
+                  {oneProfile.isNew &&  localStorage.getItem("userLevel") === "1" && !sideImage && (
                     <div
                       className="m_upload_button"
                       onClick={handleSideUploadButtonClick}
@@ -586,7 +586,7 @@ function Home() {
                       <FaCloudUploadAlt size={30} />
                     </div>
                   )}
-                  {oneProfile.isNew && (sideImage || selectedSideImage) && (
+                  {oneProfile.isNew && localStorage.getItem("userLevel") === "1" && (sideImage || selectedSideImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{

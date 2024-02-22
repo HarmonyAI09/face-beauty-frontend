@@ -111,7 +111,7 @@ export const ViewReportDialog = () => {
                       disabled={!oneProfile.isNew}
                     />
                     &nbsp;
-                    {oneProfile.isNew && (
+                    {oneProfile.isNew && localStorage.getItem("userLevel") === "1" && (
                       <div className="report_status">
                         <FaSave
                           onClick={() => {

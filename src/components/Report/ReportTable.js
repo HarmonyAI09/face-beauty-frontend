@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { MeasurementOverview } from "../MeasurementOverview";
 import "./ReportTable.css";
 import { UserContext } from "../../pages/home";
@@ -105,7 +105,6 @@ const ReportTable = () => {
   const MeasureRows = [];
   for (let index in oneProfile.front.measurements) {
     const item = oneProfile.front.measurements[index];
-    console.log(item);
     if (item.score !== null) {
       MeasureRows.push(
         <MeasureRow

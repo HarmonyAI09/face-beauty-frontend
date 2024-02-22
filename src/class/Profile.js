@@ -269,8 +269,6 @@ export class OneProfile {
       gender: this.gender,
       racial: this.race
     };
-
-    console.log(body);
     const response = await fetch("http://localhost:8000/profile/register", {
       method: "POST",
       headers: {
@@ -278,7 +276,6 @@ export class OneProfile {
       },
       body: JSON.stringify(body),
     });
-    console.log(await response.json());
   }
 
   async save(mail) {

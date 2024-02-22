@@ -302,7 +302,6 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log("TEMP WORLD");
   }, [oneProfile]);
 
   const uploadImageStyle = {

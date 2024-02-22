@@ -16,7 +16,7 @@ const FileDownload = () => {
   return (
     <div>
       {content}
-      <div className="main_button" onClick={()=>{console.log("Saving Test")}}>
+      <div className="main_button" onClick={()=>{}}>
         <FaDownload />
       </div>
     </div>

@@ -1,5 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
+import "./premium.module.scss";
+import { Button } from "@fluentui/react-components";
+import Segment from "../Segment";
 
 function PremiumComponent() {
     const stripe = useStripe();
@@ -21,7 +24,6 @@ function PremiumComponent() {
         });
 
         if (error) {
-            console.log('[error]', error);
             return;
         }
 
@@ -38,32 +40,31 @@ function PremiumComponent() {
         });
 
         const customer = await response.json();
-
-        // console.log(await response.json());
-        console.log(customer.customer_id);
         const subscription = await axios.post("http://localhost:8000/user/create-subscription", {
             customer_id: customer.customer_id,
             payment_method_id: paymentMethod.id,
             price_id: "price_1Oks0CItQ91j83DiflP5TzK9"
         });
 
-        if(subscription.status){
+        if (subscription.status) {
             await axios.post("http://localhost:8000/user/premium", {
                 email: localStorage.getItem("userEmail")
             });
             localStorage.setItem("userLevel", 1);
-        }else{
-            console.log("Failed");
+            window.location.reload();
+        } else {
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <Segment title="Premium">
             <CardElement />
-            <button type="submit" disabled={!stripe}>
-                Subscribe
-            </button>
-        </form>
+            <div style={{display:"flex", justifyContent:"center", margin:"10px"}}>
+            <Button shape="circular" onClick={handleSubmit} disabled={!stripe}>
+                Buy Premium - 17.99$
+            </Button>
+            </div>
+        </Segment>
     );
 }
 

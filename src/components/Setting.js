@@ -16,9 +16,11 @@ function Setting() {
       <Gender />
       <Ethnicity />
       <Analyze />
-      <Elements stripe={stripePromise}>
-        <PremiumComponent />
-      </Elements>
+      {localStorage.getItem("userLevel") !== "1" && (
+        <Elements stripe={stripePromise}>
+          <PremiumComponent />
+        </Elements>
+      )}
     </GroupContainer>
   );
 }

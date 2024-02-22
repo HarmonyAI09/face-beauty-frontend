@@ -32,7 +32,6 @@ const NameEdit = ({ disabled }) => { // Accept disabled as a prop
       tmpProfile.copy(oneProfile);
       tmpProfile.name = e.target.value;
       setOneProfile(tmpProfile);
-      console.log(e.target.value);
     }
   };
 

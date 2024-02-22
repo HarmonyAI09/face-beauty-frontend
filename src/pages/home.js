@@ -14,8 +14,10 @@ import { BACKEND_URL } from "../config";
 import Reference from "../components/Reference";
 import Setting from "../components/Setting";
 import Storage from "../utils/storage";
-import { useEffect } from "react";
 import { OneProfile } from "../class/Profile";
+import { landmarks } from "../utils/landmarks";
+
+
 
 export const UserContext = createContext();
 
@@ -259,12 +261,12 @@ function Home() {
 
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
-  const [storageChange, setStorageChange] = useState(null);
   const [frontImgURL, setFrontImgURL] = useState(null);
   const [sideImgURL, setSideImgURL] = useState(null);
 
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
+    formatFrontLandmarks();
 
     const file = event.target.files[0];
     var img;
@@ -301,16 +303,9 @@ function Home() {
     }
   };
 
-  useEffect(() => {
-  }, [oneProfile]);
-
-  const uploadImageStyle = {
-    width: uploadImageheight > uploadImagewidth ? "auto" : "35vh",
-    height: uploadImageheight > uploadImagewidth ? "35vh" : "auto",
-  };
-
   const handleSideImageSelect = (event) => {
     setSelectedSideImage(event.target.files[0]);
+    formatSideLandmarks();
 
     const file = event.target.files[0];
     var img;
@@ -346,9 +341,21 @@ function Home() {
     }
   };
 
-  const uploadSideImageStyle = {
-    width: sideImageheight > sideImagewidth ? "auto" : "35vh",
-    height: sideImageheight > sideImagewidth ? "35vh" : "auto",
+  const formatFrontLandmarks = () => {
+    console.log(markPoints);
+    let tmpMarks = [...markPoints];
+    for(let i = 0 ; i<30 ; i++){
+      tmpMarks[i] = landmarks[i];
+    }
+    setMarkPoints(tmpMarks);
+  };
+
+  const formatSideLandmarks = () => {
+    let tmpMarks = [...markPoints];
+    for(let i = 30 ; i<60 ; i++){
+      tmpMarks[i] = landmarks[i];
+    }
+    setMarkPoints(tmpMarks);
   };
 
   const handleFrontUploadButtonClick = () => {

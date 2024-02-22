@@ -238,7 +238,7 @@ export const Measurements = [
     "Deviation Of IAA&JFA(°)",
     "Eyebrow Tilt(°)",
     "Bitemporal Width(%)",
-    "Lower Third Proporation(%)",
+    "Lower Third Proportion(%)",
     "Ipsilateral Alar Angle(°)",
     "Medial Canthal Angle(°)",
 

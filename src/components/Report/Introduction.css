@@ -1,0 +1,11 @@
+.introduction_container{
+    color: #0d47a1;
+    font-weight: bold;
+}
+
+.unique_info{
+    display: flex;
+    align-items:flex-start;
+    font-family: monospace;
+    font-size:larger;
+}

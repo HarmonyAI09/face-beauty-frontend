@@ -35,19 +35,19 @@ function distanceAndSideOfPointToLine(point1, point2, point3) {
   const w1 = x1 - x2;
   const w2 = y1 - y2;
   const dotProduct = v1 * w1 + v2 * w2;
-  const vMagnitudeSquared = v1**2 + v2**2;
+  const vMagnitudeSquared = v1 ** 2 + v2 ** 2;
   const t = dotProduct / vMagnitudeSquared;
   const projectionX = x2 + t * v1;
   const projectionY = y2 + t * v2;
-  const distance = Math.sqrt((projectionX - x1)**2 + (projectionY - y1)**2);
+  const distance = Math.sqrt((projectionX - x1) ** 2 + (projectionY - y1) ** 2);
   const determinant = (x1 - x2) * (y3 - y2) - (y1 - y2) * (x3 - x2);
   let side;
   if (determinant > 0) {
-      side = 1;
+    side = 1;
   } else if (determinant < 0) {
-      side = -1;
+    side = -1;
   } else {
-      side = 0;
+    side = 0;
   }
 
   return { distance, side };
@@ -75,39 +75,38 @@ function findIntersectionPoint(point1, point2, point3, point4) {
   const slope1 = (point2.y - point1.y) / (point2.x - point1.x);
   const x = point3.x;
   const y = slope1 * (x - point1.x) + point1.y;
-  return {x:point3.x, y:y}
+  return { x: point3.x, y: y };
 }
 
 export function FrontProfileMappingModal() {
-  const { markPoints, setMarkPoints } = useContext(UserContext);
+  const { markPoints } = useContext(UserContext);
 
-  const { eyeSeparationRatio, setEyeSeparationRatio } = useContext(UserContext);
-  const { facialThirds, setFacialThirds } = useContext(UserContext);
-  const { lateralCanthalTilt, setLateralCanthalTilt } = useContext(UserContext);
-  const { facialWHRatio, setFacialWHRatio } = useContext(UserContext);
+  const { setEyeSeparationRatio } = useContext(UserContext);
+  const { setFacialThirds } = useContext(UserContext);
+  const { setLateralCanthalTilt } = useContext(UserContext);
+  const { setFacialWHRatio } = useContext(UserContext);
   const { jawFrontalAngle, setJawFrontalAngle } = useContext(UserContext);
-  const { cheekBoneHeight, setCheekBoneHeight } = useContext(UserContext);
-  const { totalFacialWHRatio, setTotalFacialWHRatio } = useContext(UserContext);
-  const { bigonialWidth, setBigonialWidth } = useContext(UserContext);
-  const { chin2PhiltrumRatio, setChin2PhiltrumRatio } = useContext(UserContext);
-  const { neckWidth, setNeckWidth } = useContext(UserContext);
-  const { mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio } =
-    useContext(UserContext);
-  const { midFaceRatio, setMidFaceRatio } = useContext(UserContext);
-  const { eyebrowPositionRatio, setEyebrowPositionRatio } =
-    useContext(UserContext);
-  const { eyeSpacingRatio, setEyeSpacingRatio } = useContext(UserContext);
-  const { eyeAspectRatio, setEyeAspectRatio } = useContext(UserContext);
-  const { lowerLip2UpperLipRatio, setLowerLip2UpperLipRatio } =
-    useContext(UserContext);
+  const { setCheekBoneHeight } = useContext(UserContext);
+  const { setTotalFacialWHRatio } = useContext(UserContext);
+  const { setBigonialWidth } = useContext(UserContext);
+  const { setChin2PhiltrumRatio } = useContext(UserContext);
+  const { setNeckWidth } = useContext(UserContext);
+  const { setMouseWidth2NoseWidthRatio } = useContext(UserContext);
+  const { setMidFaceRatio } = useContext(UserContext);
+  const { setEyebrowPositionRatio } = useContext(UserContext);
+  const { setEyeSpacingRatio } = useContext(UserContext);
+  const { setEyeAspectRatio } = useContext(UserContext);
+  const { setLowerLip2UpperLipRatio } = useContext(UserContext);
   const { ipsilateralAlarAngle, setIpsilateralAlarAngle } =
     useContext(UserContext);
-  const { deviationOfJFA2IAA, setDeviationOfJFA2IAA } = useContext(UserContext);
-  const { eyebrowTilt, setEyebrowTilt } = useContext(UserContext);
-  const { bitemporalWidth, setBitemporalWidth } = useContext(UserContext);
-  const { lowerThirdProporation, setLowerThirdProporation } =
-    useContext(UserContext);
-  const { medialCanthalAngle, setMedialCanthalAngle } = useContext(UserContext);
+  const { setDeviationOfJFA2IAA } = useContext(UserContext);
+  const { setEyebrowTilt } = useContext(UserContext);
+  const { setBitemporalWidth } = useContext(UserContext);
+  const { setLowerThirdProporation } = useContext(UserContext);
+  const { setMedialCanthalAngle } = useContext(UserContext);
+  const { profileMatched, setProfileMatched } = useContext(UserContext);
+
+  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const CalculateEyeSeparationRatio = () => {
     const point_12_distance = calculateDistance(
@@ -118,7 +117,9 @@ export function FrontProfileMappingModal() {
       markPoints[17][0],
       markPoints[17][1]
     );
-    setEyeSeparationRatio(parseFloat((point_12_distance * 100) / point_17_distance).toFixed(2));
+    setEyeSeparationRatio(
+      parseFloat((point_12_distance * 100) / point_17_distance).toFixed(2)
+    );
   };
   const CaculateFacialThirds = () => {
     const height_1_5 = markPoints[5][0].y - markPoints[1][0].y;
@@ -147,7 +148,9 @@ export function FrontProfileMappingModal() {
       }
     );
     setLateralCanthalTilt(
-      parseFloat((left_lateralCanthalTilt + right_lateralCanthalTilt) / 2).toFixed(2)
+      parseFloat(
+        (left_lateralCanthalTilt + right_lateralCanthalTilt) / 2
+      ).toFixed(2)
     );
   };
   const CalculateFacialWHRatio = () => {
@@ -157,16 +160,18 @@ export function FrontProfileMappingModal() {
   };
   const CalculateJawFrontalAngle = () => {
     setJawFrontalAngle(
-      parseFloat(calculateSharpAngle(
-        {
-          x: markPoints[26][0].x - markPoints[28][0].x,
-          y: markPoints[26][0].y - markPoints[28][0].y,
-        },
-        {
-          x: markPoints[26][1].x - markPoints[28][1].x,
-          y: markPoints[26][1].y - markPoints[28][1].y,
-        }
-      )).toFixed(2)
+      parseFloat(
+        calculateSharpAngle(
+          {
+            x: markPoints[26][0].x - markPoints[28][0].x,
+            y: markPoints[26][0].y - markPoints[28][0].y,
+          },
+          {
+            x: markPoints[26][1].x - markPoints[28][1].x,
+            y: markPoints[26][1].y - markPoints[28][1].y,
+          }
+        )
+      ).toFixed(2)
     );
   };
   const CalculateCheekBoneHeight = () => {
@@ -254,7 +259,9 @@ export function FrontProfileMappingModal() {
   const CalculateDeviationOfJFA2IAA = () => {
     CalculateJawFrontalAngle();
     CalculateIpsilateralAlarAngle();
-    setDeviationOfJFA2IAA(parseFloat(Math.abs(jawFrontalAngle - ipsilateralAlarAngle)).toFixed(2));
+    setDeviationOfJFA2IAA(
+      parseFloat(Math.abs(jawFrontalAngle - ipsilateralAlarAngle)).toFixed(2)
+    );
   };
   const CalculateEyebrowTilt = () => {
     const a1 = {
@@ -332,7 +339,15 @@ export function FrontProfileMappingModal() {
     CalculateLowerThirdProporation();
     CalculateMedialCanthalAngle();
     CalculateDeviationOfJFA2IAA();
-    showNotification("Saved", "Front profile landmarks have been saved.", "info");
+    let tempProfile = profileMatched;
+    tempProfile[0] = true;
+    setProfileMatched(tempProfile);
+    oneProfile.mapPoints = markPoints;
+    showNotification(
+      "Saved",
+      "Front profile landmarks have been saved.",
+      "info"
+    );
   };
 
   return (
@@ -377,42 +392,34 @@ export function FrontProfileMappingModal() {
 }
 
 export function SideProfileMappingModal() {
-  const { markPoints, setMarkPoints } = useContext(UserContext);
+  const { markPoints } = useContext(UserContext);
 
-  const { gonialAngle, setGonialAngle } = useContext(UserContext);
-  const { nasofrontalAngle, setNasofrontalAngle } = useContext(UserContext);
-  const { mandibularPlaneAngle, setMandibularPlaneAngle } =
-    useContext(UserContext);
-  const { ramus2MandibleRatio, setRamus2MandibleRatio } =
-    useContext(UserContext);
-  const { facialConvexityGlabella, setFacialConvexityGlabella } =
-    useContext(UserContext);
-  const { submentalCervicalAngle, setSubmentalCervicalAngle } =
-    useContext(UserContext);
-  const { nasofacialAngle, setNasofacialAngle } = useContext(UserContext);
-  const { nasolabialAngle, setNasolabialAngle } = useContext(UserContext);
-  const { orbitalVector, setOrbitalVector } = useContext(UserContext);
-  const { totalFacialConvexity, setTotalFacialConvexity } =
-    useContext(UserContext);
-  const { mentolabialAngle, setMentolabialAngle } = useContext(UserContext);
-  const { facialConvexityNasion, setFacialConvexityNasion } =
-    useContext(UserContext);
-  const { nasalProjection, setNasalProjection } = useContext(UserContext);
-  const { nasalW2HRatio, setNasalW2HRatio } = useContext(UserContext);
-  const { rickettsELine, setRickettsELine } = useContext(UserContext);
-  const { holdawayHLine, setHoldawayHLine } = useContext(UserContext);
-  const { steinerSLine, setSteiinerSLine } = useContext(UserContext);
-  const { burstoneLine, setBurstoneLine } = useContext(UserContext);
-  const { nasomentalAngle, setNasomentalAngle } = useContext(UserContext);
-  const { gonion2MouthRelationship, setGonion2MouthRelationship } =
-    useContext(UserContext);
-  const {
-    recessionRelative2FrankfortPlane,
-    setRecessionRelative2FrankfortPlane,
-  } = useContext(UserContext);
-  const { browridgeInclinationAngle, setBrowridgeInclinationAngle } =
-    useContext(UserContext);
-  const { nasalTipAngle, setNasalTipAngle } = useContext(UserContext);
+  const { setGonialAngle } = useContext(UserContext);
+  const { setNasofrontalAngle } = useContext(UserContext);
+  const { setMandibularPlaneAngle } = useContext(UserContext);
+  const { setRamus2MandibleRatio } = useContext(UserContext);
+  const { setFacialConvexityGlabella } = useContext(UserContext);
+  const { setSubmentalCervicalAngle } = useContext(UserContext);
+  const { setNasofacialAngle } = useContext(UserContext);
+  const { setNasolabialAngle } = useContext(UserContext);
+  const { setOrbitalVector } = useContext(UserContext);
+  const { setTotalFacialConvexity } = useContext(UserContext);
+  const { setMentolabialAngle } = useContext(UserContext);
+  const { setFacialConvexityNasion } = useContext(UserContext);
+  const { setNasalProjection } = useContext(UserContext);
+  const { setNasalW2HRatio } = useContext(UserContext);
+  const { setRickettsELine } = useContext(UserContext);
+  const { setHoldawayHLine } = useContext(UserContext);
+  const { setSteiinerSLine } = useContext(UserContext);
+  const { setBurstoneLine } = useContext(UserContext);
+  const { setNasomentalAngle } = useContext(UserContext);
+  const { setGonion2MouthRelationship } = useContext(UserContext);
+  const { setRecessionRelative2FrankfortPlane } = useContext(UserContext);
+  const { setBrowridgeInclinationAngle } = useContext(UserContext);
+  const { setNasalTipAngle } = useContext(UserContext);
+  const { profileMatched, setProfileMatched } = useContext(UserContext);
+
+  const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const CalculateGonialAngle = () => {
     const a = {
@@ -448,10 +455,14 @@ export function SideProfileMappingModal() {
     setMandibularPlaneAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateRamus2MandibleRatio = () => {
-    const interactionPoint = findIntersectionPoint(markPoints[38][0],markPoints[52][0],markPoints[50][0],(markPoints[50][0].x,markPoints[50][0].y-20 ))
+    const interactionPoint = findIntersectionPoint(
+      markPoints[38][0],
+      markPoints[52][0],
+      markPoints[50][0],
+      (markPoints[50][0].x, markPoints[50][0].y - 20)
+    );
     const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
     const b = calculateDistance(interactionPoint, markPoints[49][0]);
-    console.log(interactionPoint, markPoints[54][0], markPoints[50][0]);
     setRamus2MandibleRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateFacialConvexityGlabella = () => {
@@ -463,7 +474,9 @@ export function SideProfileMappingModal() {
       x: markPoints[50][0].x - markPoints[43][0].x,
       y: markPoints[50][0].y - markPoints[43][0].y,
     };
-    setFacialConvexityGlabella(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
+    setFacialConvexityGlabella(
+      parseFloat(calculateSharpAngle(a, b)).toFixed(2)
+    );
   };
   const CalculateSubmentalCervicalAngle = () => {
     const a = {
@@ -510,12 +523,12 @@ export function SideProfileMappingModal() {
     setFacialConvexityNasion(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateOrbitalVector = () => {
-    const distance = (markPoints[57][0].x - markPoints[33][0].x);
-    if(Math.abs(distance)<=4){
+    const distance = markPoints[57][0].x - markPoints[33][0].x;
+    if (Math.abs(distance) <= 4) {
       setOrbitalVector("neutral");
       return;
     }
-    if(distance>0){
+    if (distance > 0) {
       setOrbitalVector("positive");
     } else {
       setOrbitalVector("negative");
@@ -535,7 +548,7 @@ export function SideProfileMappingModal() {
   const CalculateNasalProjection = () => {
     const a = markPoints[36][0].x - markPoints[40][0].x;
     const b = markPoints[40][0].y - markPoints[36][0].y;
-    const c = Math.sqrt(a*a+b*b);
+    const c = Math.sqrt(a * a + b * b);
     setNasalProjection(parseFloat(a / c).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {
@@ -544,79 +557,108 @@ export function SideProfileMappingModal() {
     setNasalW2HRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateRickettsELine = () => {
-    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[40][0], markPoints[50][0])
-    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[40][0], markPoints[50][0])
-    console.log(a);
-    console.log(b);
-    if(a["side"]!==1 || b["side"]!==1){
-      setRickettsELine('unideal');
+    const a = distanceAndSideOfPointToLine(
+      markPoints[45][0],
+      markPoints[40][0],
+      markPoints[50][0]
+    );
+    const b = distanceAndSideOfPointToLine(
+      markPoints[47][0],
+      markPoints[40][0],
+      markPoints[50][0]
+    );
+    if (a["side"] !== 1 || b["side"] !== 1) {
+      setRickettsELine("unideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
-      setRickettsELine('ideal');
+    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+      setRickettsELine("ideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
-      setRickettsELine('near ideal');
+    if (
+      Math.abs(a["distance"] - 16) <= 10 &&
+      Math.abs(b["distance"] - 8) <= 10
+    ) {
+      setRickettsELine("near ideal");
       return;
     }
-    setRickettsELine('unideal');
-
+    setRickettsELine("unideal");
   };
   const CalculateHoldawayHLine = () => {
-    const a = distanceAndSideOfPointToLine(markPoints[58][0], markPoints[45][0], markPoints[50][0])
-    console.log(a);
-    if(a["side"]===-1){
-      setHoldawayHLine('unideal');
+    const a = distanceAndSideOfPointToLine(
+      markPoints[58][0],
+      markPoints[45][0],
+      markPoints[50][0]
+    );
+    if (a["side"] === -1) {
+      setHoldawayHLine("unideal");
       return;
     }
-    if(Math.abs(a["distance"])<=2){
-      setHoldawayHLine('ideal');
+    if (Math.abs(a["distance"]) <= 2) {
+      setHoldawayHLine("ideal");
       return;
     }
-    if(Math.abs(a["distance"])<=10){
-      setHoldawayHLine('near ideal');
+    if (Math.abs(a["distance"]) <= 10) {
+      setHoldawayHLine("near ideal");
       return;
     }
-    setHoldawayHLine('unideal');
+    setHoldawayHLine("unideal");
   };
   const CalculateSteinerSLine = () => {
-    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[59][0], markPoints[50][0])
-    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[59][0], markPoints[50][0])
-    console.log(a);
-    console.log(b);
-    if(a["side"]!==1 || b["side"]!==1){
-      setSteiinerSLine('unideal');
+    const a = distanceAndSideOfPointToLine(
+      markPoints[45][0],
+      markPoints[59][0],
+      markPoints[50][0]
+    );
+    const b = distanceAndSideOfPointToLine(
+      markPoints[47][0],
+      markPoints[59][0],
+      markPoints[50][0]
+    );
+    if (a["side"] !== 1 || b["side"] !== 1) {
+      setSteiinerSLine("unideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
-      setSteiinerSLine('ideal');
+    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+      setSteiinerSLine("ideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
-      setSteiinerSLine('near ideal');
+    if (
+      Math.abs(a["distance"] - 16) <= 10 &&
+      Math.abs(b["distance"] - 8) <= 10
+    ) {
+      setSteiinerSLine("near ideal");
       return;
     }
-    setSteiinerSLine('unideal');
+    setSteiinerSLine("unideal");
   };
   const CalculateBurstoneLine = () => {
-    const a = distanceAndSideOfPointToLine(markPoints[45][0], markPoints[43][0], markPoints[50][0])
-    const b = distanceAndSideOfPointToLine(markPoints[47][0], markPoints[43][0], markPoints[50][0])
-    console.log(a);
-    console.log(b);
-    if(a["side"]!==1 || b["side"]!==1){
-      setBurstoneLine('unideal');
+    const a = distanceAndSideOfPointToLine(
+      markPoints[45][0],
+      markPoints[43][0],
+      markPoints[50][0]
+    );
+    const b = distanceAndSideOfPointToLine(
+      markPoints[47][0],
+      markPoints[43][0],
+      markPoints[50][0]
+    );
+    if (a["side"] !== 1 || b["side"] !== 1) {
+      setBurstoneLine("unideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=2 && Math.abs(b["distance"]-8)<=2){
-      setBurstoneLine('ideal');
+    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+      setBurstoneLine("ideal");
       return;
     }
-    if(Math.abs(a["distance"]-16)<=10 && Math.abs(b["distance"]-8)<=10){
-      setBurstoneLine('near ideal');
+    if (
+      Math.abs(a["distance"] - 16) <= 10 &&
+      Math.abs(b["distance"] - 8) <= 10
+    ) {
+      setBurstoneLine("near ideal");
       return;
     }
-    setBurstoneLine('unideal');
+    setBurstoneLine("unideal");
   };
   const CalculateNasofacialAngle = () => {
     const a = {
@@ -645,15 +687,15 @@ export function SideProfileMappingModal() {
   };
   const CalculateRecessionRelative2FrankfortPlane = () => {
     const distance = markPoints[50][0].x - markPoints[35][0].x;
-    if(Math.abs(distance)<=0){
+    if (Math.abs(distance) <= 0) {
       setRecessionRelative2FrankfortPlane("none");
       return;
     }
-    if(Math.abs(distance)<=4){
+    if (Math.abs(distance) <= 4) {
       setRecessionRelative2FrankfortPlane("slightly");
       return;
     }
-    if(Math.abs(distance)<=8){
+    if (Math.abs(distance) <= 8) {
       setRecessionRelative2FrankfortPlane("moderate");
       return;
     }
@@ -665,7 +707,9 @@ export function SideProfileMappingModal() {
       x: markPoints[32][0].x - markPoints[31][0].x,
       y: markPoints[32][0].y - markPoints[31][0].y,
     };
-    setBrowridgeInclinationAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
+    setBrowridgeInclinationAngle(
+      parseFloat(calculateSharpAngle(a, b)).toFixed(2)
+    );
   };
   const CalculateNasalTipAngle = () => {
     const a = {
@@ -703,7 +747,15 @@ export function SideProfileMappingModal() {
     CalculateRecessionRelative2FrankfortPlane();
     CalculateBrowridgeInclinationAngle();
     CalculateNasalTipAngle();
-    showNotification("Saved", "Side profile landmarks have been saved.", "info");
+    let tempProfile = profileMatched;
+    tempProfile[1] = true;
+    setProfileMatched(tempProfile);
+    oneProfile.mapPoints = markPoints;
+    showNotification(
+      "Saved",
+      "Side profile landmarks have been saved.",
+      "info"
+    );
   };
   return (
     <>

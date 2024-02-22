@@ -1,0 +1,9 @@
+.segment_divider{
+    color: #1565c0;
+    margin-bottom: 12px;
+}
+
+.segment_container{
+    font-size: smaller;
+    color: #1565c0;
+}

@@ -1,15 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import * as React from "react";
-import { Radio, RadioGroup, Label } from "@fluentui/react-components";
-import { Button } from "@fluentui/react-components";
-import {
-  // Image,
-  Divider,
-  Tooltip,
-  CompoundButton,
-} from "@fluentui/react-components";
 import { useState, useRef, createContext } from "react";
-import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./home.css";
 
@@ -17,38 +8,30 @@ import {
   FrontProfileMappingModal,
   SideProfileMappingModal,
 } from "../components/MappingModal";
-import { ScoreAlert } from "../components/MarkShowDialog";
-import { ViewReportDialog } from "../components/ViewReportModalDialog";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import ReportList from "../components/ReportList";
 import { BACKEND_URL } from "../config";
+import Reference from "../components/Reference";
+import Setting from "../components/Setting";
+import Storage from "../utils/storage";
+import { useEffect } from "react";
+import { OneProfile } from "../class/Profile";
 
 export const UserContext = createContext();
 
 // eslint-disable-next-line no-unused-vars
 
 function Home() {
-  const navigate = useNavigate();
-
   const [selectedFrontImage, setSelectedFrontImage] = useState(null);
   const [selectedSideImage, setSelectedSideImage] = useState(null);
-
   const [frontImage, setFrontImage] = useState();
   const [sideImage, setSideImage] = useState();
-
-  const [gender, setGender] = useState(1);
-  const [selectedOption, setSelectedOption] = useState("Caucasian");
-
-  const handleRadioChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleGenderChange = (value) => {
-    setGender(value === "true");
-  };
-
+  const [gender, setGender] = useState(null);
+  const [ethnicity, setEthnicity] = useState(null);
   const [frontProfileMark, setFrontProfileMark] = useState(0.0);
   const [sideProfileMark, setSideProfileMark] = useState(0.0);
+
+  const [oneProfile, setOneProfile] = useState(new OneProfile());
 
   /**************************FRONT PROFILE***************************************/
   const [eyeSeparationRatio, setEyeSeparationRatio] = useState(0.0);
@@ -61,7 +44,8 @@ function Home() {
   const [bigonialWidth, setBigonialWidth] = useState(0.0);
   const [chin2PhiltrumRatio, setChin2PhiltrumRatio] = useState(0.0);
   const [neckWidth, setNeckWidth] = useState(0.0);
-  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] = useState(0.0);
+  const [mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio] =
+    useState(0.0);
   const [midFaceRatio, setMidFaceRatio] = useState(0.0);
   const [eyebrowPositionRatio, setEyebrowPositionRatio] = useState(0.0);
   const [eyeSpacingRatio, setEyeSpacingRatio] = useState(0.0);
@@ -94,7 +78,8 @@ function Home() {
   const [steinerSLine, setSteiinerSLine] = useState("ideal");
   const [burstoneLine, setBurstoneLine] = useState("ideal");
   const [nasomentalAngle, setNasomentalAngle] = useState(0.0);
-  const [gonion2MouthRelationship, setGonion2MouthRelationship] = useState("below");
+  const [gonion2MouthRelationship, setGonion2MouthRelationship] =
+    useState("below");
   const [
     recessionRelative2FrankfortPlane,
     setRecessionRelative2FrankfortPlane,
@@ -260,9 +245,7 @@ function Home() {
   const [reportScores, setReportScores] = useState(Array(45).fill([]));
   const [reportMaxScores, setReportMaxScores] = useState(Array(45).fill([]));
   const [reportRanges, setReportRanges] = useState(Array(45).fill([]));
-  const [reportCurrentValues, setReportCurrentValues] = useState(
-    Array(45).fill([])
-  );
+  const [reportValues, setReportValues] = useState(Array(45).fill([]));
   const [reportMeasurementNames, setReportMeasurementNames] = useState(
     Array(45).fill([])
   );
@@ -272,8 +255,13 @@ function Home() {
   const [sideImageheight, setSideImageHeight] = useState(0);
   const [sideImagewidth, setSideImageWidth] = useState(0);
 
+  const [profileMatched, setProfileMatched] = useState([false, false]);
+
   const frontfileInput = useRef(null);
   const sidefileInput = useRef(null);
+  const [storageChange, setStorageChange] = useState(null);
+  const [frontImgURL, setFrontImgURL] = useState(null);
+  const [sideImgURL, setSideImgURL] = useState(null);
 
   const handleFrontImageSelect = (event) => {
     setSelectedFrontImage(event.target.files[0]);
@@ -290,8 +278,31 @@ function Home() {
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
+      setFrontImgURL(objectUrl);
+      setOneProfile({
+        ...oneProfile,
+        front: {
+          ...oneProfile.front,
+          imgUrl: objectUrl,
+          imgSrc: event.target.files[0],
+        },
+      });
+    } else {
+      setFrontImgURL(null);
+
+      setOneProfile({
+        ...oneProfile,
+        front: {
+          ...oneProfile.front,
+          imgUrl: null,
+          imgSrc: null,
+        },
+      });
     }
   };
+
+  useEffect(() => {
+  }, [oneProfile]);
 
   const uploadImageStyle = {
     width: uploadImageheight > uploadImagewidth ? "auto" : "35vh",
@@ -313,6 +324,25 @@ function Home() {
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
+      setSideImgURL(objectUrl);
+      setOneProfile({
+        ...oneProfile,
+        side: {
+          ...oneProfile.side,
+          imgUrl: objectUrl,
+          imgSrc: event.target.files[0],
+        },
+      });
+    } else {
+      setSideImgURL(null);
+      setOneProfile({
+        ...oneProfile,
+        side: {
+          ...oneProfile.side,
+          imgUrl: objectUrl,
+          imgSrc: null,
+        },
+      });
     }
   };
 
@@ -327,10 +357,6 @@ function Home() {
 
   const handleSideUploadButtonClick = () => {
     sidefileInput.current.click();
-  };
-
-  const handleRedirect = (path) => {
-    navigate(path);
   };
 
   return (
@@ -439,8 +465,8 @@ function Home() {
         setSideProfileMark,
         gender,
         setGender,
-        selectedOption,
-        setSelectedOption,
+        ethnicity,
+        setEthnicity,
         reportNotes,
         setReportNotes,
         reportScores,
@@ -449,8 +475,8 @@ function Home() {
         setReportMaxScores,
         reportRanges,
         setReportRanges,
-        reportCurrentValues,
-        setReportCurrentValues,
+        reportValues,
+        setReportValues,
         reportMeasurementNames,
         setReportMeasurementNames,
         reportAdvices,
@@ -458,156 +484,18 @@ function Home() {
         frontImage,
         setFrontImage,
         sideImage,
-        setSideImage
+        setSideImage,
+        profileMatched,
+        setProfileMatched,
+        frontImgURL,
+        sideImgURL,
+        oneProfile,
+        setOneProfile,
       }}
     >
       <div className="main_parent">
         <ReportList />
-        <div
-          className="main_child m_setting"
-          style={{
-            width: "15%",
-            color: "#0d47a1",
-            backgroundColor: "#bbdefb",
-            zIndex: "100",
-          }}
-        >
-          <div
-            style={{
-              height: "30px",
-              backgroundColor: "#0d47a1",
-              color: "#bbdefb",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "10px",
-            }}
-          >
-            Setting
-          </div>
-          <div
-            className="custom-scroll"
-            style={{ padding: "7px", color: "#0d47a1" }}
-          >
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Gender
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <RadioGroup style={{ display: "contents" }}>
-                <Radio
-                  value="true"
-                  label="Male"
-                  checked={gender}
-                  onChange={() => handleGenderChange("true")}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="false"
-                  label="Female"
-                  checked={!gender}
-                  onChange={() => handleGenderChange("false")}
-                  disabled={!!frontImage}
-                />
-              </RadioGroup>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Ethnicity / Race
-            </Divider>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <RadioGroup style={{ display: "contents" }}>
-                <Radio
-                  value="Caucasian"
-                  label="Caucasian"
-                  checked={selectedOption === "Caucasian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="African"
-                  label="African"
-                  checked={selectedOption === "African"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="East Asian"
-                  label="East Asian"
-                  checked={selectedOption === "East Asian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="South Asian"
-                  label="South Asian"
-                  checked={selectedOption === "South Asian"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Hispanic"
-                  label="Hispanic"
-                  checked={selectedOption === "Hispanic"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Middle eastern"
-                  label="Middle eastern"
-                  checked={selectedOption === "Middle eastern"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-                <Radio
-                  value="Other"
-                  label="Other"
-                  checked={selectedOption === "Other"}
-                  onChange={handleRadioChange}
-                  disabled={!!frontImage}
-                />
-              </RadioGroup>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Calculate
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <ScoreAlert title="Total"></ScoreAlert>
-              <ScoreAlert title="Front"></ScoreAlert>
-              <ScoreAlert title="Side"></ScoreAlert>
-            </div>
-            <Divider style={{ padding: "8px", color: "#0d47a1" }}>
-              Report
-            </Divider>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <ViewReportDialog />
-              <Button
-                size="large"
-                shape="circular"
-                appearance="primary"
-                style={{ marginTop: "50px" }}
-                onClick={() => handleRedirect("/pricing")}
-              >
-                Buy Premium
-              </Button>
-            </div>
-          </div>
-        </div>
+        <Setting />
         <div className="main_child m_profile">
           <div
             style={{
@@ -632,15 +520,15 @@ function Home() {
                     onChange={handleFrontImageSelect}
                     style={{ display: "none" }}
                   />
-                  {
-                    !frontImage && <div
+                  {oneProfile.isNew && !frontImage && (
+                    <div
                       className="m_upload_button"
                       onClick={handleFrontUploadButtonClick}
                     >
                       <FaCloudUploadAlt size={30} />
                     </div>
-                  }
-                  {(frontImage || selectedFrontImage) && (
+                  )}
+                  {oneProfile.isNew && (frontImage || selectedFrontImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -657,15 +545,18 @@ function Home() {
                   {selectedFrontImage && (
                     <img
                       className="image_drawer"
-                      src={URL.createObjectURL(selectedFrontImage)}
+                      src={oneProfile.front.imgUrl}
                       alt="Image description"
-                      style={uploadImageStyle}
                     ></img>
                   )}
                   {!selectedFrontImage && (
                     <img
                       className="image_drawer"
-                      src={frontImage ? `${BACKEND_URL}/uploads/${frontImage}` : "./images/front_blank.jpg"}
+                      src={
+                        oneProfile.front.imgUrl
+                          ? oneProfile.front.imgUrl
+                          : "./images/front_blank.jpg"
+                      }
                       alt="Image description"
                     ></img>
                   )}
@@ -676,7 +567,7 @@ function Home() {
               <div className="side_photo_area">
                 <img
                   className="image_drawer"
-                  src="./images/front__.jpg"
+                  src="./images/side__.jpg"
                   alt="Side Image"
                 ></img>
                 <div className="photo_div upload">
@@ -687,15 +578,15 @@ function Home() {
                     onChange={handleSideImageSelect}
                     style={{ display: "none" }}
                   />
-                  {
-                    !sideImage && <div
+                  {oneProfile.isNew &&  localStorage.getItem("userLevel") === "1" && !sideImage && (
+                    <div
                       className="m_upload_button"
                       onClick={handleSideUploadButtonClick}
                     >
                       <FaCloudUploadAlt size={30} />
                     </div>
-                  }
-                  {(sideImage || selectedSideImage) && (
+                  )}
+                  {oneProfile.isNew && localStorage.getItem("userLevel") === "1" && (sideImage || selectedSideImage) && (
                     <div className={`lock-div show`}>
                       <div
                         style={{
@@ -712,15 +603,18 @@ function Home() {
                   {selectedSideImage && (
                     <img
                       className="image_drawer"
-                      src={URL.createObjectURL(selectedSideImage)}
+                      src={oneProfile.side.imgUrl}
                       alt="Image description"
-                      style={uploadSideImageStyle}
                     ></img>
                   )}
                   {!selectedSideImage && (
                     <img
                       className="image_drawer"
-                      src={sideImage ? `${BACKEND_URL}/uploads/${sideImage}` : "./images/side_blank.jpg"}
+                      src={
+                        oneProfile.side.imgUrl
+                          ? oneProfile.side.imgUrl
+                          : "./images/side_blank.jpg"
+                      }
                       alt="Image description"
                     ></img>
                   )}
@@ -729,160 +623,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="main_child m_reference">
-          <div
-            style={{
-              height: "30px",
-              backgroundColor: "#0d47a1",
-              color: "#bbdefb",
-              fontSize: "16px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "10px",
-              justifyContent: "space-between",
-              paddingRight: "10px",
-            }}
-          >
-            Reference
-          </div>
-          <div
-            className="custom-scroll"
-            style={{ padding: "7px", color: "#1565c0" }}
-          >
-            <Tooltip
-              relationship="label"
-              content="Follow the photo instructions carefully as it will impact the accuracy of your score."
-            >
-              <Divider style={{ padding: "8px", color: "#1565c0" }}>
-                Photo Requirements
-              </Divider>
-            </Tooltip>
-            <div style={{ paddingLeft: "10px" }}>
-              <Label size="small" style={{ color: "#1565c0" }}>
-                Follow the photo instructions carefully.
-              </Label>
-              <div style={{ paddingLeft: "-5px", paddingRight: "10px" }}>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Generally no selfies to ensure maximal accuracy.{" "}
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Lens distortion will warp your facial features if the camera
-                    lens is too close.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Harmony will try to automatically orient your photo to be
-                    straight. However, you may also rotate your photo before
-                    uploading to make sure your head is positioned straight.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Hair should not be covering the forehead or sides of the
-                    face.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Photo should be well lit and good quality for AI to detect
-                    landmarks accurately.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Face should be turned completely to the front and side for
-                    each respective photo.
-                  </Label>
-                </div>
-                <div>
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "#1565c0", paddingRight: "10px" }}
-                  >
-                    {" "}
-                  </i>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Face should have a neutral expression (no smiling or
-                    excessive grinning).
-                  </Label>
-                </div>
-              </div>
-            </div>
-            <Divider style={{ padding: "8px", color: "#1565c0" }}>
-              <i
-                className="fa-solid fa-circle-exclamation fa-lg"
-                style={{ color: "#1565c0" }}
-              />
-            </Divider>
-            <div style={{ paddingLeft: "10px" }}>
-              <Label size="medium" style={{ color: "#1565c0" }}>
-                <i
-                  class="fa-regular fa-clipboard"
-                  style={{ color: "#1565c0", paddingRight: "10px" }}
-                />
-                Note:
-              </Label>
-              <div style={{ paddingRight: "10px" }}>
-                <div>
-                  <Label size="small" style={{ color: "#1565c0" }}>
-                    Harmony only assesses your facial proportions, angles, and
-                    the relative positioning of features. &nbsp;&nbsp; It does
-                    not factor in features like hair color, skin color, eye
-                    color, skin health, and eye contrast, all of which play a
-                    role in facial attractiveness. <br />
-                    These features may be added in a later version of
-                    Harmony.&nbsp;&nbsp;For example, if you have severe acne,
-                    your overall beauty score may be lower than your harmony
-                    score. However, your harmony score should represent the
-                    majority of criteria that factor into beauty. Think of
-                    facial harmony as the foundation of beauty, on top of which
-                    the rest of your features sit.
-                  </Label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Reference />
       </div>
     </UserContext.Provider>
   );

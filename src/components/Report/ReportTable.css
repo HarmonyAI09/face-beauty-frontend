@@ -1,0 +1,46 @@
+.report_table{
+    background-color: white;
+    width: 100%;
+    border: 1px solid blue;
+}
+.table_content{
+    height: calc(90vh - 244px);
+    /* height: 500px; */
+    overflow-y: auto;
+}
+.table_header{
+    height: 20px;
+    border-bottom: 1px solid gray;
+    display: flex;
+}
+.header_item{
+    color: gray;
+    font-size: medium;
+    border: 1px solid gray;
+}
+.cell{
+    padding-left: 4px;
+    padding-right: 4px;
+    display: flex;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+}
+.cell img{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #0d47a1;
+}
+.measure_row{
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid gray;
+    display: flex;
+    height: 80px;
+}
+.blur{
+    filter: blur(5px);
+    user-select: none;
+    pointer-events: none;
+}

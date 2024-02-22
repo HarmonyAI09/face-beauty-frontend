@@ -4,7 +4,6 @@ import {
   DialogTrigger,
   DialogSurface,
   DialogTitle,
-  DialogContent,
   DialogBody,
   DialogActions,
   Button,
@@ -13,81 +12,65 @@ import { UserContext } from "../pages/home";
 import { useContext, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import { LoadingComponent } from "./Loading";
+import { showNotification } from "./NotificationCreator";
 
 export const ScoreAlert = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { eyeSeparationRatio, setEyeSeparationRatio } = useContext(UserContext);
-  const { facialThirds, setFacialThirds } = useContext(UserContext);
-  const { lateralCanthalTilt, setLateralCanthalTilt } = useContext(UserContext);
-  const { facialWHRatio, setFacialWHRatio } = useContext(UserContext);
-  const { jawFrontalAngle, setJawFrontalAngle } = useContext(UserContext);
-  const { cheekBoneHeight, setCheekBoneHeight } = useContext(UserContext);
-  const { totalFacialWHRatio, setTotalFacialWHRatio } = useContext(UserContext);
-  const { bigonialWidth, setBigonialWidth } = useContext(UserContext);
-  const { chin2PhiltrumRatio, setChin2PhiltrumRatio } = useContext(UserContext);
-  const { neckWidth, setNeckWidth } = useContext(UserContext);
-  const { mouthWidth2NoseWidthRatio, setMouseWidth2NoseWidthRatio } =
-    useContext(UserContext);
-  const { midFaceRatio, setMidFaceRatio } = useContext(UserContext);
-  const { eyebrowPositionRatio, setEyebrowPositionRatio } =
-    useContext(UserContext);
-  const { eyeSpacingRatio, setEyeSpacingRatio } = useContext(UserContext);
-  const { eyeAspectRatio, setEyeAspectRatio } = useContext(UserContext);
-  const { lowerLip2UpperLipRatio, setLowerLip2UpperLipRatio } =
-    useContext(UserContext);
-  const { ipsilateralAlarAngle, setIpsilateralAlarAngle } =
-    useContext(UserContext);
-  const { deviationOfJFA2IAA, setDeviationOfJFA2IAA } = useContext(UserContext);
-  const { eyebrowTilt, setEyebrowTilt } = useContext(UserContext);
-  const { bitemporalWidth, setBitemporalWidth } = useContext(UserContext);
-  const { lowerThirdProporation, setLowerThirdProporation } =
-    useContext(UserContext);
-  const { medialCanthalAngle, setMedialCanthalAngle } = useContext(UserContext);
-  const { gonialAngle, setGonialAngle } = useContext(UserContext);
-  const { nasofrontalAngle, setNasofrontalAngle } = useContext(UserContext);
-  const { mandibularPlaneAngle, setMandibularPlaneAngle } =
-    useContext(UserContext);
-  const { ramus2MandibleRatio, setRamus2MandibleRatio } =
-    useContext(UserContext);
-  const { facialConvexityGlabella, setFacialConvexityGlabella } =
-    useContext(UserContext);
-  const { submentalCervicalAngle, setSubmentalCervicalAngle } =
-    useContext(UserContext);
-  const { nasofacialAngle, setNasofacialAngle } = useContext(UserContext);
-  const { nasolabialAngle, setNasolabialAngle } = useContext(UserContext);
-  const { orbitalVector, setOrbitalVector } = useContext(UserContext);
-  const { totalFacialConvexity, setTotalFacialConvexity } =
-    useContext(UserContext);
-  const { mentolabialAngle, setMentolabialAngle } = useContext(UserContext);
-  const { facialConvexityNasion, setFacialConvexityNasion } =
-    useContext(UserContext);
-  const { nasalProjection, setNasalProjection } = useContext(UserContext);
-  const { nasalW2HRatio, setNasalW2HRatio } = useContext(UserContext);
-  const { rickettsELine, setRickettsELine } = useContext(UserContext);
-  const { holdawayHLine, setHoldawayHLine } = useContext(UserContext);
-  const { steinerSLine, setSteiinerSLine } = useContext(UserContext);
-  const { burstoneLine, setBurstoneLine } = useContext(UserContext);
-  const { nasomentalAngle, setNasomentalAngle } = useContext(UserContext);
-  const { gonion2MouthRelationship, setGonion2MouthRelationship } =
-    useContext(UserContext);
-  const {
-    recessionRelative2FrankfortPlane,
-    setRecessionRelative2FrankfortPlane,
-  } = useContext(UserContext);
-  const { browridgeInclinationAngle, setBrowridgeInclinationAngle } =
-    useContext(UserContext);
-  const { nasalTipAngle, setNasalTipAngle } = useContext(UserContext);
+  const { eyeSeparationRatio } = useContext(UserContext);
+  const { facialThirds } = useContext(UserContext);
+  const { lateralCanthalTilt } = useContext(UserContext);
+  const { facialWHRatio } = useContext(UserContext);
+  const { jawFrontalAngle } = useContext(UserContext);
+  const { cheekBoneHeight } = useContext(UserContext);
+  const { totalFacialWHRatio } = useContext(UserContext);
+  const { bigonialWidth } = useContext(UserContext);
+  const { chin2PhiltrumRatio } = useContext(UserContext);
+  const { neckWidth } = useContext(UserContext);
+  const { mouthWidth2NoseWidthRatio } = useContext(UserContext);
+  const { midFaceRatio } = useContext(UserContext);
+  const { eyebrowPositionRatio } = useContext(UserContext);
+  const { eyeSpacingRatio } = useContext(UserContext);
+  const { eyeAspectRatio } = useContext(UserContext);
+  const { lowerLip2UpperLipRatio } = useContext(UserContext);
+  const { ipsilateralAlarAngle } = useContext(UserContext);
+  const { deviationOfJFA2IAA } = useContext(UserContext);
+  const { eyebrowTilt } = useContext(UserContext);
+  const { bitemporalWidth } = useContext(UserContext);
+  const { lowerThirdProporation } = useContext(UserContext);
+  const { medialCanthalAngle } = useContext(UserContext);
+  const { gonialAngle } = useContext(UserContext);
+  const { nasofrontalAngle } = useContext(UserContext);
+  const { mandibularPlaneAngle } = useContext(UserContext);
+  const { ramus2MandibleRatio } = useContext(UserContext);
+  const { facialConvexityGlabella } = useContext(UserContext);
+  const { submentalCervicalAngle } = useContext(UserContext);
+  const { nasofacialAngle } = useContext(UserContext);
+  const { nasolabialAngle } = useContext(UserContext);
+  const { orbitalVector } = useContext(UserContext);
+  const { totalFacialConvexity } = useContext(UserContext);
+  const { mentolabialAngle } = useContext(UserContext);
+  const { facialConvexityNasion } = useContext(UserContext);
+  const { nasalProjection } = useContext(UserContext);
+  const { nasalW2HRatio } = useContext(UserContext);
+  const { rickettsELine } = useContext(UserContext);
+  const { holdawayHLine } = useContext(UserContext);
+  const { steinerSLine } = useContext(UserContext);
+  const { burstoneLine } = useContext(UserContext);
+  const { nasomentalAngle } = useContext(UserContext);
+  const { gonion2MouthRelationship } = useContext(UserContext);
+  const { recessionRelative2FrankfortPlane } = useContext(UserContext);
+  const { browridgeInclinationAngle } = useContext(UserContext);
+  const { nasalTipAngle } = useContext(UserContext);
 
   const { frontProfileMark, setFrontProfileMark } = useContext(UserContext);
   const { sideProfileMark, setSideProfileMark } = useContext(UserContext);
-  const { gender } = useContext(UserContext);
   const { selectedOption } = useContext(UserContext);
   const { reportNotes, setReportNotes } = useContext(UserContext);
   const { reportScores, setReportScores } = useContext(UserContext);
   const { reportMaxScores, setReportMaxScores } = useContext(UserContext);
   const { reportRanges, setReportRanges } = useContext(UserContext);
-  const { reportCurrentValues, setReportCurrentValues } =
+  const { reportValues, setreportValues } =
     useContext(UserContext);
   const { reportMeasurementNames, setReportMeasurementNames } =
     useContext(UserContext);
@@ -97,6 +80,16 @@ export const ScoreAlert = (props) => {
   const [showingScore, setShowingScore] = useState([0.0, 0.0]);
 
   const handleFrontProfileCalc = async () => {
+    const gender = sessionStorage.getItem("gender");
+    const ethnicity = sessionStorage.getItem("ethnicity");
+    if (gender === null) {
+      showNotification("Warning", "You need to select the gender.", "Warning");
+      return;
+    }
+    if (ethnicity === null) {
+      showNotification("Warning", "You need to select the ethnicity/race.", "Warning");
+      return;
+    }
     setIsLoading(true);
     const requestBody = {
       gender: gender,
@@ -134,14 +127,13 @@ export const ScoreAlert = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("front**************", data)
         setFrontProfileMark(data.score);
-        setShowingScore([data.score, data.score/3.055]);
+        setShowingScore([data.score, data.score / 3.055]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
         const templateRanges = [...reportRanges];
-        const templateValues = [...reportCurrentValues];
+        const templateValues = [...reportValues];
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
         for (let i = 0; i < 22; i++) {
@@ -157,18 +149,22 @@ export const ScoreAlert = (props) => {
         setReportScores(templateScores);
         setReportMaxScores(templateMaxScores);
         setReportRanges(templateRanges);
-        setReportCurrentValues(templateValues);
+        setreportValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
         setIsLoading(false);
       })
       .catch((error) => {
-        // Handle any errors
         console.error(error);
       });
   };
 
   const handleSideProfileCalc = async () => {
+    const gender = sessionStorage.getItem("gender");
+    if (gender !== null) {
+      showNotification("Warning", "You need to select the gender.", "Warning");
+      return;
+    }
     setIsLoading(true);
     const requestBody = {
       gender: gender,
@@ -209,29 +205,28 @@ export const ScoreAlert = (props) => {
       .then((data) => {
         // Handle the response data
         setSideProfileMark(data.score);
-        setShowingScore([data.score, data.score/1.945]);
-        console.log("side**************", data)
+        setShowingScore([data.score, data.score / 1.945]);
         const tempNotes = [...reportNotes];
         const templateScores = [...reportScores];
         const templateMaxScores = [...reportMaxScores];
         const templateRanges = [...reportRanges];
-        const templateValues = [...reportCurrentValues];
+        const templateValues = [...reportValues];
         const templateMeasurements = [...reportMeasurementNames];
         const templateAdvices = [...reportAdvices];
         for (let i = 0; i < 45; i++) {
-          tempNotes[i+22] = data.notes[i];
-          templateScores[i+22] = data.scores[i];
-          templateMaxScores[i+22] = data.maxs[i];
-          templateRanges[i+22] = data.ranges[i];
-          templateValues[i+22] = data.values[i];
-          templateMeasurements[i+22] = data.names[i];
-          templateAdvices[i+22] = data.advices[i];
+          tempNotes[i + 22] = data.notes[i];
+          templateScores[i + 22] = data.scores[i];
+          templateMaxScores[i + 22] = data.maxs[i];
+          templateRanges[i + 22] = data.ranges[i];
+          templateValues[i + 22] = data.values[i];
+          templateMeasurements[i + 22] = data.names[i];
+          templateAdvices[i + 22] = data.advices[i];
         }
         setReportNotes(tempNotes);
         setReportScores(templateScores);
         setReportMaxScores(templateMaxScores);
         setReportRanges(templateRanges);
-        setReportCurrentValues(templateValues);
+        setreportValues(templateValues);
         setReportMeasurementNames(templateMeasurements);
         setReportAdvices(templateAdvices);
         setIsLoading(false);
@@ -272,7 +267,7 @@ export const ScoreAlert = (props) => {
     <Dialog modalType="alert">
       <DialogTrigger disableButtonEnhancement>
         <Button
-          shape="circular"
+          shape="rect"
           style={{ width: "200px", margin: "5px" }}
           onClick={handleCalculateButtonClick}
           disabled={isDisabled}
@@ -282,21 +277,21 @@ export const ScoreAlert = (props) => {
       </DialogTrigger>
       <DialogSurface>
         <DialogBody>
-          <DialogTitle>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {isLoading ? (
-                <LoadingComponent />
-              ) : (
-                <>
-                  {props.title} Profile Harmony Score {" - "}
-                  {Math.max(parseFloat(showingScore[1]).toFixed(1), 0)}%
-                </>
-              )}
-            </div>
-          </DialogTitle>
+            <DialogTitle>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {isLoading ? (
+                  <LoadingComponent />
+                ) : (
+                  <>
+                    {props.title} Profile Harmony Score {" - "}
+                    {Math.max(parseFloat(showingScore[1]).toFixed(1), 0)}%
+                  </>
+                )}
+              </div>
+            </DialogTitle>
           <DialogActions>
             <DialogTrigger disableButtonEnhancement>
-              <Button shape="circular" appearance="secondary">
+              <Button shape="rect" appearance="secondary">
                 Close
               </Button>
             </DialogTrigger>

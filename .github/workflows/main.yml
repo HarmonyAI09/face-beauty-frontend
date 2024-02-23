@@ -1,16 +1,43 @@
-version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: build
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
+name: Build and Deploy
+
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - main  # Assuming your main branch is named 'main'.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Specifies the runner environment.
+
+    steps:
+    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it.
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '21.6.2'  # Specifies the Node.js version.
+
+    - name: Install Dependencies
+      run: npm install
+      # Installs the project dependencies.
+
+    - name: Build
+      run: npm run build
+      # Builds your React project.
+
+    # Add more steps here if you need to run tests or other checks.
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: gh-pages  # The branch the action should deploy to.
+        folder: build      # The folder the action should deploy.
+        # Ensure your project builds into the 'build' directory. Adjust if your output directory differs.

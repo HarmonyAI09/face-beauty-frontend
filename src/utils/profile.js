@@ -18,7 +18,7 @@ export const frontProfileJSON = {
   "Deviation Of IAA&JFA(°)": 0.0,
   "Eyebrow Tilt(°)": 0.0,
   "Bitemporal Width(%)": 0.0,
-  "Lower Third Proporation(%)": 0.0,
+  "Lower Third Proportion(%)": 0.0,
   "Ipsilateral Alar Angle(°)": 0.0,
   "Medial Canthal Angle(°)": 0.0,
 };
@@ -69,7 +69,7 @@ export const attributeStringToShort = {
   "Deviation Of IAA&JFA(°)": "deviationOfJFA2IAA",
   "Eyebrow Tilt(°)": "eyebrowTilt",
   "Bitemporal Width(%)": "bitemporalWidth",
-  "Lower Third Proporation(%)": "lowerThirdProporation",
+  "Lower Third Proportion(%)": "lowerThirdProportion",
   "Ipsilateral Alar Angle(°)": "ipsilateralAlarAngle",
   "Medial Canthal Angle(°)": "medialCanthalAngle",
 

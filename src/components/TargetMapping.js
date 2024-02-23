@@ -200,7 +200,7 @@ export const FrontTargetMapping = ({
     setMaginifierMousePosition([x1, y1]);
     const updatedCircles = circles.map((circle) => {
       if (circle.id * 2 === id) {
-        const updatedMarkPoints = { ...markPoints };
+        const updatedMarkPoints = [ ...markPoints ];
         updatedMarkPoints[circle.id][0] = { x: data.x, y: data.y };
         handleSelectPointChange([circle.id, 0]);
         if (!circle.issymmetry) {
@@ -212,7 +212,7 @@ export const FrontTargetMapping = ({
           position: { x: data.x, y: data.y },
         };
       } else if (circle.id * 2 + 1 === id) {
-        const updatedMarkPoints = { ...markPoints };
+        const updatedMarkPoints = [ ...markPoints ];
         updatedMarkPoints[circle.id][1] = { x: data.x, y: data.y };
         handleSelectPointChange([circle.id, 1]);
         if (!circle.issymmetry) {
@@ -253,7 +253,7 @@ export const FrontTargetMapping = ({
 
       const data = await response.json();
 
-      const updatedMarkPoints = { ...markPoints };
+      const updatedMarkPoints = [ ...markPoints ];
 
       const width = imageRef.current.naturalWidth;
       const height = imageRef.current.naturalHeight;
@@ -552,7 +552,7 @@ export const SideTargetMapping = ({
     setMaginifierMousePosition([x1, y1]);
     const updatedCircles = circles.map((circle) => {
       if (circle.id === id) {
-        const updatedMarkPoints = { ...markPoints };
+        const updatedMarkPoints = [ ...markPoints ];
         updatedMarkPoints[circle.id][0] = { x: data.x, y: data.y };
         handleSelectPointChange([circle.id, 0]);
         setMarkPoints(updatedMarkPoints);
@@ -589,7 +589,7 @@ export const SideTargetMapping = ({
 
       const data = await response.json();
 
-      const updatedMarkPoints = { ...markPoints };
+      const updatedMarkPoints = [ ...markPoints ];
 
       const width = imageRef.current.naturalWidth;
       const height = imageRef.current.naturalHeight;

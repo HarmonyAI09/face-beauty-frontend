@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { CompoundButton } from "@fluentui/react-components";
 import React from "react";
 import Draggable from "react-draggable";
 import { useEffect, useRef, useState, useContext } from "react";
@@ -98,10 +97,6 @@ export const FrontTargetMapping = ({
 
   const SubRectImage = ({ imageUrl, rect }) => {
     const { x, y, width, height, scaleWidth, scaleHeight } = rect;
-    const maxLength =
-      uploadImageheight > uploadImagewidth
-        ? uploadImageheight
-        : uploadImagewidth;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
       perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
@@ -255,9 +250,6 @@ export const FrontTargetMapping = ({
 
       const updatedMarkPoints = [ ...markPoints ];
 
-      const width = imageRef.current.naturalWidth;
-      const height = imageRef.current.naturalHeight;
-
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i][0] = {
           x: data.points[i][0][0] + offset.x,
@@ -409,7 +401,6 @@ export const SideTargetMapping = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const imageRef = useRef(null);
-  const [imageOffsetX, setImageOffsetX] = useState(0.0);
   const { markPoints, setMarkPoints } = useContext(UserContext);
   const { selectedSideImage, sideImage } = useContext(UserContext);
   const [circles, setCircles] = React.useState([
@@ -452,10 +443,6 @@ export const SideTargetMapping = ({
 
   const SubRectImage = ({ imageUrl, rect }) => {
     const { x, y, width, height, scaleWidth, scaleHeight } = rect;
-    const maxLength =
-      uploadImageheight > uploadImagewidth
-        ? uploadImageheight
-        : uploadImagewidth;
     var perX, perY;
     if (uploadImageheight > uploadImagewidth) {
       perX = x * ((uploadImagewidth * 16) / uploadImageheight) - 100;
@@ -590,12 +577,6 @@ export const SideTargetMapping = ({
       const data = await response.json();
 
       const updatedMarkPoints = [ ...markPoints ];
-
-      const width = imageRef.current.naturalWidth;
-      const height = imageRef.current.naturalHeight;
-
-      setImageOffsetX((800 - (800 * width) / height) / 2);
-
       for (let i = 0; i < data.points.length; i++) {
         updatedMarkPoints[i + 30][0] = {
           // x: data.points[i][0] + (800 - (800 * width) / height) / 2,
@@ -644,6 +625,7 @@ export const SideTargetMapping = ({
         }}
       >
         {selectedSideImage && (
+          // eslint-disable-next-line jsx-a11y/img-redundant-alt
           <img
             src={imgUrl}
             alt="Image description"

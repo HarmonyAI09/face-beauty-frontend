@@ -10,14 +10,10 @@ import {
 } from "../components/MappingModal";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import ReportList from "../components/ReportList";
-import { BACKEND_URL } from "../config";
 import Reference from "../components/Reference";
 import Setting from "../components/Setting";
-import Storage from "../utils/storage";
 import { OneProfile } from "../class/Profile";
 import { landmarks } from "../utils/landmarks";
-
-
 
 export const UserContext = createContext();
 
@@ -252,10 +248,6 @@ function Home() {
     Array(45).fill([])
   );
   const [reportAdvices, setReportAdvices] = useState(Array(45).fill([]));
-  const [uploadImageheight, setUploadImageHeight] = useState(0);
-  const [uploadImagewidth, setUploadImageWidth] = useState(0);
-  const [sideImageheight, setSideImageHeight] = useState(0);
-  const [sideImagewidth, setSideImageWidth] = useState(0);
 
   const [profileMatched, setProfileMatched] = useState([false, false]);
 
@@ -275,8 +267,6 @@ function Home() {
       img = new Image();
       var objectUrl = _URL.createObjectURL(file);
       img.onload = function () {
-        setUploadImageHeight(this.height);
-        setUploadImageWidth(this.width);
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
@@ -314,8 +304,6 @@ function Home() {
       img = new Image();
       var objectUrl = _URL.createObjectURL(file);
       img.onload = function () {
-        setSideImageHeight(this.height);
-        setSideImageWidth(this.width);
         _URL.revokeObjectURL(objectUrl);
       };
       img.src = objectUrl;
@@ -344,7 +332,7 @@ function Home() {
   const formatFrontLandmarks = () => {
     console.log(markPoints);
     let tmpMarks = [...markPoints];
-    for(let i = 0 ; i<30 ; i++){
+    for (let i = 0; i < 30; i++) {
       tmpMarks[i] = landmarks[i];
     }
     setMarkPoints(tmpMarks);
@@ -352,7 +340,7 @@ function Home() {
 
   const formatSideLandmarks = () => {
     let tmpMarks = [...markPoints];
-    for(let i = 30 ; i<60 ; i++){
+    for (let i = 30; i < 60; i++) {
       tmpMarks[i] = landmarks[i];
     }
     setMarkPoints(tmpMarks);
@@ -585,28 +573,32 @@ function Home() {
                     onChange={handleSideImageSelect}
                     style={{ display: "none" }}
                   />
-                  {oneProfile.isNew &&  localStorage.getItem("userLevel") === "1" && !sideImage && (
-                    <div
-                      className="m_upload_button"
-                      onClick={handleSideUploadButtonClick}
-                    >
-                      <FaCloudUploadAlt size={30} />
-                    </div>
-                  )}
-                  {oneProfile.isNew && localStorage.getItem("userLevel") === "1" && (sideImage || selectedSideImage) && (
-                    <div className={`lock-div show`}>
+                  {oneProfile.isNew &&
+                    localStorage.getItem("userLevel") === "1" &&
+                    !sideImage && (
                       <div
-                        style={{
-                          borderRadius: "0px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        className="m_upload_button"
+                        onClick={handleSideUploadButtonClick}
                       >
-                        <SideProfileMappingModal />
+                        <FaCloudUploadAlt size={30} />
                       </div>
-                    </div>
-                  )}
+                    )}
+                  {oneProfile.isNew &&
+                    localStorage.getItem("userLevel") === "1" &&
+                    (sideImage || selectedSideImage) && (
+                      <div className={`lock-div show`}>
+                        <div
+                          style={{
+                            borderRadius: "0px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <SideProfileMappingModal />
+                        </div>
+                      </div>
+                    )}
                   {selectedSideImage && (
                     <img
                       className="image_drawer"

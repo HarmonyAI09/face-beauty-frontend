@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import "./ReportList.css";
 import { UserContext } from "../pages/home";
-import { BACKEND_URL } from "../config";
 import { FaDownload } from "react-icons/fa6";
 import { OneProfile } from "../class/Profile";
 
@@ -62,20 +61,11 @@ const SavedReport = (props) => {
 const ReportList = () => {
   const [reportList, setReportList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const { setSelectedFrontImage, setSelectedSideImage } =
-    useContext(UserContext);
-  const {
-    setGender,
-    setEthnicity,
-    setFrontImage,
-    setSideImage,
-    setMarkPoints,
-  } = useContext(UserContext);
   const { oneProfile, setOneProfile } = useContext(UserContext);
 
   const handleShowButtonClick = async () => {
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:8000/profile/${localStorage.getItem("userEmail")}`
       )
         .then((response) => response.json())
@@ -94,26 +84,6 @@ const ReportList = () => {
   };
   const handleReportDropboxClick = () => {
     setIsOpen(!isOpen);
-  };
-  const setAsSavedWork = async (index) => {
-    const item = reportList[index];
-    setGender(item.gender === "true");
-    setEthnicity(item.race);
-    setFrontImage(item.front_image);
-    setSideImage(item.side_image);
-    setSelectedFrontImage(null);
-    setSelectedSideImage(null);
-
-    loadKeyPoints(item.id);
-  };
-  const loadKeyPoints = (item_id) => {
-    fetch(`${BACKEND_URL}/details/${item_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const keypoints = JSON.parse(data.keyPoints);
-        setMarkPoints(keypoints);
-      })
-      .catch((error) => console.error(error));
   };
   const handleNewProfile = () => {
     const newProfile = new OneProfile();

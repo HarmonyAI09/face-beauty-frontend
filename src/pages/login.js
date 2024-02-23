@@ -4,12 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { showNotification } from "../components/NotificationCreator";
 import BeautyInput from "../components/BeautyInput";
 
-const Login = ({}) => {
+const Login = () => {
   const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
-
-  const [alertMessage, setAlertMessage] = useState("");
-  const [alertColor, setAlertColor] = useState("rgb(26,115,232)");
 
   const handleChangeState = () => {
     setIsSignIn(!isSignIn);
@@ -36,7 +33,6 @@ const Login = ({}) => {
         .then((response) => response.json())
         .then((data) => {
           // Handle success or error response from the backend
-          console.log(data);
           if (data.success) {
             showNotification("Success", data.status, "success");
             setUserName(data.name);
@@ -112,7 +108,6 @@ const Login = ({}) => {
 
       if (!username || !email || !password) {
         // Handle validation error - display a warning or error message
-        console.log("Please fill in all the fields");
         return;
       }
       const formData = {

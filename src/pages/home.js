@@ -238,6 +238,7 @@ function Home() {
     [{ x: 210, y: 494 }], //58
     [{ x: 185, y: 428 }], //59
   ]);
+  const [RLs, setRLs] = useState([]);
 
   const [reportNotes, setReportNotes] = useState(Array(45).fill([]));
   const [reportScores, setReportScores] = useState(Array(45).fill([]));
@@ -486,6 +487,8 @@ function Home() {
         sideImgURL,
         oneProfile,
         setOneProfile,
+        RLs, 
+        setRLs
       }}
     >
       <div className="main_parent">

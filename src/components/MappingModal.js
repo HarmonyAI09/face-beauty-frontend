@@ -26,6 +26,17 @@ function calculateDistance(point1, point2) {
   return distance;
 }
 
+function pointPosition(point1, point2, point3){
+  const value  = (point2['x'] - point1['x']) * (point3['y'] - point1['y']) - (point2['y'] - point1['y']) * (point3['x'] - point1['x']);
+  if (value > 0){
+    return 1;
+  } else if (value < 0){
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
 function distanceAndSideOfPointToLine(point1, point2, point3) {
   const [x1, y1] = [point1.x, point1.y];
   const [x2, y2] = [point2.x, point2.y];
@@ -80,6 +91,7 @@ function findIntersectionPoint(point1, point2, point3, point4) {
 
 export function FrontProfileMappingModal() {
   const { markPoints, setMarkPoints } = useContext(UserContext);
+  const { RLs, setRLs} = useContext(UserContext);
 
   const { setEyeSeparationRatio } = useContext(UserContext);
   const { setFacialThirds } = useContext(UserContext);
@@ -117,6 +129,7 @@ export function FrontProfileMappingModal() {
     });
     const data = await response.json();
     setMarkPoints(data.points);
+    setRLs(data.RLs);
   };
   const CalculateEyeSeparationRatio = () => {
     const point_12_distance = calculateDistance(
@@ -404,6 +417,7 @@ export function FrontProfileMappingModal() {
 
 export function SideProfileMappingModal() {
   const { markPoints, setMarkPoints } = useContext(UserContext);
+  const { RLs, setRLs} = useContext(UserContext);
 
   const { setGonialAngle } = useContext(UserContext);
   const { setNasofrontalAngle } = useContext(UserContext);
@@ -441,6 +455,7 @@ export function SideProfileMappingModal() {
     });
     const data = await response.json();
     setMarkPoints(data.points);
+    setRLs(data.RLs);
   };
   const CalculateGonialAngle = () => {
     const a = {
@@ -466,8 +481,8 @@ export function SideProfileMappingModal() {
   };
   const CalculateMandibularPlaneAngle = () => {
     const a = {
-      x: -1,
-      y: 0,
+      x: RLs[2][0].x - RLs[2][1].x,
+      y: RLs[2][0].y - RLs[2][1].y,
     };
     const b = {
       x: markPoints[52][0].x - markPoints[49][0].x,
@@ -567,10 +582,9 @@ export function SideProfileMappingModal() {
     setMentolabialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasalProjection = () => {
-    const a = markPoints[36][0].x - markPoints[40][0].x;
-    const b = markPoints[40][0].y - markPoints[36][0].y;
-    const c = Math.sqrt(a * a + b * b);
-    setNasalProjection(parseFloat(a / c).toFixed(2));
+    const b = calculateDistance(markPoints[34][0], markPoints[40][0]);
+    const a = calculateDistanceFromPointToLine(markPoints[40][0], RLs[3][0], RLs[3][1]);
+    setNasalProjection(parseFloat(a / b).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {
     const a = markPoints[42][0].x - markPoints[40][0].x;
@@ -694,12 +708,12 @@ export function SideProfileMappingModal() {
   };
   const CalculateNasomentalAngle = () => {
     const a = {
-      x: markPoints[35][0].x - markPoints[39][0].x,
-      y: markPoints[35][0].y - markPoints[39][0].y,
+      x: markPoints[35][0].x - markPoints[40][0].x,
+      y: markPoints[35][0].y - markPoints[40][0].y,
     };
     const b = {
-      x: markPoints[50][0].x - markPoints[39][0].x,
-      y: markPoints[50][0].y - markPoints[39][0].y,
+      x: markPoints[50][0].x - markPoints[40][0].x,
+      y: markPoints[50][0].y - markPoints[40][0].y,
     };
     setNasomentalAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
@@ -707,16 +721,17 @@ export function SideProfileMappingModal() {
     setGonion2MouthRelationship("below");
   };
   const CalculateRecessionRelative2FrankfortPlane = () => {
-    const distance = markPoints[50][0].x - markPoints[35][0].x;
-    if (Math.abs(distance) <= 0) {
+    const pos = pointPosition(markPoints[35][0], RLs[5][1], RLs[5][0]);
+    const d = calculateDistanceFromPointToLine(markPoints[35][0], RLs[5][0], RLs[5][1]);
+    if (pos) {
       setRecessionRelative2FrankfortPlane("none");
       return;
     }
-    if (Math.abs(distance) <= 4) {
+    if (d <= 4) {
       setRecessionRelative2FrankfortPlane("slightly");
       return;
     }
-    if (Math.abs(distance) <= 8) {
+    if (d <= 8) {
       setRecessionRelative2FrankfortPlane("moderate");
       return;
     }
@@ -744,8 +759,8 @@ export function SideProfileMappingModal() {
     setNasalTipAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
 
-  const handleApplyButtonClick = () => {
-    CompleteMarkPoints();
+  const handleApplyButtonClick = async() => {
+    await CompleteMarkPoints();
     CalculateGonialAngle();
     CalculateNasofrontalAngle();
     CalculateMandibularPlaneAngle();

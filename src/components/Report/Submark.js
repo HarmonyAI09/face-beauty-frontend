@@ -46,7 +46,7 @@ export const FrontProfileCalculator = () => {
     "Not Landmarked Yet",
     "Get Front Profile Score",
     "Calculating",
-    (oneProfile.front.score / 3.055).toFixed(2).toString() +
+    (oneProfile.front.score / 3.055).toFixed(1).toString() +
       "% Front Profile Score",
   ];
   const { profileMatched } = useContext(UserContext);
@@ -135,7 +135,7 @@ export const SideProfileCalculator = () => {
     "Not Landmarked Yet",
     "Get Side Profile Score",
     "Calculating",
-    (oneProfile.side.score / 1.945).toFixed(2).toString() +
+    (oneProfile.side.score / 1.945).toFixed(1).toString() +
       "% Side Profile Score",
   ];
   const { profileMatched } = useContext(UserContext);

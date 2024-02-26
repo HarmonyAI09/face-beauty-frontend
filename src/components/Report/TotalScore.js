@@ -6,7 +6,7 @@ const TotalProfileScore = () => {
 
   return (
     <div className="total_score_view">
-      { oneProfile.percentage.toFixed(2) }% FACIAL HARMONY
+      { oneProfile.percentage.toFixed(1) }% FACIAL HARMONY
     </div>
   )
 };

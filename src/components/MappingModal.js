@@ -16,7 +16,7 @@ import { Dismiss24Regular } from "@fluentui/react-icons";
 import { Connected20Filled } from "@fluentui/react-icons";
 import { FrontDialogContent, SideDialogContent } from "./NewDialogContent";
 import { UserContext } from "../pages/home";
-import { useEffect, useRef, useState, useContext } from "react";
+import { useContext } from "react";
 import { showNotification } from "./NotificationCreator";
 
 function calculateDistance(point1, point2) {
@@ -79,7 +79,7 @@ function findIntersectionPoint(point1, point2, point3, point4) {
 }
 
 export function FrontProfileMappingModal() {
-  const { markPoints } = useContext(UserContext);
+  const { markPoints, setMarkPoints } = useContext(UserContext);
 
   const { setEyeSeparationRatio } = useContext(UserContext);
   const { setFacialThirds } = useContext(UserContext);
@@ -108,6 +108,16 @@ export function FrontProfileMappingModal() {
 
   const { oneProfile, setOneProfile } = useContext(UserContext);
 
+  const CompleteMarkPoints = async() => {
+    const formData = new FormData();
+    formData.append("points", JSON.stringify({markPoints}))
+    const response = await fetch("http://localhost:8000/repair", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    setMarkPoints(data.points);
+  };
   const CalculateEyeSeparationRatio = () => {
     const point_12_distance = calculateDistance(
       markPoints[12][0],
@@ -316,7 +326,8 @@ export function FrontProfileMappingModal() {
     setMedialCanthalAngle(parseFloat((left + right) / 2).toFixed(2));
   };
 
-  const handleApplyButtonClick = () => {
+  const handleApplyButtonClick = async() => {
+    await CompleteMarkPoints();
     CalculateEyeSeparationRatio();
     CaculateFacialThirds();
     CalculateLateralCanthalTilt();
@@ -392,7 +403,7 @@ export function FrontProfileMappingModal() {
 }
 
 export function SideProfileMappingModal() {
-  const { markPoints } = useContext(UserContext);
+  const { markPoints, setMarkPoints } = useContext(UserContext);
 
   const { setGonialAngle } = useContext(UserContext);
   const { setNasofrontalAngle } = useContext(UserContext);
@@ -421,6 +432,16 @@ export function SideProfileMappingModal() {
 
   const { oneProfile, setOneProfile } = useContext(UserContext);
 
+  const CompleteMarkPoints = async() => {
+    const formData = new FormData();
+    formData.append("points", JSON.stringify({markPoints}))
+    const response = await fetch("http://localhost:8000/repair", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await response.json();
+    setMarkPoints(data.points);
+  };
   const CalculateGonialAngle = () => {
     const a = {
       x: markPoints[38][0].x - markPoints[49][0].x,
@@ -724,6 +745,7 @@ export function SideProfileMappingModal() {
   };
 
   const handleApplyButtonClick = () => {
+    CompleteMarkPoints();
     CalculateGonialAngle();
     CalculateNasofrontalAngle();
     CalculateMandibularPlaneAngle();

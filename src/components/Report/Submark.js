@@ -73,7 +73,7 @@ export const FrontProfileCalculator = () => {
   const { deviationOfJFA2IAA } = useContext(UserContext);
   const { eyebrowTilt } = useContext(UserContext);
   const { bitemporalWidth } = useContext(UserContext);
-  const { lowerThirdProporation } = useContext(UserContext);
+  const { lowerThirdProportion } = useContext(UserContext);
   const { medialCanthalAngle } = useContext(UserContext);
 
   const handleFrontProfileCalc = async () => {
@@ -101,7 +101,7 @@ export const FrontProfileCalculator = () => {
       deviationOfJFA2IAA: deviationOfJFA2IAA,
       eyebrowTilt: eyebrowTilt,
       bitemporalWidth: bitemporalWidth,
-      lowerThirdProporation: lowerThirdProporation,
+      lowerThirdProportion: lowerThirdProportion,
       medialCanthalAngle: medialCanthalAngle,
     };
     const shortStringToAttributeString = swapObjectKeyValue(

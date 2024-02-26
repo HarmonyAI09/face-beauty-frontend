@@ -102,7 +102,7 @@ export function FrontProfileMappingModal() {
   const { setDeviationOfJFA2IAA } = useContext(UserContext);
   const { setEyebrowTilt } = useContext(UserContext);
   const { setBitemporalWidth } = useContext(UserContext);
-  const { setLowerThirdProporation } = useContext(UserContext);
+  const { setLowerThirdProportion } = useContext(UserContext);
   const { setMedialCanthalAngle } = useContext(UserContext);
   const { profileMatched, setProfileMatched } = useContext(UserContext);
 
@@ -289,10 +289,10 @@ export function FrontProfileMappingModal() {
     const b = calculateDistance(markPoints[17][0], markPoints[17][1]);
     setBitemporalWidth(parseFloat((a * 100) / b).toFixed(2));
   };
-  const CalculateLowerThirdProporation = () => {
+  const CalculateLowerThirdProportion = () => {
     const a = markPoints[24][0].y - markPoints[19][0].y;
     const b = markPoints[29][0].y - markPoints[19][0].y;
-    setLowerThirdProporation(parseFloat((a * 100) / b).toFixed(2));
+    setLowerThirdProportion(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateMedialCanthalAngle = () => {
     const a1 = {
@@ -336,7 +336,7 @@ export function FrontProfileMappingModal() {
     CalculateIpsilateralAlarAngle();
     CalculateEyebrowTilt();
     CalculateBitemporalWidth();
-    CalculateLowerThirdProporation();
+    CalculateLowerThirdProportion();
     CalculateMedialCanthalAngle();
     CalculateDeviationOfJFA2IAA();
     let tempProfile = profileMatched;

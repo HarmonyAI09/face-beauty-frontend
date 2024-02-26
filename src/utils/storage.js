@@ -9,7 +9,6 @@ const Storage = {
         return sessionStorage.getItem(key);
     },
     onChange: function (key) {
-        console.log("kingbar");
         // custom event handler
     }
 }

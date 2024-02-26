@@ -111,7 +111,7 @@ function Profile() {
 
                                 <div className="measurement-div">
                                     <i className="fa-solid fa-percent"></i>
-                                    <div className="measurement-name">&nbsp;&nbsp;Lower third proporation :&nbsp;</div>
+                                    <div className="measurement-name">&nbsp;&nbsp;Lower third proportion :&nbsp;</div>
                                     <input type="text" class="badge-input" />
                                     &nbsp;%
                                 </div>

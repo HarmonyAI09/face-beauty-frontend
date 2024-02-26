@@ -53,7 +53,7 @@ function Home() {
   const [deviationOfJFA2IAA, setDeviationOfJFA2IAA] = useState(0.0);
   const [eyebrowTilt, setEyebrowTilt] = useState(0.0);
   const [bitemporalWidth, setBitemporalWidth] = useState(0.0);
-  const [lowerThirdProporation, setLowerThirdProporation] = useState(0.0);
+  const [lowerThirdProportion, setLowerThirdProportion] = useState(0.0);
   const [medialCanthalAngle, setMedialCanthalAngle] = useState(0.0);
 
   /**************************SIDE PROFILE***************************************/
@@ -377,7 +377,7 @@ function Home() {
         deviationOfJFA2IAA,
         eyebrowTilt,
         bitemporalWidth,
-        lowerThirdProporation,
+        lowerThirdProportion,
         medialCanthalAngle,
         setEyeSeparationRatio,
         setFacialThirds,
@@ -399,7 +399,7 @@ function Home() {
         setDeviationOfJFA2IAA,
         setEyebrowTilt,
         setBitemporalWidth,
-        setLowerThirdProporation,
+        setLowerThirdProportion,
         setMedialCanthalAngle,
 
         gonialAngle,

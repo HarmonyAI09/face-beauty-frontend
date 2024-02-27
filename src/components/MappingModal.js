@@ -598,8 +598,9 @@ export function SideProfileMappingModal() {
     setNasalProjection(parseFloat(a / b).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {
-    const a = markPoints[42][0].x - markPoints[40][0].x;
-    const b = markPoints[40][0].y - markPoints[33][0].y;
+    const RLs = data.RLs;
+    const a = calculateDistanceFromPointToLine(markPoints[40][0], RLs[3][0], RLs[3][1])
+    const b = calculateDistance(markPoints[40][0], markPoints[56][0]);
     setNasalW2HRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateRickettsELine = () => {
@@ -750,7 +751,11 @@ export function SideProfileMappingModal() {
     setRecessionRelative2FrankfortPlane("extreme");
   };
   const CalculateBrowridgeInclinationAngle = () => {
-    const a = { x: 0, y: 1 };
+    const RLs = data.RLs;
+    const a = { 
+      x: RLs[7][0].x - RLs[7][1].x, 
+      y: RLs[7][0].y - RLs[7][1].y, 
+    };
     const b = {
       x: markPoints[32][0].x - markPoints[31][0].x,
       y: markPoints[32][0].y - markPoints[31][0].y,

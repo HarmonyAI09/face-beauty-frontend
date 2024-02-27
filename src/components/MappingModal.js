@@ -74,13 +74,18 @@ function calculateSharpAngle(line1, line2) {
 }
 
 function calculateDistanceFromPointToLine(point1, point2, point3) {
-  let slope = (point3.y - point2.y) / (point3.x - point2.x);
-  let yIntercept = point2.y - slope * point2.x;
-  let distance =
-    Math.abs(slope * point1.x - point1.y + yIntercept) /
-    Math.sqrt(Math.pow(slope, 2) + 1);
-  return distance;
+  if (point3.x === point2.x) {
+    return Math.abs(point1.x - point2.x);
+  } else {
+    let slope = (point3.y - point2.y) / (point3.x - point2.x);
+    let yIntercept = point2.y - slope * point2.x;
+    let distance =
+      Math.abs(slope * point1.x - point1.y + yIntercept) /
+      Math.sqrt(Math.pow(slope, 2) + 1);
+    return distance;
+  }
 }
+
 
 function findIntersectionPoint(point1, point2, point3, point4) {
   const slope1 = (point2.y - point1.y) / (point2.x - point1.x);
@@ -119,6 +124,7 @@ export function FrontProfileMappingModal() {
   const { profileMatched, setProfileMatched } = useContext(UserContext);
 
   const { oneProfile, setOneProfile } = useContext(UserContext);
+  let data;
 
   const CompleteMarkPoints = async() => {
     const formData = new FormData();
@@ -127,7 +133,7 @@ export function FrontProfileMappingModal() {
       method: "POST",
       body: formData,
     });
-    const data = await response.json();
+    data = await response.json();
     setMarkPoints(data.points);
     setRLs(data.RLs);
   };
@@ -445,6 +451,7 @@ export function SideProfileMappingModal() {
   const { profileMatched, setProfileMatched } = useContext(UserContext);
 
   const { oneProfile, setOneProfile } = useContext(UserContext);
+  let data;
 
   const CompleteMarkPoints = async() => {
     const formData = new FormData();
@@ -453,7 +460,7 @@ export function SideProfileMappingModal() {
       method: "POST",
       body: formData,
     });
-    const data = await response.json();
+    data = await response.json();
     setMarkPoints(data.points);
     setRLs(data.RLs);
   };
@@ -480,6 +487,7 @@ export function SideProfileMappingModal() {
     setNasofrontalAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateMandibularPlaneAngle = () => {
+    const RLs = data.RLs;
     const a = {
       x: RLs[2][0].x - RLs[2][1].x,
       y: RLs[2][0].y - RLs[2][1].y,
@@ -582,8 +590,11 @@ export function SideProfileMappingModal() {
     setMentolabialAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateNasalProjection = () => {
+    const RLs = data.RLs;
     const b = calculateDistance(markPoints[34][0], markPoints[40][0]);
     const a = calculateDistanceFromPointToLine(markPoints[40][0], RLs[3][0], RLs[3][1]);
+    console.log(RLs);
+    console.log(a, b, "********");
     setNasalProjection(parseFloat(a / b).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {

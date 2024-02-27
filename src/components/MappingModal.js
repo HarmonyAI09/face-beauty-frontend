@@ -732,6 +732,7 @@ export function SideProfileMappingModal() {
     setGonion2MouthRelationship("below");
   };
   const CalculateRecessionRelative2FrankfortPlane = () => {
+    const RLs = data.RLs;
     const pos = pointPosition(markPoints[35][0], RLs[5][1], RLs[5][0]);
     const d = calculateDistanceFromPointToLine(markPoints[35][0], RLs[5][0], RLs[5][1]);
     if (pos) {

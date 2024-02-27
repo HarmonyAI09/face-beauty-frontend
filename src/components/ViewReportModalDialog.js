@@ -53,7 +53,7 @@ export const ViewReportDialog = () => {
     const settingAvability =
       oneProfile.gender !== null && oneProfile.race !== null;
     const profileAvability =
-      oneProfile.front.imgSrc !== null || oneProfile.front.imgSrc !== null;
+      oneProfile.front.imgSrc !== null || oneProfile.side.imgSrc !== null;
     setIsClickable(settingAvability && profileAvability);
   }, [isClickable, oneProfile]);
 

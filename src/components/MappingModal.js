@@ -221,8 +221,9 @@ export function FrontProfileMappingModal() {
     setBigonialWidth(parseFloat((a * 100) / b).toFixed(2));
   };
   const CalculateChin2PhiltrumRatio = () => {
-    const a = calculateDistance(markPoints[29][0], markPoints[25][0]);
-    const b = calculateDistance(markPoints[21][0], markPoints[20][0]);
+    const RLs = data.RLs;
+    const a = calculateDistanceFromPointToLine(markPoints[25][0], RLs[15][0], RLs[15][1]);
+    const b = calculateDistanceFromPointToLine(markPoints[20][0], RLs[17][0], RLs[17][1]);
     setChin2PhiltrumRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateNeckWidth = () => {
@@ -499,14 +500,8 @@ export function SideProfileMappingModal() {
     setMandibularPlaneAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateRamus2MandibleRatio = () => {
-    const interactionPoint = findIntersectionPoint(
-      markPoints[38][0],
-      markPoints[52][0],
-      markPoints[50][0],
-      (markPoints[50][0].x, markPoints[50][0].y - 20)
-    );
     const a = calculateDistance(markPoints[38][0], markPoints[49][0]);
-    const b = calculateDistance(interactionPoint, markPoints[49][0]);
+    const b = calculateDistance(markPoints[54][0], markPoints[49][0]);
     setRamus2MandibleRatio(parseFloat(a / b).toFixed(2));
   };
   const CalculateFacialConvexityGlabella = () => {

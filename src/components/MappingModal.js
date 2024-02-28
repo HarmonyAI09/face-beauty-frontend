@@ -27,7 +27,7 @@ function calculateDistance(point1, point2) {
 }
 
 function pointPosition(point1, point2, point3){
-  const value  = (point2['x'] - point1['x']) * (point3['y'] - point1['y']) - (point2['y'] - point1['y']) * (point3['x'] - point1['x']);
+  const value  = (point2.x - point1.x) * (point3.y - point1.y) - (point2.y - point1.y) * (point3.x - point1.x);
   if (value > 0){
     return 1;
   } else if (value < 0){
@@ -728,10 +728,13 @@ export function SideProfileMappingModal() {
     setGonion2MouthRelationship("below");
   };
   const CalculateRecessionRelative2FrankfortPlane = () => {
-    const RLs = data.RLs;
+    let RLs = data.RLs;    
+    RLs[5].sort(function(a, b){
+      return a.y - b.y;
+    });
     const pos = pointPosition(markPoints[35][0], RLs[5][1], RLs[5][0]);
     const d = calculateDistanceFromPointToLine(markPoints[35][0], RLs[5][0], RLs[5][1]);
-    if (pos) {
+    if (pos === 1) {
       setRecessionRelative2FrankfortPlane("none");
       return;
     }

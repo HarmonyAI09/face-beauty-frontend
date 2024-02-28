@@ -58,7 +58,7 @@ const RangeText = (props) => {
   return (
     <div>
       {Array.isArray(props.range) && props.range.length >= 2
-        ? props.range[0] + " - " + props.range[1]
+        ? (props.range[0]).toFixed(2) + " - " + (props.range[1]).toFixed(2)
         : props.range[0].charAt(0).toUpperCase() + props.range[0].slice(1)}
     </div>
   );

@@ -28,9 +28,6 @@ import TotalProfileScore from "./Report/TotalScore";
 import ReportTable from "./Report/ReportTable";
 
 export const ViewReportDialog = () => {
-  const { gender } = useContext(UserContext);
-  const { ethnicity } = useContext(UserContext);
-
   const { selectedFrontImage, selectedSideImage } = useContext(UserContext);
   const { markPoints } = useContext(UserContext);
   const [isClickable, setIsClickable] = useState(false);

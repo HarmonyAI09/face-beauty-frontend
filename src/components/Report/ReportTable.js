@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MeasurementOverview } from "../MeasurementOverview";
 import "./ReportTable.css";
 import { UserContext } from "../../pages/home";
@@ -58,7 +58,7 @@ const RangeText = (props) => {
   return (
     <div>
       {Array.isArray(props.range) && props.range.length >= 2
-        ? (props.range[0]).toFixed(2) + " - " + (props.range[1]).toFixed(2)
+        ? props.range[0].toFixed(2) + " - " + props.range[1].toFixed(2)
         : props.range[0].charAt(0).toUpperCase() + props.range[0].slice(1)}
     </div>
   );
@@ -102,36 +102,40 @@ const ReportTable = () => {
     "Advice",
   ];
   const { oneProfile } = useContext(UserContext);
-  const MeasureRows = [];
-  for (let index in oneProfile.front.measurements) {
-    const item = oneProfile.front.measurements[index];
-    if (item.score !== null) {
-      MeasureRows.push(
-        <MeasureRow
-          id={oneProfile.id}
-          item={item}
-          index={index}
-          key={index}
-          hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
-        />
-      );
+  const  [MeasureRows, setMeasureRows] = useState([]);
+  useEffect(() => {
+    const msRows = [];
+    for (let index in oneProfile.front.measurements) {
+      const item = oneProfile.front.measurements[index];
+      if (item.score !== null) {
+        msRows.push(
+          <MeasureRow
+            id={oneProfile.id}
+            item={item}
+            index={index}
+            key={index}
+            hide={index >= 7 && localStorage.getItem("userLevel") === "0"}
+          />
+        );
+      }
     }
-  }
-  for (let index in oneProfile.side.measurements) {
-    const item = oneProfile.side.measurements[index];
-    if (item.score !== null) {
-      MeasureRows.push(
-        <MeasureRow
-          id={oneProfile.id}
-          item={item}
-          index={parseInt(index, 10) + 22}
-          key={parseInt(index, 10) + 22}
-          hide={localStorage.getItem("userLevel") === "0"}
-        />
-      );
-    } else{
+    for (let index in oneProfile.side.measurements) {
+      const item = oneProfile.side.measurements[index];
+      if (item.score !== null) {
+        msRows.push(
+          <MeasureRow
+            id={oneProfile.id}
+            item={item}
+            index={parseInt(index, 10) + 22}
+            key={parseInt(index, 10) + 22}
+            hide={localStorage.getItem("userLevel") === "0"}
+          />
+        );
+      } else {
+      }
     }
-  }
+    setMeasureRows(msRows);
+  }, [MeasureRows, oneProfile]);
   return (
     <div className="report_table">
       <div className="table_header">

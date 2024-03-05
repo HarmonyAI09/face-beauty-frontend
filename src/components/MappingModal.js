@@ -586,10 +586,8 @@ export function SideProfileMappingModal() {
   };
   const CalculateNasalProjection = () => {
     const RLs = data.RLs;
-    const b = calculateDistance(markPoints[34][0], markPoints[40][0]);
     const a = calculateDistanceFromPointToLine(markPoints[40][0], RLs[3][0], RLs[3][1]);
-    console.log(RLs);
-    console.log(a, b, "********");
+    const b = calculateDistance(markPoints[34][0], markPoints[40][0]);
     setNasalProjection(parseFloat(a / b).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {

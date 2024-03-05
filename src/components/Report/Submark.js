@@ -117,6 +117,7 @@ export const FrontProfileCalculator = () => {
     await tempProfile.getHarmony("Front");
     setOneProfile(tempProfile);
     setState(3);
+    setOneProfile(tempProfile);
   };
   return (
     <div className="frontCalcContainer" onClick={handleFrontProfileCalc}>
@@ -208,6 +209,7 @@ export const SideProfileCalculator = () => {
     tempProfile.getHarmony("Side");
     setOneProfile(tempProfile);
     setState(3);
+    setOneProfile(tempProfile);
   };
   return (
     <div className="sideCalcContainer" onClick={handleSideProfileCalc}>

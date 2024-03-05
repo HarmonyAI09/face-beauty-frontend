@@ -5,17 +5,12 @@ export const MeasurementOverviews = [
   
   Both men and women favor measurements somewhere in the middle, also referred to as an averageness zone. Overly close set or wide set eyes relative to facial width can throw off facial balance.
   
-  Still, within that zone, women's faces generally tend to favor higher ratios (wider set eyes), while male faces favor lower ratios (closer set eyes). Men possess a greater bizygomatic width(cheekbone width) in absolute terms, as well as a larger interpupillary distance on average. Perhaps the former is disproportionately larger contributing to a lower male ESR on average.`,
+  Still, within that zone, women's faces generally tend to favor higher ratios (wider set eyes), while male faces favor lower ratios (closer set eyes). Men possess a greater bizygomatic width (cheekbone width) in absolute terms, as well as a larger interpupillary distance on average. Perhaps the former is disproportionately larger, contributing to a lower male ESR on average. `,
   `Facial thirds are perhaps one of the most well known facial beauty canons. They assess the relative balance between the upper, middle, and lower portions of your face. 
-  
-  The upper third is from the Trichion (middle hairline point) to the Glabella (foremost brow point usually around the mid-brow). 
-  
-  The middle third is from the Glabella to the Nasal tip(sometimes synonymous with the subnasale). 
-  
-  The lower third is from the Nasal tip to the Menton (lowermost point of the chin).
-  
-  All of these thirds should be approximately the same length ideally. However, it is rarely the case that any person has perfectly balanced thirds. As long as no third is overly disproportionate facial balance should be maximized. 
-  
+  The upper third is from the Trichion (middle hairline point) to the Glabella (foremost brow point usually around the mid-brow).   
+  The middle third is from the Glabella to the Nasal tip (or subnasale, whichever is lower).   
+  The lower third is from the Nasal tip to the Menton (lowermost point of the chin).  
+  All of these thirds should be approximately the same length. However, it is rarely the case that any person has perfectly balanced thirds. As long as no third is overly disproportionate, facial balance should be maximized.   
   Males tend to suit slightly taller lower thirds, so that their favorable distribution is when the lower third is the tallest. It is the opposite for female faces, where a shorter lower third is favored. Again, this means shorter within reason and not overly short.`,
   `This angle helps determine how upturned your eyes are. It is also referred to as the palpebral axis or canthal tilt depending on the specific literature you are looking at. 
   
@@ -73,11 +68,9 @@ export const MeasurementOverviews = [
   Typically, the eyes should be about one eye's width (palpebral width) apart, but it does not have to be precicely one eye as long as it is within a reasonable range.
   
   There are subtle variations among ethnic groups, but that standard is consistent across all groups. Unlike the ESR, there are no notable sexually dimorphic (male-female) differences in this measurement.`,
-  `This ratio indicates how rounded or narrow your eye are. An aspect ratio simply refers to the width vs. height of a thing(e.g., films, photos). The eye aspect ratio is the same concept,  but for your eyes. 
-  
-  Eyes that are not overly round or narrow are usually preferred because they harmonize best with most people's faces. 
-  
-  Males tend to have higher ratios on average due to a lower palpebral height (eye height) on average than females. Female faces tend to have rounder eye shapes on average, so within reason a lower ratio does not detract from facial attractiveness in women.`,
+  `This ratio indicates how rounded or narrow your eye are. An aspect ratio simply refers to the width vs. height of a thing (e.g., films, photos). The eye aspect ratio is the same concept,  but for your eyes.
+  Eyes that are not overly round or narrow are usually preferred because they harmonize best with most people's faces.
+  Males tend to have higher ratios on average due to a lower palpebral height (eye height) than females. Female faces tend to have rounder eye shapes on average.`,
   `This assessment divides the height of your lower lip by that of your upper lip
   
   There should generally be a balance between the two, with neither being overly full in proportion to the other.
@@ -98,10 +91,10 @@ export const MeasurementOverviews = [
   
   The ratio should not be too high, or it indicates an overly elongated region above the mid-lip. If the ratio is too low, it indicates an overly short region above the mid-lip. In the latter case, it could indicate a thin upper lip and short philtrum.`,
   `This is the angle formed between the subnasale (bottom of nose) and both outer eye corners. 
-  
+
   It generally helps assess the shape of the midface region. Angles that are overly high signify a midface that is too compact, and/or eyes that are too wide set.
   
-  Low angles can signify the opposite -- an elongated midface or close set eyes.`,
+  Low angles can signify the opposite -- an elongated midface and/or close set eyes.`,
   `This angle assesses how sharp the inner corner of the eye (medial/inner canthus) is. 
   
   Generally sharper angles are more attractive because they give the eyes a jaguar-like appearance. Though, this is not a universal standard across all ethnic groups. For example, Korean faces may favor a higher angle and more rounded eye shape. Generally, somewhere in the middle is most attractive.`,
@@ -150,18 +143,15 @@ export const MeasurementOverviews = [
       While there are many causes for periorbital hyperpigmentation (dark circles), hollowing of the infraorbital region can often be confused with POH. Infraorbital hollowing is when the tissue underneath the eyes is hollow, creating the appearance of a trough and overall leading to a less youthful and vibrant appearance -- POH simply refers to the skin's color around the eyes. 
       
       The orbital vector tells us if the tissue underneath the eye is inferior (in front) or posterior (behind) the eye. Usually the latter is not aesthetically pleasing in most cases.`,
+
   `See notes for "Facial convexity(glabella)"
-  
-      This is variation of the normal facial convexity assessment. The only difference is that it now includes your nose. 
-      
-      It is possible to have a less than ideal facial convexity angle while having an ideal total facial convexity angle. It really depends how well your nose harmonizes with your specific facial profile.
-      
-      The same concept applies here, where you don't want a full (or total) profile that is too flat or too rounded. While this does still factor in the lower jaw, it can also clue into whether your nose is too protrusive or too small.`,
+    This is a variation of the normal facial convexity assessment. The only difference is that it now includes your nose.
+    It is possible to have a less than ideal facial convexity angle while having an ideal total facial convexity angle. It really depends how well your nose harmonizes with your facial profile.
+    The same concept applies here, where you don't want a full (or total) profile that is too flat or too rounded. While this does still factor in the lower jaw, it also indicates whether your nose is too protrusive or too small.`,
+
   `This is the angle formed between your lower lip and the foremost point of your chin (Pogonion). It provides valuable insight into the nature of your chin's shape and protrusion, as well as the protrusion of your lower lip.
-  
-      A lower angle indicates a greater indent between the chin and lower lip. This could be due to an overly pouted lower lip, or overly prominent chin. However, some degree of indent is desirable as it shows adequate chin projection.
-      
-      In other words, you generally don't want an angle that is too high or low because that may indicate abnormal jaw growth patterns. A normal angle tends to form the most attractive and pleasant chin region.`,
+  A lower angle indicates a greater indent between the chin and lower lip. This could be due to a pouted lower lip or prominent chin. However, some degree of indent is desirable as it shows adequate chin projection.
+  In other words, you generally don't want an angle that is too high or low because that may indicate abnormal jaw growth patterns. A normal angle tends to form the most attractive and pleasant chin region.`,
   `See notes for "Facial convexity(glabella)"
   
       This measurement is simply a variation of that one. It seeks to eliminate the confounding variable of one's brow ridge (Glabella) and replace it with the Nasion. This provides useful insight because sometimes the regular facial convexity angle can be misleading if your brow ridge is quite protrusive, or non-protrusive for that matter.

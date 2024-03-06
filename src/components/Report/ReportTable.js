@@ -65,11 +65,18 @@ const RangeText = (props) => {
 };
 
 const MeasureRow = (props) => {
-  const item = props.item;
+  const [item, setItem] = useState(props.item);
+  const [id, setId] = useState(props.id);
+  const [index, setIndex] = useState(props.index);
+  useEffect(()=>{
+    setItem(props.item);
+    setId(props.id);
+    setIndex(props.index);
+  }, [props])
   return (
     <div className={`measure_row ${props.hide ? "blur" : ""}`}>
       <Item width={widthList[0]}>
-        <MeasurementOverview id={props.id} index={props.index} />
+        <MeasurementOverview id={id} index={index} />
       </Item>
       <Item width={widthList[1]}>
         <InlineText text={item.name} />
@@ -94,7 +101,7 @@ const MeasureRow = (props) => {
 const ReportTable = () => {
   const headerList = [
     "Image",
-    "Measure Name",
+    "Measurement Name",
     "Value",
     "Score",
     "Ideal Range",
@@ -104,6 +111,7 @@ const ReportTable = () => {
   const { oneProfile } = useContext(UserContext);
   const  [MeasureRows, setMeasureRows] = useState([]);
   useEffect(() => {
+    setMeasureRows([]);
     const msRows = [];
     for (let index in oneProfile.front.measurements) {
       const item = oneProfile.front.measurements[index];

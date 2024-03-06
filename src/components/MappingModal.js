@@ -5,12 +5,8 @@ import {
   DialogSurface,
   DialogTitle,
   DialogBody,
-  DialogActions,
-  DialogContent,
   Button,
   CompoundButton,
-  Image,
-  Switch,
 } from "@fluentui/react-components";
 import { Dismiss24Regular } from "@fluentui/react-icons";
 import { Connected20Filled } from "@fluentui/react-icons";
@@ -287,11 +283,27 @@ export function FrontProfileMappingModal() {
     setIpsilateralAlarAngle(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateDeviationOfJFA2IAA = () => {
-    CalculateJawFrontalAngle();
-    CalculateIpsilateralAlarAngle();
-    setDeviationOfJFA2IAA(
-      parseFloat(Math.abs(jawFrontalAngle - ipsilateralAlarAngle)).toFixed(2)
+    const a = calculateSharpAngle(
+      {
+        x: markPoints[26][0].x - markPoints[28][0].x,
+        y: markPoints[26][0].y - markPoints[28][0].y,
+      },
+      {
+        x: markPoints[26][1].x - markPoints[28][1].x,
+        y: markPoints[26][1].y - markPoints[28][1].y,
+      }
     );
+    const b = calculateSharpAngle(
+      {
+        x: markPoints[9][1].x - markPoints[19][0].x,
+        y: markPoints[9][1].y - markPoints[19][0].y,
+      },
+      {
+        x: markPoints[9][0].x - markPoints[19][0].x,
+        y: markPoints[9][0].y - markPoints[19][0].y,
+      }
+    );
+    setDeviationOfJFA2IAA(parseFloat(Math.abs(a - b)).toFixed(2));
   };
   const CalculateEyebrowTilt = () => {
     const a1 = {
@@ -756,9 +768,12 @@ export function SideProfileMappingModal() {
       x: markPoints[32][0].x - markPoints[31][0].x,
       y: markPoints[32][0].y - markPoints[31][0].y,
     };
-    setBrowridgeInclinationAngle(
-      parseFloat(calculateSharpAngle(a, b)).toFixed(2)
-    );
+    const angle = parseFloat(calculateSharpAngle(a, b)).toFixed(2);
+    if(angle >= 90){
+      setBrowridgeInclinationAngle(180 - angle);
+    } else {
+      setBrowridgeInclinationAngle(angle);
+    }
   };
   const CalculateNasalTipAngle = () => {
     const a = {

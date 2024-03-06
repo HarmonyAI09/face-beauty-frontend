@@ -331,7 +331,6 @@ function Home() {
   };
 
   const formatFrontLandmarks = () => {
-    console.log(markPoints);
     let tmpMarks = [...markPoints];
     for (let i = 0; i < 30; i++) {
       tmpMarks[i] = landmarks[i];

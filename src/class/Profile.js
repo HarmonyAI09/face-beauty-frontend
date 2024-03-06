@@ -330,6 +330,15 @@ export class OneProfile {
     this.percentage = src.percentage;
   }
 
+  format(flag){
+    if(flag === 0){
+      this.front = new Profile();
+    }
+    else if (flag === 1){
+      this.side = new Profile();
+    }
+  }
+
   getPercentage() {
     const MAX_TOTAL = 500;
     const frontScore = this.front.score;

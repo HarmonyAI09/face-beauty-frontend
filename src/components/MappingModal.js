@@ -14,6 +14,7 @@ import { FrontDialogContent, SideDialogContent } from "./NewDialogContent";
 import { UserContext } from "../pages/home";
 import { useContext } from "react";
 import { showNotification } from "./NotificationCreator";
+import { getAngle } from "../utils/geometry";
 
 function calculateDistance(point1, point2) {
   const xDiff = point2.x - point1.x;
@@ -306,24 +307,14 @@ export function FrontProfileMappingModal() {
     setDeviationOfJFA2IAA(parseFloat(Math.abs(a - b)).toFixed(2));
   };
   const CalculateEyebrowTilt = () => {
-    const a1 = {
-      x: markPoints[7][1].x - markPoints[7][0].x,
-      y: markPoints[7][1].y - markPoints[7][0].y,
-    };
-    const b1 = {
-      x: markPoints[4][1].x - markPoints[7][1].x,
-      y: markPoints[4][1].y - markPoints[7][1].y,
-    };
-    const left = calculateSharpAngle(a1, b1);
-    const a2 = {
-      x: markPoints[7][0].x - markPoints[7][1].x,
-      y: markPoints[7][0].y - markPoints[7][1].y,
-    };
-    const b2 = {
-      x: markPoints[4][0].x - markPoints[7][0].x,
-      y: markPoints[4][0].y - markPoints[7][0].y,
-    };
-    const right = calculateSharpAngle(a2, b2);
+    const RLs = data.RLs;
+    const a0 = [markPoints[7][0], markPoints[4][0]];
+    const b0 = [RLs[10][0], RLs[10][1]];
+    const left = getAngle(a0, b0);
+    const a1 = [markPoints[7][1], markPoints[4][1]];
+    const b1 = [RLs[10][0], RLs[10][1]];
+    const right = getAngle(a1, b1);
+    console.log(left, right);
     setEyebrowTilt(parseFloat((left + right) / 2).toFixed(2));
   };
   const CalculateBitemporalWidth = () => {

@@ -742,7 +742,7 @@ export function SideProfileMappingModal() {
       return;
     }
     if (d <= 4) {
-      setRecessionRelative2FrankfortPlane("slightly");
+      setRecessionRelative2FrankfortPlane("slight");
       return;
     }
     if (d <= 8) {

@@ -58,7 +58,7 @@ function distanceAndSideOfPointToLine(point1, point2, point3) {
     side = 0;
   }
 
-  return { distance, side };
+  return { "distance":distance, "side":side };
 }
 
 function calculateSharpAngle(line1, line2) {
@@ -565,12 +565,14 @@ export function SideProfileMappingModal() {
     setFacialConvexityNasion(parseFloat(calculateSharpAngle(a, b)).toFixed(2));
   };
   const CalculateOrbitalVector = () => {
-    const distance = markPoints[57][0].x - markPoints[33][0].x;
-    if (Math.abs(distance) <= 4) {
+    const RLs = data.RLs;
+    const t = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][0], RLs[8][1]);
+    console.log(t);
+    if (t["distance"] <= 4) {
       setOrbitalVector("neutral");
       return;
     }
-    if (distance > 0) {
+    if (t["side"] > 0) {
       setOrbitalVector("positive");
     } else {
       setOrbitalVector("negative");
@@ -740,7 +742,7 @@ export function SideProfileMappingModal() {
       return;
     }
     if (d <= 4) {
-      setRecessionRelative2FrankfortPlane("slightly");
+      setRecessionRelative2FrankfortPlane("slight");
       return;
     }
     if (d <= 8) {

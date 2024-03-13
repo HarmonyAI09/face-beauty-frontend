@@ -27,9 +27,9 @@ export function getAngle(a, b) {
     }
     // Calculate angle from a[0] - intersection - b[1]
     // If intersection - b[1] is the right of a[0] - intersection, then return negative angle.
-    // If intersection - b[1] is the left of a[0] - intersection, then return positive angle.
+    // If intersection - b[1] is the left of a[0] - intersection, then return positive angle. 
 
-    // Calculate vectors from the intersection point to the end points of each line
+    // Calculate vectors from the intersection point to the end points of each line HelloWorld
     const vectorA = { x: a[1].x - intersection.x, y: a[1].y - intersection.y };
     const vectorB = { x: b[1].x - intersection.x, y: b[1].y - intersection.y };
 

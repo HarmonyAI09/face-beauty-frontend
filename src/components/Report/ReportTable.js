@@ -84,7 +84,7 @@ const MeasureRow = (props) => {
       <Item width={widthList[2]}>
         <ValueText value={item.value} />
       </Item>
-      <Item width={widthList[3]}>{item.score}</Item>
+      <Item width={widthList[3]}>{item.score.toFixed(2)}</Item>
       <Item width={widthList[4]}>
         <RangeText range={item.ideal} />
       </Item>

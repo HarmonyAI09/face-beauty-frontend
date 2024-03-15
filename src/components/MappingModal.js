@@ -566,16 +566,20 @@ export function SideProfileMappingModal() {
   };
   const CalculateOrbitalVector = () => {
     const RLs = data.RLs;
-    const t = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][0], RLs[8][1]);
+    const a = RLs[8][0].y < RLs[8][1].y? 0 : 1;
+    const b = 1 - a;
+    const t = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][a], RLs[8][b]);
     console.log(t);
-    if (t["distance"] <= 4) {
+    const u = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][b], RLs[8][a]);
+    console.log(u);
+    if (t["distance"] < 1) {
       setOrbitalVector("neutral");
       return;
     }
-    if (t["side"] > 0) {
-      setOrbitalVector("positive");
-    } else {
+    if (t["side"] === 1) {
       setOrbitalVector("negative");
+    } else {
+      setOrbitalVector("positive");
     }
   };
   const CalculateMentolabialAngle = () => {

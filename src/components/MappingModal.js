@@ -569,10 +569,7 @@ export function SideProfileMappingModal() {
     const a = RLs[8][0].y < RLs[8][1].y? 0 : 1;
     const b = 1 - a;
     const t = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][a], RLs[8][b]);
-    console.log(t);
-    const u = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][b], RLs[8][a]);
-    console.log(u);
-    if (t["distance"] < 1) {
+    if (t["distance"] < 2) {
       setOrbitalVector("neutral");
       return;
     }
@@ -596,7 +593,7 @@ export function SideProfileMappingModal() {
   const CalculateNasalProjection = () => {
     const RLs = data.RLs;
     const a = calculateDistanceFromPointToLine(markPoints[40][0], RLs[3][0], RLs[3][1]);
-    const b = calculateDistance(markPoints[34][0], markPoints[40][0]);
+    const b = calculateDistance(markPoints[40][0], markPoints[34][0]);
     setNasalProjection(parseFloat(a / b).toFixed(2));
   };
   const CalculateNasalW2HRatio = () => {

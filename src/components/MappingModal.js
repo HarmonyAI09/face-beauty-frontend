@@ -569,6 +569,7 @@ export function SideProfileMappingModal() {
     const a = RLs[8][0].y < RLs[8][1].y? 0 : 1;
     const b = 1 - a;
     const t = distanceAndSideOfPointToLine(markPoints[57][0], RLs[8][a], RLs[8][b]);
+    console.log(t['distance']);
     if (t["distance"] < 2) {
       setOrbitalVector("neutral");
       return;

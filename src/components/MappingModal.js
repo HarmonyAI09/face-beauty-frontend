@@ -618,13 +618,13 @@ export function SideProfileMappingModal() {
       setRickettsELine("unideal");
       return;
     }
-    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+    if (a['distance'] / b['distance'] >= 1.5 && a['distance'] / b['distance'] <= 2.5) {
       setRickettsELine("ideal");
       return;
     }
     if (
-      Math.abs(a["distance"] - 16) <= 10 &&
-      Math.abs(b["distance"] - 8) <= 10
+      (a['distance'] / b['distance'] >= 1 && a['distance'] / b['distance'] <= 1.5) && 
+      (a['distance'] / b['distance'] >= 2.5 && a['distance'] / b['distance'] <= 3)
     ) {
       setRickettsELine("near ideal");
       return;
@@ -633,19 +633,18 @@ export function SideProfileMappingModal() {
   };
   const CalculateHoldawayHLine = () => {
     const a = distanceAndSideOfPointToLine(
-      markPoints[58][0],
+      markPoints[47][0],
       markPoints[45][0],
       markPoints[50][0]
     );
-    if (a["side"] === -1) {
-      setHoldawayHLine("unideal");
-      return;
-    }
-    if (Math.abs(a["distance"]) <= 2) {
+    console.log(a);
+    console.log(Math.abs(a["distance"]));
+    console.log(Math.abs(a["distance"])<=6.0);
+    if (Math.abs(a["distance"]) <= 6.0) {
       setHoldawayHLine("ideal");
       return;
     }
-    if (Math.abs(a["distance"]) <= 10) {
+    else if (Math.abs(a["distance"]) <= 15.0) {
       setHoldawayHLine("near ideal");
       return;
     }
@@ -657,23 +656,11 @@ export function SideProfileMappingModal() {
       markPoints[59][0],
       markPoints[50][0]
     );
-    const b = distanceAndSideOfPointToLine(
-      markPoints[47][0],
-      markPoints[59][0],
-      markPoints[50][0]
-    );
-    if (a["side"] !== 1 || b["side"] !== 1) {
-      setSteiinerSLine("unideal");
-      return;
-    }
-    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+    if (Math.abs(a["distance"]) <= 6) {
       setSteiinerSLine("ideal");
       return;
     }
-    if (
-      Math.abs(a["distance"] - 16) <= 10 &&
-      Math.abs(b["distance"] - 8) <= 10
-    ) {
+    if (Math.abs(a["distance"]) <= 15) {
       setSteiinerSLine("near ideal");
       return;
     }
@@ -690,17 +677,14 @@ export function SideProfileMappingModal() {
       markPoints[43][0],
       markPoints[50][0]
     );
-    if (a["side"] !== 1 || b["side"] !== 1) {
-      setBurstoneLine("unideal");
-      return;
-    }
-    if (Math.abs(a["distance"] - 16) <= 2 && Math.abs(b["distance"] - 8) <= 2) {
+    console.log(a, b, "(((((");
+    if (a['distance'] / b['distance'] >= 1.3 && a['distance'] / b['distance'] <= 1.8) {
       setBurstoneLine("ideal");
       return;
     }
     if (
-      Math.abs(a["distance"] - 16) <= 10 &&
-      Math.abs(b["distance"] - 8) <= 10
+      (a['distance'] / b['distance'] >= 1.1 && a['distance'] / b['distance'] <= 1.3)&&
+      (a['distance'] / b['distance'] >= 1.8 && a['distance'] / b['distance'] <= 2)
     ) {
       setBurstoneLine("near ideal");
       return;
